@@ -51,7 +51,6 @@
     .custom-select-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
     .custom-select-group label { font-size: 0.9em; color: #88bbff; }
     
-    /* Replaced Select with Custom Trigger Button */
     .select-trigger {
       padding: 8px 10px; border-radius: 5px; background-color: #112244; color: white; 
       border: 1px solid #5577aa; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
@@ -103,7 +102,9 @@
 
     .sprite-grid { display: grid; width: 100%; height: 100%; }
     .sprite-grid img { grid-column: 1; grid-row: 1; pointer-events: none; }
-    .base-transform { transform: translate(50%, 95%); }
+    
+    /* Fixed base transform to use absolute pixels instead of percentages to handle broken images */
+    .base-transform { transform: translate(65px, 123.5px); } 
 
     /* --- TAB 2 & 3 --- */
     .gene-viewer-container { display: flex; flex-direction: column; gap: 20px; }
@@ -143,15 +144,15 @@
     .modal-body {
       padding: 15px 15px 100px 15px; 
       overflow-y: auto; display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px;
+      grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 15px;
       align-content: start;
     }
     
     /* Tama Cards in Modal */
     .tama-card {
       background-color: #112244; border: 2px solid #5577aa; border-radius: 10px;
-      padding: 10px 5px; text-align: center; cursor: pointer; transition: all 0.2s;
-      display: flex; flex-direction: column; align-items: center; gap: 5px;
+      padding: 15px 10px; text-align: center; cursor: pointer; transition: all 0.2s;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
     }
     .tama-card:hover {
       border-color: #ffb3d9; background-color: #1a3366; transform: translateY(-2px);
@@ -160,14 +161,16 @@
     .tama-card.selected { border-color: #88ff88; background-color: #224422; }
     .tama-card.default-card { border-color: #ffb3d9; border-style: dashed; }
     
-    /* Mini Sprite Renderer (Perfectly replicates 260x260 view scaled down) */
+    /* Mini Sprite Renderer (Bigger & Perfectly Centered) */
     .mini-sprite {
-      width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; overflow: hidden;
+      width: 130px; height: 130px; 
+      display: flex; justify-content: center; align-items: center; 
+      overflow: hidden;
     }
     .mini-sprite-inner {
       display: grid;
       width: 260px; height: 260px; 
-      transform: scale(0.4); /* 104px / 260px */
+      transform: scale(0.5); /* Scaled exactly to 130px */
       transform-origin: center center;
     }
     .mini-sprite-inner img {
@@ -177,7 +180,7 @@
     }
 
     .tama-name {
-      font-size: 0.85em; color: #ccc; font-weight: bold; line-height: 1.1;
+      font-size: 0.85em; color: #ccc; font-weight: bold; line-height: 1.2;
     }
   </style>
 </head>
@@ -261,7 +264,6 @@
       <!-- Right Side: Visuals -->
       <div class="visuals-panel">
         <div class="image-stack">
-          <!-- Added Dynamic Title -->
           <div class="current-tama-title" id="currentTamaName">Current Tama:<br>Loading...</div>
           
           <div class="sprite-container" id="tamaPreviewField">
@@ -397,7 +399,7 @@
           .filter(([id, d]) => d.stage === 3 && d.data && d.data.breedable === true)
           .map(([id, d]) => ({ id, name: d.name }));
           
-        // NEW: Filter out the currently selected Base Tama from the Overrides list
+        // Filter out the currently selected Base Tama from the Overrides list
         modalFilterList = modalFilterList.filter(t => t.id !== appState.baseId);
       }
 
@@ -424,7 +426,7 @@
         const defaultCard = document.createElement('div');
         defaultCard.className = `tama-card default-card ${appState[modalContext + 'Override'] === 'default' ? 'selected' : ''}`;
         defaultCard.innerHTML = `
-          <div class="mini-sprite" style="display:flex;align-items:center;justify-content:center;color:#8899cc;font-size:0.8em;">Default</div>
+          <div class="mini-sprite" style="display:flex;align-items:center;justify-content:center;color:#8899cc;font-size:0.9em;text-align:center;">Default</div>
           <div class="tama-name">Current Tama</div>
         `;
         defaultCard.onclick = () => selectTama('default');
@@ -447,15 +449,15 @@
         const card = document.createElement('div');
         card.className = `tama-card ${isSelected ? 'selected' : ''}`;
         
-        // Render Mini Sprite
+        // Render Mini Sprite with absolute pixel transforms to fix broken images
         card.innerHTML = `
           <div class="mini-sprite">
             <div class="mini-sprite-inner">
-              <img loading="lazy" src="images/tamas/${tama.id}/color.png" style="transform: translate(50%, 95%);" />
-              <img loading="lazy" src="images/tamas/${tama.id}/color.png" style="transform: translate(50%, 95%); filter: opacity(0.5) drop-shadow(0 0 0 #${data.color}) saturate(500%);" />
-              <img loading="lazy" src="images/tamas/${tama.id}/base.png" style="transform: translate(50%, 95%);" />
-              <img loading="lazy" src="images/tamas/${tama.id}/eyes.png" style="transform: translate(50%, 95%) translate(${eyeX}px, ${eyeY}px);" />
-              <img loading="lazy" src="images/tamas/${tama.id}/face.png" style="transform: translate(50%, 95%);" />
+              <img loading="lazy" src="images/tamas/${tama.id}/color.png" style="transform: translate(65px, 123.5px);" />
+              <img loading="lazy" src="images/tamas/${tama.id}/color.png" style="transform: translate(65px, 123.5px); filter: opacity(0.5) drop-shadow(0 0 0 #${data.color}) saturate(500%);" />
+              <img loading="lazy" src="images/tamas/${tama.id}/base.png" style="transform: translate(65px, 123.5px);" />
+              <img loading="lazy" src="images/tamas/${tama.id}/eyes.png" style="transform: translate(65px, 123.5px) translate(${eyeX}px, ${eyeY}px);" />
+              <img loading="lazy" src="images/tamas/${tama.id}/face.png" style="transform: translate(65px, 123.5px);" />
             </div>
           </div>
           <div class="tama-name">${tama.name}</div>
@@ -583,7 +585,6 @@
       const currentTamaData = tamaData[currentTamaId];
       if (!currentTamaData) return;
 
-      // NEW: Update Title
       document.getElementById('currentTamaName').innerHTML = `Current Tama:<br>${currentTamaData.name}`;
 
       document.getElementById('TamaColorBase').src = `images/tamas/${currentTamaId}/color.png`;
@@ -597,7 +598,7 @@
 
       const eyeX = currentTamaData.offsets ? currentTamaData.offsets.x : 0;
       const eyeY = currentTamaData.offsets ? currentTamaData.offsets.y : 0;
-      document.getElementById('TamaEyes').style.transform = `translate(50%, 95%) translate(${eyeX}px, ${eyeY}px)`;
+      document.getElementById('TamaEyes').style.transform = `translate(65px, 123.5px) translate(${eyeX}px, ${eyeY}px)`;
       document.getElementById('CellEyes').style.transform = `translate(50%, 44.5%)`;
 
       const hexColor = appState.colorOverride === 'default' ? currentTamaData.color : tamaData[appState.colorOverride].color;
