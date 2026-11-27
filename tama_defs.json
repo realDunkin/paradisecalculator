@@ -200,7 +200,30 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "base": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "roar_young",
+            "method": {
+              "max": true,
+              "mistakes": "0"
+            }
+          }
+        }
+      }
     }
   },
   "pochitchi": {
@@ -390,7 +413,7 @@
     "offsets": { "x": 4.5, "y": 24 },
     "data": {
       "breedable": true,
-      "secret": false,
+      "secret": true,
       "lab_only": false,
       "path": {}
     }
@@ -594,7 +617,7 @@
     "offsets": { "x": 4.5, "y": 24 },
     "data": {
       "breedable": true,
-      "secret": false,
+      "secret": true,
       "lab_only": false,
       "path": {}
     }
@@ -798,7 +821,7 @@
     "offsets": { "x": 4.5, "y": 24 },
     "data": {
       "breedable": true,
-      "secret": false,
+      "secret": true,
       "lab_only": false,
       "path": {}
     }
@@ -1062,7 +1085,7 @@
     "offsets": { "x": 4.5, "y": 24 },
     "data": {
       "breedable": true,
-      "secret": false,
+      "secret": true,
       "lab_only": false,
       "path": {}
     }
@@ -1386,7 +1409,7 @@
     "offsets": { "x": 4.5, "y": 24 },
     "data": {
       "breedable": true,
-      "secret": false,
+      "secret": true,
       "lab_only": false,
       "path": {}
     }
@@ -1590,7 +1613,7 @@
     "offsets": { "x": 4.5, "y": 24 },
     "data": {
       "breedable": true,
-      "secret": false,
+      "secret": true,
       "lab_only": false,
       "path": {}
     }
@@ -1926,7 +1949,7 @@
     "offsets": { "x": 4.5, "y": 24 },
     "data": {
       "breedable": true,
-      "secret": false,
+      "secret": true,
       "lab_only": false,
       "path": {}
     }
