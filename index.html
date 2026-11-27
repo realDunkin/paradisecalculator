@@ -50,7 +50,16 @@
 
     .custom-select-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
     .custom-select-group label { font-size: 0.9em; color: #88bbff; }
-    .custom-select-group select { padding: 8px; border-radius: 5px; background-color: #112244; color: white; border: 1px solid #5577aa; font-family: inherit; }
+    
+    /* Replaced Select with Custom Trigger Button */
+    .select-trigger {
+      padding: 8px 10px; border-radius: 5px; background-color: #112244; color: white; 
+      border: 1px solid #5577aa; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      transition: background 0.2s;
+    }
+    .select-trigger:hover { background-color: #1a3366; border-color: #88bbff; }
+    .select-trigger::after { content: '▼'; font-size: 0.8em; color: #88bbff; }
+
     .help-text { font-size: 0.75em; color: #8899cc; margin-top: -5px; margin-bottom: 10px; }
 
     /* Paths Buttons */
@@ -67,7 +76,6 @@
     .stage-tab { flex: 1; background-color: #222; color: #888; padding: 8px 5px; text-align: center; border: 2px solid #555; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.9em;}
     .stage-tab:hover { background-color: #333; color: #ccc; }
     .stage-tab.active { background-color: #44aa44; color: white; border-color: #88ff88; }
-    /* Specific color for Adult tab when active */
     #tab-adult.active { background-color: #aa44aa; border-color: #ff88ff; }
 
     .requirements-box {
@@ -100,6 +108,66 @@
     .family-tree-container { display: flex; flex-direction: column; gap: 15px; }
     .tree-toolbar { display: flex; gap: 10px; background-color: #112244; padding: 10px; border-radius: 8px; }
     .tree-canvas { height: 400px; background-color: #0a0a1a; background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 20px 20px; border: 2px dashed #5577aa; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #5577aa; }
+
+    /* --- CUSTOM TAMA SELECTOR MODAL --- */
+    .modal-overlay {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8); z-index: 1000; justify-content: center; align-items: center;
+    }
+    .modal-content {
+      background-color: #001a4d; border: 3px solid #88bbff; border-radius: 15px;
+      width: 90%; max-width: 800px; height: 80vh; display: flex; flex-direction: column;
+      box-shadow: 0 0 20px rgba(136, 187, 255, 0.5);
+    }
+    .modal-header {
+      padding: 15px; border-bottom: 2px solid #334488; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    }
+    .modal-header h2 { margin: 0; color: #ffb3d9; font-size: 1.2em; flex: 1; min-width: 150px;}
+    .modal-search {
+      flex: 2; padding: 8px; border-radius: 5px; border: 1px solid #5577aa;
+      background-color: #112244; color: white; font-family: inherit; min-width: 200px;
+    }
+    .modal-btn {
+      padding: 8px 15px; border-radius: 5px; background-color: #334488; color: white;
+      border: 1px solid #5577aa; cursor: pointer; font-weight: bold;
+    }
+    .modal-btn:hover { background-color: #4466aa; }
+    .modal-btn.close { background-color: #aa3344; border-color: #ff5566; }
+    .modal-btn.close:hover { background-color: #cc4455; }
+    
+    .modal-body {
+      padding: 15px; overflow-y: auto; display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px;
+      align-content: start;
+    }
+    
+    /* Tama Cards in Modal */
+    .tama-card {
+      background-color: #112244; border: 2px solid #5577aa; border-radius: 10px;
+      padding: 10px 5px; text-align: center; cursor: pointer; transition: all 0.2s;
+      display: flex; flex-direction: column; align-items: center; gap: 5px;
+    }
+    .tama-card:hover {
+      border-color: #ffb3d9; background-color: #1a3366; transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    }
+    .tama-card.selected {
+      border-color: #88ff88; background-color: #224422;
+    }
+    .tama-card.default-card {
+      border-color: #ffb3d9; border-style: dashed;
+    }
+    
+    /* Mini Sprite Renderer for Grid */
+    .mini-sprite {
+      width: 80px; height: 80px; position: relative;
+    }
+    .mini-sprite img {
+      position: absolute; width: 80px; height: 80px; object-fit: contain;
+    }
+    .tama-name {
+      font-size: 0.8em; color: #ccc; font-weight: bold; line-height: 1.1;
+    }
   </style>
 </head>
 <body>
@@ -131,26 +199,26 @@
         <h3 style="margin-top: 0; color: #ffb3d9; border-bottom: 2px solid #5577aa; padding-bottom: 5px;">Tama Selector</h3>
         
         <div class="custom-select-group">
-          <label for="baseTamaSelect">Select Target Adult Tama:</label>
-          <select id="baseTamaSelect" onchange="onBaseTamaChange()">
-            <option>Loading data...</option>
-          </select>
+          <label>Select Target Adult Tama:</label>
+          <div class="select-trigger" id="baseTamaTrigger" onclick="openModalFor('base')">
+            <span id="baseTamaDisplay">Select Tama...</span>
+          </div>
           <div class="help-text">*Only showing Stage 3 Tamas that are not Lab-Only.</div>
         </div>
 
         <div class="custom-select-group">
-          <label for="eyesSelect">Eyes Override:</label>
-          <select id="eyesSelect" onchange="updateUI()">
-            <option>Loading data...</option>
-          </select>
+          <label>Eyes Override:</label>
+          <div class="select-trigger" id="eyesTrigger" onclick="openModalFor('eyes')">
+            <span id="eyesDisplay">Default (Current Tama)</span>
+          </div>
           <div class="help-text">*Pulls eyes from any Breedable Adult Tama.</div>
         </div>
 
         <div class="custom-select-group">
-          <label for="colorSelect">Color Override:</label>
-          <select id="colorSelect" onchange="updateUI()">
-            <option>Loading data...</option>
-          </select>
+          <label>Color Override:</label>
+          <div class="select-trigger" id="colorTrigger" onclick="openModalFor('color')">
+            <span id="colorDisplay">Default (Current Tama)</span>
+          </div>
           <div class="help-text">*Pulls color from any Breedable Adult Tama.</div>
         </div>
 
@@ -159,7 +227,6 @@
         <!-- PATHS -->
         <h3 style="margin-top: 0; color: #ffb3d9; border-bottom: 2px solid #5577aa; padding-bottom: 5px;">Paths</h3>
         <div id="pathsContainer" class="paths-container">
-          <!-- Path buttons injected by JS -->
           <div style="color: #8899cc; font-size: 0.9em; font-style: italic;">Select a Base Tama first...</div>
         </div>
 
@@ -175,35 +242,28 @@
           <div class="stage-tab" id="tab-adult" onclick="updateStage(3)">Adult</div>
         </div>
 
-        <!-- Read-Only Requirements Box -->
-        <div class="requirements-box" id="requirementsDisplay">
-          <!-- Content injected by JS -->
-        </div>
+        <div class="requirements-box" id="requirementsDisplay"></div>
         
-        <!-- Advance Button -->
         <button id="advanceBtn" class="pixel-btn" style="margin-top: 15px; width: 100%;" onclick="advanceStage()">Advance to Next Stage ➔</button>
       </div>
 
       <!-- Right Side: Visuals -->
       <div class="visuals-panel">
         <div class="image-stack">
-          <!-- Tama Environment View -->
           <div class="sprite-container" id="tamaPreviewField">
             <div class="sprite-grid">
-              <img id="TamaColorBase" alt="Tama Color" src="" width="130" height="130" class="base-transform" />
-              <img id="TamaColor" alt="Tama Color" src="" width="130" height="130" class="base-transform" />
-              <img id="TamaBody" src="" alt="Tama Base Body" width="130" height="130" class="base-transform" />
-              <img id="TamaEyes" src="" alt="Tama Eyes" width="130" height="130" />
-              <img id="TamaFace" src="" alt="Tama Face" width="130" height="130" class="base-transform" />
+              <img id="TamaColorBase" alt="" src="" width="130" height="130" class="base-transform" />
+              <img id="TamaColor" alt="" src="" width="130" height="130" class="base-transform" />
+              <img id="TamaBody" src="" alt="" width="130" height="130" class="base-transform" />
+              <img id="TamaEyes" src="" alt="" width="130" height="130" />
+              <img id="TamaFace" src="" alt="" width="130" height="130" class="base-transform" />
             </div>
           </div>
-
-          <!-- Cell View -->
           <div class="sprite-container cell-bg">
             <div class="sprite-grid">
-              <img id="CellBase" src="images/cell/base.png" alt="Cell Base" width="130" height="130" style="transform: translate(50%, 50%);" />
-              <img id="CellEyes" src="" alt="Cell Eyes" width="130" height="130" />
-              <img id="CellFace" src="images/cell/face.png" alt="Cell Face" width="130" height="130" style="transform: translate(50%, 50%);" />
+              <img id="CellBase" src="images/cell/base.png" alt="" width="130" height="130" style="transform: translate(50%, 50%);" />
+              <img id="CellEyes" src="" alt="" width="130" height="130" />
+              <img id="CellFace" src="images/cell/face.png" alt="" width="130" height="130" style="transform: translate(50%, 50%);" />
             </div>
           </div>
         </div>
@@ -212,19 +272,15 @@
     </div>
   </div>
 
-  <!-- TAB 2: GENE VIEWER (Placeholder) -->
+  <!-- TAB 2: GENE VIEWER -->
   <div id="gene-viewer" class="tab-content">
     <div class="gene-viewer-container">
       <h2 style="text-align: center; color: #ffb3d9; margin-top: 0;">Breeding Simulator</h2>
-      <div class="parents-container">
-        <div class="parent-box ui-card"><h3>Parent 1</h3><div class="parent-image-placeholder">Select Parent 1</div></div>
-        <h1 style="color: #ffb3d9; font-size: 3em; text-shadow: 2px 2px 0 #000;">+</h1>
-        <div class="parent-box ui-card"><h3>Parent 2</h3><div class="parent-image-placeholder">Select Parent 2</div></div>
-      </div>
+      <p style="text-align: center; color: #8899cc;">(Coming Soon)</p>
     </div>
   </div>
 
-  <!-- TAB 3: FAMILY TREE (Placeholder) -->
+  <!-- TAB 3: FAMILY TREE -->
   <div id="family-tree" class="tab-content">
     <div class="family-tree-container">
       <div class="tree-toolbar">
@@ -235,107 +291,191 @@
     </div>
   </div>
 
+  <!-- CUSTOM TAMA SELECTOR MODAL -->
+  <div id="tamaModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Select Tama</h2>
+        <input type="text" id="tamaSearchInput" class="modal-search" placeholder="Search by name..." oninput="renderModalGrid()">
+        <button class="modal-btn" id="sortBtn" onclick="toggleSort()">Sort: A-Z</button>
+        <button class="modal-btn close" onclick="closeModal()">✖</button>
+      </div>
+      <div class="modal-body" id="modalGrid">
+        <!-- Cards generated by JS -->
+      </div>
+    </div>
+  </div>
+
   <!-- Main Application Logic -->
   <script>
     let tamaData = {};
-    let currentStage = 0; // Global tracker (0-3)
-    let currentPathKey = null; // Tracks the selected path button
+    
+    // Global State for the Step-by-Step tab
+    let appState = {
+      baseId: null,
+      eyesOverride: 'default',
+      colorOverride: 'default',
+      currentPathKey: null,
+      currentStage: 0 // 0-3
+    };
 
-    // Field mapping
     const fieldNames = ["land", "water", "sky", "forest", "tropical", "ice", "cosmic", "new-tamagotchi", "tamagotchi"];
 
-    // 1. Fetch the JSON Data
+    // --- MODAL STATE ---
+    let modalContext = 'base'; // 'base', 'eyes', 'color'
+    let modalFilterList = [];
+    let isSortAscending = true;
+
+    // 1. Fetch Data
     async function loadTamaData() {
       try {
         const response = await fetch('tama_defs.json');
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        
         tamaData = await response.json();
         
-        populateInitialDropdowns();
-        updateStage(0); // Initialize on Baby stage
+        // Initialize with the first valid Base Tama
+        const validBaseIds = Object.keys(tamaData).filter(id => 
+          tamaData[id].stage === 3 && tamaData[id].data && tamaData[id].data.lab_only === false
+        ).sort((a, b) => tamaData[a].name.localeCompare(tamaData[b].name));
+
+        if (validBaseIds.length > 0) {
+          appState.baseId = validBaseIds[0];
+          document.getElementById('baseTamaDisplay').textContent = tamaData[appState.baseId].name;
+          onBaseTamaChange();
+        }
+        
+        updateStage(0);
         
       } catch (error) {
         console.error("Failed to load tama_defs.json:", error);
-        document.getElementById('requirementsDisplay').innerHTML = `
-          <p style="color: #ff4444; font-weight: bold;">⚠️ Failed to load data.</p>
-          <p style="font-size: 0.8em; color: #ffaaaa;">If you are opening this file directly (file://), your browser might be blocking local file access. Please use a local web server (like VS Code Live Server).</p>
-        `;
+        document.getElementById('requirementsDisplay').innerHTML = `<p style="color: #ff4444;">⚠️ Failed to load data. Run via local server.</p>`;
       }
     }
 
-    // 2. Tab Switching Logic
+    // 2. Tab Switching
     function openTab(tabName, btnElement) {
-      var i;
-      var tabContents = document.getElementsByClassName("tab-content");
-      for (i = 0; i < tabContents.length; i++) tabContents[i].classList.remove("active");
-      
-      var tabButtons = document.getElementsByClassName("tab-btn");
-      for (i = 0; i < tabButtons.length; i++) tabButtons[i].classList.remove("active");
-      
-      document.getElementById(tabName).classList.add("active");
-      btnElement.classList.add("active");
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabName).classList.add('active');
+      btnElement.classList.add('active');
     }
 
-    // 3. Populate Base, Eyes, and Color Dropdowns
-    function populateInitialDropdowns() {
-      const baseSelect = document.getElementById('baseTamaSelect');
-      const eyesSelect = document.getElementById('eyesSelect');
-      const colorSelect = document.getElementById('colorSelect');
+    // --- MODAL LOGIC ---
+
+    function openModalFor(context) {
+      modalContext = context;
+      const titleEl = document.getElementById('modalTitle');
+      const searchEl = document.getElementById('tamaSearchInput');
       
-      baseSelect.innerHTML = ''; 
-      eyesSelect.innerHTML = '<option value="default">Default (Current Tama)</option>'; 
-      colorSelect.innerHTML = '<option value="default">Default (Current Tama)</option>'; 
+      searchEl.value = '';
+      isSortAscending = true;
+      document.getElementById('sortBtn').textContent = 'Sort: A-Z';
 
-      let breedableAdults = [];
-
-      // Sort alphabetically by name
-      const sortedTamaIds = Object.keys(tamaData).sort((a, b) => tamaData[a].name.localeCompare(tamaData[b].name));
-
-      sortedTamaIds.forEach(id => {
-        const data = tamaData[id];
-        
-        // Filter 1: Base Tama Selector (Stage 3, not lab only)
-        if (data.stage === 3 && data.data && data.data.lab_only === false) {
-          const option = document.createElement('option');
-          option.value = id;
-          option.textContent = data.name;
-          baseSelect.appendChild(option);
-        }
-
-        // Filter 2: Gather Breedable Adults for Overrides
-        if (data.stage === 3 && data.data && data.data.breedable === true) {
-          breedableAdults.push({ id: id, name: data.name });
-        }
-      });
-
-      // Populate Eyes and Color overrides
-      breedableAdults.forEach(tama => {
-        const eyeOpt = document.createElement('option');
-        eyeOpt.value = tama.id;
-        eyeOpt.textContent = tama.name;
-        eyesSelect.appendChild(eyeOpt);
-
-        const colorOpt = document.createElement('option');
-        colorOpt.value = tama.id;
-        colorOpt.textContent = tama.name;
-        colorSelect.appendChild(colorOpt);
-      });
-
-      if (baseSelect.options.length > 0) {
-        baseSelect.selectedIndex = 0;
-        onBaseTamaChange();
+      if (context === 'base') {
+        titleEl.textContent = "Select Target Adult Tama";
+        // Filter: Stage 3, not lab only
+        modalFilterList = Object.entries(tamaData)
+          .filter(([id, d]) => d.stage === 3 && d.data && d.data.lab_only === false)
+          .map(([id, d]) => ({ id, name: d.name }));
+          
+      } else if (context === 'eyes' || context === 'color') {
+        titleEl.textContent = `Select ${context === 'eyes' ? 'Eyes' : 'Color'} Override`;
+        // Filter: Stage 3, breedable
+        modalFilterList = Object.entries(tamaData)
+          .filter(([id, d]) => d.stage === 3 && d.data && d.data.breedable === true)
+          .map(([id, d]) => ({ id, name: d.name }));
       }
+
+      renderModalGrid();
+      document.getElementById('tamaModal').style.display = 'flex';
     }
 
-    // 4. Handle Base Tama Change (Populate Path Buttons)
+    function closeModal() {
+      document.getElementById('tamaModal').style.display = 'none';
+    }
+
+    function toggleSort() {
+      isSortAscending = !isSortAscending;
+      document.getElementById('sortBtn').textContent = isSortAscending ? 'Sort: A-Z' : 'Sort: Z-A';
+      renderModalGrid();
+    }
+
+    function renderModalGrid() {
+      const grid = document.getElementById('modalGrid');
+      const searchTerm = document.getElementById('tamaSearchInput').value.toLowerCase();
+      grid.innerHTML = '';
+
+      // Add Default Option for Eyes/Color
+      if (modalContext !== 'base') {
+        const defaultCard = document.createElement('div');
+        defaultCard.className = `tama-card default-card ${appState[modalContext + 'Override'] === 'default' ? 'selected' : ''}`;
+        defaultCard.innerHTML = `
+          <div class="mini-sprite" style="display:flex;align-items:center;justify-content:center;color:#8899cc;font-size:0.8em;">Default</div>
+          <div class="tama-name">Current Tama</div>
+        `;
+        defaultCard.onclick = () => selectTama('default');
+        grid.appendChild(defaultCard);
+      }
+
+      // Filter by search term
+      let filtered = modalFilterList.filter(t => t.name.toLowerCase().includes(searchTerm));
+
+      // Sort
+      filtered.sort((a, b) => {
+        return isSortAscending ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+      });
+
+      // Render Cards
+      filtered.forEach(tama => {
+        const data = tamaData[tama.id];
+        const isSelected = appState[modalContext === 'base' ? 'baseId' : modalContext + 'Override'] === tama.id;
+        
+        // Render Default Sprite for preview
+        const eyeX = data.offsets ? data.offsets.x : 0;
+        const eyeY = data.offsets ? data.offsets.y : 0;
+        
+        const card = document.createElement('div');
+        card.className = `tama-card ${isSelected ? 'selected' : ''}`;
+        card.innerHTML = `
+          <div class="mini-sprite">
+            <img src="images/tamas/${tama.id}/color.png" style="transform: translate(50%, 95%);" />
+            <img src="images/tamas/${tama.id}/color.png" style="transform: translate(50%, 95%); filter: opacity(0.5) drop-shadow(0 0 0 #${data.color}) saturate(500%);" />
+            <img src="images/tamas/${tama.id}/base.png" style="transform: translate(50%, 95%);" />
+            <img src="images/tamas/${tama.id}/eyes.png" style="transform: translate(50%, 95%) translate(${eyeX * 0.6}px, ${eyeY * 0.6}px);" />
+            <img src="images/tamas/${tama.id}/face.png" style="transform: translate(50%, 95%);" />
+          </div>
+          <div class="tama-name">${tama.name}</div>
+        `;
+        card.onclick = () => selectTama(tama.id);
+        grid.appendChild(card);
+      });
+    }
+
+    function selectTama(id) {
+      if (modalContext === 'base') {
+        appState.baseId = id;
+        document.getElementById('baseTamaDisplay').textContent = tamaData[id].name;
+        onBaseTamaChange();
+      } else if (modalContext === 'eyes') {
+        appState.eyesOverride = id;
+        document.getElementById('eyesDisplay').textContent = id === 'default' ? 'Default (Current Tama)' : tamaData[id].name;
+        updateUI();
+      } else if (modalContext === 'color') {
+        appState.colorOverride = id;
+        document.getElementById('colorDisplay').textContent = id === 'default' ? 'Default (Current Tama)' : tamaData[id].name;
+        updateUI();
+      }
+      closeModal();
+    }
+
+    // --- APP LOGIC ---
+
     function onBaseTamaChange() {
-      const baseId = document.getElementById('baseTamaSelect').value;
       const pathsContainer = document.getElementById('pathsContainer');
       pathsContainer.innerHTML = '';
-      currentPathKey = null; // Reset
+      appState.currentPathKey = null;
 
-      // FIXED: Accessing data.path instead of path
+      const baseId = appState.baseId;
       if (baseId && tamaData[baseId] && tamaData[baseId].data && tamaData[baseId].data.path) {
         const paths = tamaData[baseId].data.path;
         const pathKeys = Object.keys(paths);
@@ -348,8 +488,6 @@
             btn.onclick = () => selectPath(key, btn);
             pathsContainer.appendChild(btn);
           });
-          
-          // Automatically select the first path
           pathsContainer.children[0].click();
         } else {
           pathsContainer.innerHTML = '<div style="color: #ff8888; font-size: 0.9em;">No paths available</div>';
@@ -361,29 +499,21 @@
       }
     }
 
-    // 5. Select Path Button
     function selectPath(key, btnElement) {
-      currentPathKey = key;
-      // Update button UI
-      const buttons = document.querySelectorAll('.path-btn');
-      buttons.forEach(b => b.classList.remove('active'));
+      appState.currentPathKey = key;
+      document.querySelectorAll('.path-btn').forEach(b => b.classList.remove('active'));
       if(btnElement) btnElement.classList.add('active');
-      
       updateUI();
     }
 
-    // 6. Advance Stage Function
     function advanceStage() {
-      if (currentStage < 3) {
-        updateStage(currentStage + 1);
+      if (appState.currentStage < 3) {
+        updateStage(appState.currentStage + 1);
       }
     }
 
-    // 7. Stage Switching
     function updateStage(stageNum) {
-      currentStage = stageNum;
-
-      // Update Tab UI
+      appState.currentStage = stageNum;
       const tabs = ['baby', 'kid', 'young', 'adult'];
       tabs.forEach((tab, index) => {
         const el = document.getElementById('tab-' + tab);
@@ -391,122 +521,75 @@
         else el.classList.remove('active');
       });
 
-      // Handle Advance Button Visibility
-      const advanceBtn = document.getElementById('advanceBtn');
-      if (currentStage === 3) {
-        advanceBtn.style.display = 'none'; 
-      } else {
-        advanceBtn.style.display = 'block'; 
-      }
-
+      document.getElementById('advanceBtn').style.display = (stageNum === 3) ? 'none' : 'block';
       updateUI();
     }
 
-    // 8. Master Update UI Function
     function updateUI() {
-      const baseId = document.getElementById('baseTamaSelect').value;
-      
+      const baseId = appState.baseId;
       if (!baseId || !tamaData[baseId]) return;
 
-      // --- Update Background Field based on JSON ---
+      // Background Field
       const fieldContainer = document.getElementById('tamaPreviewField');
-      let bgImage = 'images/fields/land.png'; // Default fallback
+      let bgImage = 'images/fields/land.png';
 
-      // FIXED: Accessing data.path
-      if (currentPathKey && tamaData[baseId].data && tamaData[baseId].data.path && tamaData[baseId].data.path[currentPathKey]) {
-        const method = tamaData[baseId].data.path[currentPathKey]["0"].method;
-        if (method && method.field !== undefined) {
-          const fieldIndex = method.field;
-          if (fieldIndex >= 0 && fieldIndex < fieldNames.length) {
-            bgImage = `images/fields/${fieldNames[fieldIndex]}.png`;
-          }
+      if (appState.currentPathKey && tamaData[baseId].data && tamaData[baseId].data.path && tamaData[baseId].data.path[appState.currentPathKey]) {
+        const method = tamaData[baseId].data.path[appState.currentPathKey]["0"].method;
+        if (method && method.field !== undefined && method.field >= 0 && method.field < fieldNames.length) {
+          bgImage = `images/fields/${fieldNames[method.field]}.png`;
         }
       }
-      
       fieldContainer.style.backgroundImage = `url('${bgImage}')`;
-      fieldContainer.style.backgroundColor = '#111'; 
 
-      // --- Update Requirements Text ---
+      // Requirements Text
       const reqBox = document.getElementById('requirementsDisplay');
-      
-      if (currentStage === 3) {
-        reqBox.innerHTML = `<h4>Adult Stage</h4><ul><li>Congratulations! You have reached the final result.</li><li>You can now breed this Tama in the Gene Viewer.</li></ul>`;
+      if (appState.currentStage === 3) {
+        reqBox.innerHTML = `<h4>Adult Stage</h4><ul><li>Congratulations! You have reached the final result.</li></ul>`;
+      } else if (!appState.currentPathKey || !tamaData[baseId].data || !tamaData[baseId].data.path || !tamaData[baseId].data.path[appState.currentPathKey]) {
+        reqBox.innerHTML = `<h4>Stage Requirements</h4><ul><li style="color:#ff8888;">No path data available.</li></ul>`;
       } else {
-        // FIXED: Accessing data.path
-        if (!currentPathKey || !tamaData[baseId].data || !tamaData[baseId].data.path || !tamaData[baseId].data.path[currentPathKey]) {
-          reqBox.innerHTML = `<h4>Stage Requirements</h4><ul><li style="color:#ff8888;">No path data available for this Tama yet.</li></ul>`;
-        } else {
-          const method = tamaData[baseId].data.path[currentPathKey][currentStage].method;
-          
-          let reqHTML = '';
-          if (currentStage === 0) {
-            reqHTML = `<h4>Baby Stage Requirements</h4><ul><li><strong>Field ID:</strong> ${method.field}</li></ul>`;
-          } else if (currentStage === 1) {
-            reqHTML = `<h4>Kid Stage Requirements</h4><ul><li><strong>Food Index:</strong> ${method.food}</li></ul>`;
-          } else if (currentStage === 2) {
-            let mistakeText = "";
-            if (method.mistakes === "0") mistakeText = method.max ? "0 mistakes" : "0-1 mistakes";
-            if (method.mistakes === "1") mistakeText = "2-5 mistakes";
-            if (method.mistakes === "2") mistakeText = "6 or more mistakes";
-            
-            reqHTML = `<h4>Young Stage Requirements</h4><ul>
-                        <li><strong>Max Food & Happiness:</strong> ${method.max ? 'Yes (5 times)' : 'No'}</li>
-                        <li><strong>Care Mistakes:</strong> ${mistakeText}</li>
-                       </ul>`;
-          }
-          reqBox.innerHTML = reqHTML;
+        const method = tamaData[baseId].data.path[appState.currentPathKey][appState.currentStage].method;
+        let reqHTML = '';
+        if (appState.currentStage === 0) {
+          reqHTML = `<h4>Baby Requirements</h4><ul><li><strong>Field ID:</strong> ${method.field}</li></ul>`;
+        } else if (appState.currentStage === 1) {
+          reqHTML = `<h4>Kid Requirements</h4><ul><li><strong>Food Index:</strong> ${method.food}</li></ul>`;
+        } else if (appState.currentStage === 2) {
+          let mistakeText = method.mistakes === "0" ? (method.max ? "0" : "0-1") : (method.mistakes === "1" ? "2-5" : "6+");
+          reqHTML = `<h4>Young Requirements</h4><ul>
+                      <li><strong>Max Food/Happy:</strong> ${method.max ? 'Yes' : 'No'}</li>
+                      <li><strong>Mistakes:</strong> ${mistakeText}</li>
+                     </ul>`;
         }
+        reqBox.innerHTML = reqHTML;
       }
 
-      // --- Update Preview Images ---
-      updatePreviewImages();
-    }
-
-    // 9. Update Images, Colors, and Eye Offsets
-    function updatePreviewImages() {
-      const baseId = document.getElementById('baseTamaSelect').value;
-      if (!baseId || !tamaData[baseId]) return;
-
-      let currentTamaId = baseId; // Default to adult if something goes wrong
-
-      // FIXED: Accessing data.path
-      if (currentStage < 3 && currentPathKey && tamaData[baseId].data && tamaData[baseId].data.path && tamaData[baseId].data.path[currentPathKey]) {
-        currentTamaId = tamaData[baseId].data.path[currentPathKey][currentStage].tama;
+      // Preview Images
+      let currentTamaId = baseId;
+      if (appState.currentStage < 3 && appState.currentPathKey && tamaData[baseId].data.path[appState.currentPathKey]) {
+        currentTamaId = tamaData[baseId].data.path[appState.currentPathKey][appState.currentStage].tama;
       }
-
       const currentTamaData = tamaData[currentTamaId];
       if (!currentTamaData) return;
 
-      // --- Base Body & Face ---
       document.getElementById('TamaColorBase').src = `images/tamas/${currentTamaId}/color.png`;
       document.getElementById('TamaColor').src = `images/tamas/${currentTamaId}/color.png`;
       document.getElementById('TamaBody').src = `images/tamas/${currentTamaId}/base.png`;
       document.getElementById('TamaFace').src = `images/tamas/${currentTamaId}/face.png`;
 
-      // --- Eyes Override Logic ---
-      const eyesOverrideId = document.getElementById('eyesSelect').value;
-      const eyesSourceId = eyesOverrideId === 'default' ? currentTamaId : eyesOverrideId;
-      const eyeImgSrc = `images/tamas/${eyesSourceId}/eyes.png`;
-      
-      document.getElementById('TamaEyes').src = eyeImgSrc;
-      document.getElementById('CellEyes').src = eyeImgSrc;
+      const eyesSourceId = appState.eyesOverride === 'default' ? currentTamaId : appState.eyesOverride;
+      document.getElementById('TamaEyes').src = `images/tamas/${eyesSourceId}/eyes.png`;
+      document.getElementById('CellEyes').src = `images/tamas/${eyesSourceId}/eyes.png`;
 
-      // Apply Eye Offsets (Based on the CURRENT stage Tama's body)
       const eyeX = currentTamaData.offsets ? currentTamaData.offsets.x : 0;
       const eyeY = currentTamaData.offsets ? currentTamaData.offsets.y : 0;
-
       document.getElementById('TamaEyes').style.transform = `translate(50%, 95%) translate(${eyeX}px, ${eyeY}px)`;
       document.getElementById('CellEyes').style.transform = `translate(50%, 44.5%)`;
 
-      // --- Color Override Logic ---
-      const colorOverrideId = document.getElementById('colorSelect').value;
-      const hexColor = colorOverrideId === 'default' ? currentTamaData.color : tamaData[colorOverrideId].color;
-      
-      const colorImg = document.getElementById('TamaColor');
-      colorImg.style.filter = `opacity(0.5) drop-shadow(0 0 0 #${hexColor}) saturate(500%)`;
+      const hexColor = appState.colorOverride === 'default' ? currentTamaData.color : tamaData[appState.colorOverride].color;
+      document.getElementById('TamaColor').style.filter = `opacity(0.5) drop-shadow(0 0 0 #${hexColor}) saturate(500%)`;
     }
 
-    // Initialize
     window.onload = loadTamaData;
   </script>
 
