@@ -136,7 +136,7 @@
     .modal-btn.close:hover { background-color: #cc4455; }
     
     .modal-body {
-      padding: 15px 15px 100px 15px; /* Increased bottom padding to fix cutoff */
+      padding: 15px 15px 100px 15px; 
       overflow-y: auto; display: grid; 
       grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px;
       align-content: start;
@@ -155,16 +155,14 @@
     .tama-card.selected { border-color: #88ff88; background-color: #224422; }
     .tama-card.default-card { border-color: #ffb3d9; border-style: dashed; }
     
-    /* Mini Sprite Renderer for Grid */
+    /* Mini Sprite Renderer for Grid (Replicated 260x260 layout) */
     .mini-sprite {
       width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; overflow: hidden;
     }
-    
-    /* FIXED: Using exactly the image size (130x130) and scaling it to perfectly center the sprite */
     .mini-sprite-inner {
       display: grid;
-      width: 130px; height: 130px; 
-      transform: scale(0.65); 
+      width: 260px; height: 260px; 
+      transform: scale(0.35); /* 90px / 260px = 0.346 */
       transform-origin: center center;
     }
     .mini-sprite-inner img {
@@ -334,13 +332,16 @@
     let modalFilterList = [];
     let isSortAscending = true;
 
-    // 1. Fetch Data
+    // 1. Fetch Data & Preload Images
     async function loadTamaData() {
       try {
         const response = await fetch('tama_defs.json');
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         tamaData = await response.json();
         
+        // Preload all sprites to prevent rate limiting and flickering
+        preloadImages();
+
         // Initialize with the first valid Base Tama
         const validBaseIds = Object.keys(tamaData).filter(id => 
           tamaData[id].stage === 3 && tamaData[id].data && tamaData[id].data.lab_only === false
@@ -358,6 +359,20 @@
         console.error("Failed to load tama_defs.json:", error);
         document.getElementById('requirementsDisplay').innerHTML = `<p style="color: #ff4444;">⚠️ Failed to load data. Run via local server.</p>`;
       }
+    }
+
+    function preloadImages() {
+      console.log("Preloading images...");
+      const parts = ['color', 'base', 'eyes', 'face'];
+      
+      // Loop through all Tamas in the JSON
+      Object.keys(tamaData).forEach(id => {
+        parts.forEach(part => {
+          const img = new Image();
+          // Setting src triggers the browser to download and cache the image
+          img.src = `images/tamas/${id}/${part}.png`;
+        });
+      });
     }
 
     // 2. Tab Switching
@@ -438,15 +453,15 @@
         const card = document.createElement('div');
         card.className = `tama-card ${isSelected ? 'selected' : ''}`;
         
-        // Render Mini Sprite: Remove translate(50%, 95%) so images stack and center perfectly in the 130x130 box
+        // Render Mini Sprite: Base 260x260 layout scaled down
         card.innerHTML = `
           <div class="mini-sprite">
             <div class="mini-sprite-inner">
-              <img src="images/tamas/${tama.id}/color.png" />
-              <img src="images/tamas/${tama.id}/color.png" style="filter: opacity(0.5) drop-shadow(0 0 0 #${data.color}) saturate(500%);" />
-              <img src="images/tamas/${tama.id}/base.png" />
-              <img src="images/tamas/${tama.id}/eyes.png" style="transform: translate(${eyeX}px, ${eyeY}px);" />
-              <img src="images/tamas/${tama.id}/face.png" />
+              <img src="images/tamas/${tama.id}/color.png" style="transform: translate(50%, 95%);" />
+              <img src="images/tamas/${tama.id}/color.png" style="transform: translate(50%, 95%); filter: opacity(0.5) drop-shadow(0 0 0 #${data.color}) saturate(500%);" />
+              <img src="images/tamas/${tama.id}/base.png" style="transform: translate(50%, 95%);" />
+              <img src="images/tamas/${tama.id}/eyes.png" style="transform: translate(50%, 95%) translate(${eyeX}px, ${eyeY}px);" />
+              <img src="images/tamas/${tama.id}/face.png" style="transform: translate(50%, 95%);" />
             </div>
           </div>
           <div class="tama-name">${tama.name}</div>
