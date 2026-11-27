@@ -136,7 +136,7 @@
     .modal-btn.close:hover { background-color: #cc4455; }
     
     .modal-body {
-      padding: 15px 15px 50px 15px; /* Extra bottom padding */
+      padding: 15px 15px 60px 15px; /* Extra bottom padding to prevent cutoff */
       overflow-y: auto; display: grid; 
       grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px;
       align-content: start;
@@ -160,11 +160,14 @@
       width: 90px; height: 90px; display: flex; justify-content: center; align-items: center; overflow: hidden;
     }
     
-    /* Fixed: Using display grid to perfectly stack the images exactly like the main view */
+    /* 
+      FIXED: Using the exact same dimensions (260x260) as the main view, 
+      then scaling the whole box down so the translate logic remains perfectly centered.
+    */
     .mini-sprite-inner {
       display: grid;
-      width: 130px; height: 130px; 
-      transform: scale(0.65); 
+      width: 260px; height: 260px; 
+      transform: scale(0.35); 
       transform-origin: center center;
     }
     .mini-sprite-inner img {
