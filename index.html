@@ -51,6 +51,7 @@
     .custom-select-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
     .custom-select-group label { font-size: 0.9em; color: #88bbff; }
     .custom-select-group select { padding: 8px; border-radius: 5px; background-color: #112244; color: white; border: 1px solid #5577aa; font-family: inherit; }
+    .help-text { font-size: 0.75em; color: #8899cc; margin-top: -5px; margin-bottom: 10px; }
 
     .stage-tabs { display: flex; gap: 5px; margin-bottom: 15px; }
     .stage-tab { flex: 1; background-color: #222; color: #888; padding: 8px 5px; text-align: center; border: 2px solid #555; border-radius: 5px; cursor: pointer; font-weight: bold; }
@@ -76,11 +77,8 @@
     }
     .sprite-container.cell-bg { background-image: url(images/cell/bg.png); background-color: #225588; margin-top: 10px; }
 
-    /* Grids for sprites */
     .sprite-grid { display: grid; width: 100%; height: 100%; }
     .sprite-grid img { grid-column: 1; grid-row: 1; pointer-events: none; }
-    
-    /* Base transforms for centering the sprites */
     .base-transform { transform: translate(50%, 95%); }
 
     /* --- TAB 2 & 3 --- */
@@ -122,26 +120,27 @@
         <h3 style="margin-top: 0; color: #ffb3d9; border-bottom: 2px solid #5577aa; padding-bottom: 5px;">Tama Selector</h3>
         
         <div class="custom-select-group">
-          <label for="baseTamaSelect">Base Tama (Filtered by Stage):</label>
+          <label for="baseTamaSelect">Select Target Adult Tama:</label>
           <select id="baseTamaSelect" onchange="updatePreview()">
             <option>Loading data...</option>
           </select>
+          <div class="help-text">*Only showing Stage 3 Tamas that are not Lab-Only.</div>
         </div>
 
         <div class="custom-select-group">
           <label for="eyesSelect">Eyes Override:</label>
           <select id="eyesSelect" onchange="updatePreview()">
-            <option value="default">Default (Do not override)</option>
-            <option value="happy">Happy Eyes</option>
-            <option value="sleepy">Sleepy Eyes</option>
+            <option>Loading data...</option>
           </select>
+          <div class="help-text">*Pulls eyes from any Breedable Adult Tama.</div>
         </div>
 
         <div class="custom-select-group">
           <label for="colorSelect">Color Override:</label>
           <select id="colorSelect" onchange="updatePreview()">
-            <option value="default">Default (Use JSON Color)</option>
+            <option>Loading data...</option>
           </select>
+          <div class="help-text">*Pulls color from any Breedable Adult Tama.</div>
         </div>
 
         <hr style="border-color: #5577aa; width: 100%; margin: 10px 0;">
@@ -174,7 +173,6 @@
               <img id="TamaColorBase" alt="Tama Color" src="" width="130" height="130" class="base-transform" />
               <img id="TamaColor" alt="Tama Color" src="" width="130" height="130" class="base-transform" />
               <img id="TamaBody" src="" alt="Tama Base Body" width="130" height="130" class="base-transform" />
-              <!-- TamaEyes gets dynamic transform via JS -->
               <img id="TamaEyes" src="" alt="Tama Eyes" width="130" height="130" />
               <img id="TamaFace" src="" alt="Tama Face" width="130" height="130" class="base-transform" />
             </div>
@@ -184,7 +182,6 @@
           <div class="sprite-container cell-bg">
             <div class="sprite-grid">
               <img id="CellBase" src="images/cell/base.png" alt="Cell Base" width="130" height="130" style="transform: translate(50%, 50%);" />
-              <!-- CellEyes gets static transform via JS -->
               <img id="CellEyes" src="" alt="Cell Eyes" width="130" height="130" />
               <img id="CellFace" src="images/cell/face.png" alt="Cell Face" width="130" height="130" style="transform: translate(50%, 50%);" />
             </div>
@@ -201,15 +198,9 @@
     <div class="gene-viewer-container">
       <h2 style="text-align: center; color: #ffb3d9; margin-top: 0;">Breeding Simulator</h2>
       <div class="parents-container">
-        <div class="parent-box ui-card">
-          <h3>Parent 1</h3>
-          <div class="parent-image-placeholder">Select Parent 1</div>
-        </div>
+        <div class="parent-box ui-card"><h3>Parent 1</h3><div class="parent-image-placeholder">Select Parent 1</div></div>
         <h1 style="color: #ffb3d9; font-size: 3em; text-shadow: 2px 2px 0 #000;">+</h1>
-        <div class="parent-box ui-card">
-          <h3>Parent 2</h3>
-          <div class="parent-image-placeholder">Select Parent 2</div>
-        </div>
+        <div class="parent-box ui-card"><h3>Parent 2</h3><div class="parent-image-placeholder">Select Parent 2</div></div>
       </div>
     </div>
   </div>
@@ -228,19 +219,20 @@
   <!-- Main Application Logic -->
   <script>
     let tamaData = {};
-    let currentStage = 0; // 0: Baby, 1: Kid, 2: Young, 3: Adult
 
     // 1. Fetch the JSON Data
     async function loadTamaData() {
       try {
         const response = await fetch('tama_defs.json');
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         
         tamaData = await response.json();
-        updateStage(0); // Initialize with Baby stage
+        
+        // Populate the dropdowns once data is loaded
+        populateDropdowns();
+        
+        // Initialize the guide on the Baby stage
+        updateStage(0); 
         
       } catch (error) {
         console.error("Failed to load tama_defs.json:", error);
@@ -255,21 +247,68 @@
     function openTab(tabName, btnElement) {
       var i;
       var tabContents = document.getElementsByClassName("tab-content");
-      for (i = 0; i < tabContents.length; i++) {
-        tabContents[i].classList.remove("active");
-      }
+      for (i = 0; i < tabContents.length; i++) tabContents[i].classList.remove("active");
+      
       var tabButtons = document.getElementsByClassName("tab-btn");
-      for (i = 0; i < tabButtons.length; i++) {
-        tabButtons[i].classList.remove("active");
-      }
+      for (i = 0; i < tabButtons.length; i++) tabButtons[i].classList.remove("active");
+      
       document.getElementById(tabName).classList.add("active");
       btnElement.classList.add("active");
     }
 
-    // 3. Stage Switching & Dropdown Population
-    function updateStage(stageNum) {
-      currentStage = stageNum;
+    // 3. Populate Dropdowns
+    function populateDropdowns() {
+      const baseSelect = document.getElementById('baseTamaSelect');
+      const eyesSelect = document.getElementById('eyesSelect');
+      const colorSelect = document.getElementById('colorSelect');
       
+      baseSelect.innerHTML = ''; 
+      eyesSelect.innerHTML = '<option value="default">Default (Base Tama)</option>'; 
+      colorSelect.innerHTML = '<option value="default">Default (Base Tama)</option>'; 
+
+      // Create a list of breedable adult Tamas for the overrides
+      let breedableAdults = [];
+
+      for (const [id, data] of Object.entries(tamaData)) {
+        // Filter 1: Base Tama Selector (Stage 3, not lab only)
+        if (data.stage === 3 && data.data && data.data.lab_only === false) {
+          const option = document.createElement('option');
+          option.value = id;
+          option.textContent = data.name;
+          baseSelect.appendChild(option);
+        }
+
+        // Filter 2: Gather Breedable Adults for Overrides
+        if (data.stage === 3 && data.data && data.data.breedable === true) {
+          breedableAdults.push({ id: id, name: data.name });
+        }
+      }
+
+      // Sort breedable adults alphabetically so they are easy to find
+      breedableAdults.sort((a, b) => a.name.localeCompare(b.name));
+
+      // Populate Eyes and Color overrides
+      breedableAdults.forEach(tama => {
+        const eyeOpt = document.createElement('option');
+        eyeOpt.value = tama.id;
+        eyeOpt.textContent = tama.name;
+        eyesSelect.appendChild(eyeOpt);
+
+        const colorOpt = document.createElement('option');
+        colorOpt.value = tama.id;
+        colorOpt.textContent = tama.name;
+        colorSelect.appendChild(colorOpt);
+      });
+
+      // Select the first base Tama and update preview
+      if (baseSelect.options.length > 0) {
+        baseSelect.selectedIndex = 0;
+        updatePreview();
+      }
+    }
+
+    // 4. Stage Switching (Only changes the Requirements Guide now)
+    function updateStage(stageNum) {
       // Update Tab UI
       document.getElementById('tab-baby').classList.remove('active');
       document.getElementById('tab-kid').classList.remove('active');
@@ -289,76 +328,47 @@
       if(stageNum === 0) fieldContainer.style.backgroundColor = '#44aa44'; // Green meadow
       if(stageNum === 1) fieldContainer.style.backgroundColor = '#ccaa44'; // Sandy
       if(stageNum === 2) fieldContainer.style.backgroundColor = '#44aacc'; // Water/Sky
-
-      // Populate Dropdown
-      populateDropdown(stageNum);
-    }
-
-    // 4. Populate the Dropdown
-    function populateDropdown(stageNum) {
-      const select = document.getElementById('baseTamaSelect');
-      select.innerHTML = ''; 
-
-      for (const [id, data] of Object.entries(tamaData)) {
-        if (data.stage === stageNum) {
-          const option = document.createElement('option');
-          option.value = id;
-          option.textContent = data.name;
-          select.appendChild(option);
-        }
-      }
-
-      if (select.options.length > 0) {
-        select.selectedIndex = 0;
-        updatePreview();
-      } else {
-        document.getElementById('TamaBody').src = '';
-        document.getElementById('TamaEyes').src = '';
-        document.getElementById('TamaFace').src = '';
-        document.getElementById('CellEyes').src = '';
-      }
     }
 
     // 5. Update Images, Colors, and Eye Offsets
     function updatePreview() {
-      const tamaId = document.getElementById('baseTamaSelect').value;
-      if (!tamaId || !tamaData[tamaId]) return;
+      const baseTamaId = document.getElementById('baseTamaSelect').value;
+      if (!baseTamaId || !tamaData[baseTamaId]) return;
 
-      const data = tamaData[tamaId];
+      const baseData = tamaData[baseTamaId];
       
-      // --- Update Image Sources ---
-      document.getElementById('TamaColorBase').src = `images/tamas/${tamaId}/color.png`;
-      document.getElementById('TamaColor').src = `images/tamas/${tamaId}/color.png`;
-      document.getElementById('TamaBody').src = `images/tamas/${tamaId}/base.png`;
-      document.getElementById('TamaFace').src = `images/tamas/${tamaId}/face.png`;
+      // --- Base Body & Face ---
+      document.getElementById('TamaColorBase').src = `images/tamas/${baseTamaId}/color.png`;
+      document.getElementById('TamaColor').src = `images/tamas/${baseTamaId}/color.png`;
+      document.getElementById('TamaBody').src = `images/tamas/${baseTamaId}/base.png`;
+      document.getElementById('TamaFace').src = `images/tamas/${baseTamaId}/face.png`;
 
-      // Eyes Override Logic
-      const eyesSelect = document.getElementById('eyesSelect').value;
-      const eyeImgSrc = eyesSelect === 'default' ? `images/tamas/${tamaId}/eyes.png` : `images/tamas/${tamaId}/${eyesSelect}_eyes.png`;
+      // --- Eyes Override Logic ---
+      const eyesOverrideId = document.getElementById('eyesSelect').value;
+      // If override is selected, use that Tama's eye folder. Otherwise use the base Tama's eyes.
+      const eyesSourceId = eyesOverrideId === 'default' ? baseTamaId : eyesOverrideId;
+      const eyeImgSrc = `images/tamas/${eyesSourceId}/eyes.png`;
       
       document.getElementById('TamaEyes').src = eyeImgSrc;
       document.getElementById('CellEyes').src = eyeImgSrc;
 
-      // --- Apply Eye Offsets ---
-      // Get offset values from JSON (defaults to 0 if missing)
-      const eyeX = data.offsets ? data.offsets.x : 0;
-      const eyeY = data.offsets ? data.offsets.y : 0;
+      // Apply Eye Offsets (Based on Base Tama's body, since we are putting eyes on its body)
+      const eyeX = baseData.offsets ? baseData.offsets.x : 0;
+      const eyeY = baseData.offsets ? baseData.offsets.y : 0;
 
-      // Outdoor View: Default is translate(50%, 95%), then we add the specific X/Y pixel offsets
       document.getElementById('TamaEyes').style.transform = `translate(50%, 95%) translate(${eyeX}px, ${eyeY}px)`;
-      
-      // Cell View: The cell sprites already have the offset baked in. We just use the default mockup position.
       document.getElementById('CellEyes').style.transform = `translate(50%, 44.5%)`;
 
-      // --- Apply Color Tint ---
-      const hexColor = data.color; // e.g. "FFF394" from JSON
-      const colorImg = document.getElementById('TamaColor');
+      // --- Color Override Logic ---
+      const colorOverrideId = document.getElementById('colorSelect').value;
+      // If override is selected, use that Tama's color. Otherwise use the base Tama's color.
+      const hexColor = colorOverrideId === 'default' ? baseData.color : tamaData[colorOverrideId].color;
       
-      // Apply the JSON hex color to the CSS filter tint
+      const colorImg = document.getElementById('TamaColor');
       colorImg.style.filter = `opacity(0.5) drop-shadow(0 0 0 #${hexColor}) saturate(500%)`;
     }
 
-    // Initialize on Load
+    // Initialize
     window.onload = loadTamaData;
   </script>
 
