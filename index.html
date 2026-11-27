@@ -163,14 +163,14 @@
     
     /* Mini Sprite Renderer - Using exact main view logic but scaled up */
     .mini-sprite {
-      width: 100%; height: 180px; /* Increased height */
+      width: 100%; height: 140px; /* Increased height */
       overflow: hidden;
       display: flex; justify-content: center; align-items: center;
     }
     .mini-sprite-inner {
       display: grid;
       width: 260px; height: 260px; 
-      transform: scale(0.7); /* Scaled up so sprites are bigger */
+      transform: scale(0.85); /* Scaled up so sprites are bigger */
       transform-origin: center center;
     }
     .mini-sprite-inner img {
@@ -454,11 +454,11 @@
         card.innerHTML = `
           <div class="mini-sprite">
             <div class="mini-sprite-inner">
-              <img loading="lazy" src="images/tamas/${tama.id}/color.png" style="transform: translate(50%, 95%);" />
-              <img loading="lazy" src="images/tamas/${tama.id}/color.png" style="transform: translate(50%, 95%); filter: opacity(0.5) drop-shadow(0 0 0 #${data.color}) saturate(500%);" />
-              <img loading="lazy" src="images/tamas/${tama.id}/base.png" style="transform: translate(50%, 95%);" />
-              <img loading="lazy" src="images/tamas/${tama.id}/eyes.png" style="transform: translate(50%, 95%) translate(${eyeX}px, ${eyeY}px);" />
-              <img loading="lazy" src="images/tamas/${tama.id}/face.png" style="transform: translate(50%, 95%);" />
+              <img loading="lazy" src="images/tamas/${tama.id}/color.png" style="transform: translate(25%, 95%);" />
+              <img loading="lazy" src="images/tamas/${tama.id}/color.png" style="transform: translate(25%, 95%); filter: opacity(0.5) drop-shadow(0 0 0 #${data.color}) saturate(500%);" />
+              <img loading="lazy" src="images/tamas/${tama.id}/base.png" style="transform: translate(25%, 95%);" />
+              <img loading="lazy" src="images/tamas/${tama.id}/eyes.png" style="transform: translate(25%, 95%) translate(${eyeX}px, ${eyeY}px);" />
+              <img loading="lazy" src="images/tamas/${tama.id}/face.png" style="transform: translate(25%, 95%);" />
             </div>
           </div>
           <div class="tama-name">${tama.name}</div>
