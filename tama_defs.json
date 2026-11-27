@@ -222,6 +222,28 @@
               "mistakes": "0"
             }
           }
+        },
+        "neon": {
+          "display": "New Tamagotchi Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 7
+            }
+          },
+          "1": {
+            "tama": "newtama_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "land_young",
+            "method": {
+              "max": true,
+              "mistakes": "0"
+            }
+          }
         }
       }
     }
@@ -1692,6 +1714,54 @@
   },
   "mech_young": {
     "name": "Mech Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "land_young": {
+    "name": "Land Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "water_young": {
+    "name": "Water Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "sky_young": {
+    "name": "Sky Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "forest_young": {
+    "name": "Forest Young",
     "stage": 2,
     "color": "FFD2EF",
     "offsets": { "x": 4.5, "y": 24 },
