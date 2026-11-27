@@ -105,6 +105,23 @@
     .sprite-grid img { grid-column: 1; grid-row: 1; pointer-events: none; }
     .base-transform { transform: translate(50%, 95%); }
 
+    /* --- DEBUG PANEL --- */
+    #debugPanel {
+      background: rgba(0, 0, 0, 0.9); border: 2px solid #ff4444; border-radius: 8px;
+      padding: 10px; margin-bottom: 10px; width: 260px; display: none;
+      font-size: 0.85em; box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+    }
+    #debugPanel h4 { margin: 0 0 10px 0; color: #ff4444; text-align: center; text-transform: uppercase; }
+    .debug-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .debug-row span { color: #fff; font-family: monospace; }
+    .debug-btn {
+      background-color: #444; color: white; border: 1px solid #666;
+      border-radius: 3px; padding: 2px 6px; cursor: pointer; font-weight: bold;
+    }
+    .debug-btn:hover { background-color: #666; }
+    .debug-reset { background-color: #aa3344; border-color: #ff5566; width: 100%; margin-top: 5px; }
+    .debug-reset:hover { background-color: #cc4455; }
+
     /* --- TAB 2 & 3 --- */
     .gene-viewer-container { display: flex; flex-direction: column; gap: 20px; }
     .parents-container { display: flex; justify-content: space-around; align-items: center; gap: 20px; }
@@ -143,7 +160,6 @@
     .modal-body {
       padding: 15px 15px 100px 15px; 
       overflow-y: auto; display: grid; 
-      /* Increased minmax to make cards wider */
       grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 15px;
       align-content: start;
     }
@@ -163,21 +179,20 @@
     
     /* Mini Sprite Renderer - Using exact main view logic but scaled up */
     .mini-sprite {
-      width: 100%; height: 180px; /* Increased height */
+      width: 100%; height: 180px; 
       overflow: hidden;
       display: flex; justify-content: center; align-items: center;
     }
     .mini-sprite-inner {
       display: grid;
       width: 260px; height: 260px; 
-      transform: scale(0.85); /* Scaled up so sprites are bigger */
+      transform: scale(0.85); 
       transform-origin: center center;
     }
     .mini-sprite-inner img {
       grid-column: 1; grid-row: 1; 
       width: 130px; height: 130px;
       pointer-events: none;
-      /* Using the standard transform that perfectly stacks grid items */
     }
 
     .tama-name {
@@ -267,6 +282,33 @@
         <div class="image-stack">
           <div class="current-tama-title" id="currentTamaName">Current Tama:<br>Loading...</div>
           
+          <!-- Debug Toggle Button -->
+          <button class="pixel-btn" style="font-size: 0.8em; padding: 4px 10px; margin-bottom: 5px; background-color: #ff4444; color: white; border-color: #ff8888;" onclick="toggleDebug()">🛠️ Toggle Debug Panel</button>
+
+          <!-- Debug Panel -->
+          <div id="debugPanel">
+            <h4>Eye Offset Debugger</h4>
+            <div class="debug-row">
+              <span>X Offset: <span id="debugXVal">0</span></span>
+              <div>
+                <button class="debug-btn" onclick="adjustOffset('x', -1)">-1</button>
+                <button class="debug-btn" onclick="adjustOffset('x', -0.5)">-0.5</button>
+                <button class="debug-btn" onclick="adjustOffset('x', 0.5)">+0.5</button>
+                <button class="debug-btn" onclick="adjustOffset('x', 1)">+1</button>
+              </div>
+            </div>
+            <div class="debug-row">
+              <span>Y Offset: <span id="debugYVal">0</span></span>
+              <div>
+                <button class="debug-btn" onclick="adjustOffset('y', -1)">-1</button>
+                <button class="debug-btn" onclick="adjustOffset('y', -0.5)">-0.5</button>
+                <button class="debug-btn" onclick="adjustOffset('y', 0.5)">+0.5</button>
+                <button class="debug-btn" onclick="adjustOffset('y', 1)">+1</button>
+              </div>
+            </div>
+            <button class="debug-btn debug-reset" onclick="resetDebug()">Reset to 0</button>
+          </div>
+
           <div class="sprite-container" id="tamaPreviewField">
             <div class="sprite-grid">
               <img id="TamaColorBase" alt="" src="" width="130" height="130" class="base-transform" />
@@ -336,6 +378,11 @@
       currentStage: 0 // 0-3
     };
 
+    // Debug State
+    let isDebugMode = false;
+    let debugX = 0;
+    let debugY = 0;
+
     const fieldNames = ["land", "water", "sky", "forest", "tropical", "ice", "cosmic", "new-tamagotchi", "tamagotchi"];
 
     // --- MODAL STATE ---
@@ -375,6 +422,32 @@
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
       document.getElementById(tabName).classList.add('active');
       btnElement.classList.add('active');
+    }
+
+    // --- DEBUG LOGIC ---
+    function toggleDebug() {
+      isDebugMode = !isDebugMode;
+      const panel = document.getElementById('debugPanel');
+      panel.style.display = isDebugMode ? 'block' : 'none';
+    }
+
+    function adjustOffset(axis, amount) {
+      if (axis === 'x') {
+        debugX += amount;
+        document.getElementById('debugXVal').textContent = debugX;
+      } else if (axis === 'y') {
+        debugY += amount;
+        document.getElementById('debugYVal').textContent = debugY;
+      }
+      updateUI(); // Re-render to apply the new offset
+    }
+
+    function resetDebug() {
+      debugX = 0;
+      debugY = 0;
+      document.getElementById('debugXVal').textContent = "0";
+      document.getElementById('debugYVal').textContent = "0";
+      updateUI();
     }
 
     // --- MODAL LOGIC ---
@@ -597,10 +670,10 @@
       document.getElementById('TamaEyes').src = `images/tamas/${eyesSourceId}/eyes.png`;
       document.getElementById('CellEyes').src = `images/tamas/${eyesSourceId}/eyes.png`;
 
-      const eyeX = currentTamaData.offsets ? currentTamaData.offsets.x : 0;
-      const eyeY = currentTamaData.offsets ? currentTamaData.offsets.y : 0;
+      const eyeX = (currentTamaData.offsets ? currentTamaData.offsets.x : 0) + debugX;
+      const eyeY = (currentTamaData.offsets ? currentTamaData.offsets.y : 0) + debugY;
       
-      // Main view uses the standard transform
+      // Main view uses the standard transform + debug offsets
       document.getElementById('TamaEyes').style.transform = `translate(50%, 95%) translate(${eyeX}px, ${eyeY}px)`;
       document.getElementById('CellEyes').style.transform = `translate(50%, 44.5%)`;
 
