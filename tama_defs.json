@@ -194,7 +194,7 @@
   "meowtchi": {
     "name": "Meowtchi",
     "stage": 3,
-    "color": "FFD2EF",
+    "color": "FF82B5",
     "offsets": { "x": 0, "y": 0 },
     "data": {
       "breedable": true,
