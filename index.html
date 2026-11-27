@@ -100,11 +100,10 @@
     }
     .sprite-container.cell-bg { background-image: url(images/cell/bg.png); background-color: #225588; margin-top: 10px; }
 
+    /* Use the standard 260x260 grid layout */
     .sprite-grid { display: grid; width: 100%; height: 100%; }
     .sprite-grid img { grid-column: 1; grid-row: 1; pointer-events: none; }
-    
-    /* Fixed absolute pixel transform to handle missing images */
-    .base-transform { transform: translate(65px, 123.5px); } 
+    .base-transform { transform: translate(50%, 95%); }
 
     /* --- TAB 2 & 3 --- */
     .gene-viewer-container { display: flex; flex-direction: column; gap: 20px; }
@@ -122,7 +121,7 @@
     }
     .modal-content {
       background-color: #001a4d; border: 3px solid #88bbff; border-radius: 15px;
-      width: 90%; max-width: 900px; height: 85vh; display: flex; flex-direction: column;
+      width: 90%; max-width: 950px; height: 85vh; display: flex; flex-direction: column;
       box-shadow: 0 0 20px rgba(136, 187, 255, 0.5);
     }
     .modal-header {
@@ -144,14 +143,15 @@
     .modal-body {
       padding: 15px 15px 100px 15px; 
       overflow-y: auto; display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px;
+      /* Increased minmax to make cards wider */
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 15px;
       align-content: start;
     }
     
     /* Tama Cards in Modal */
     .tama-card {
       background-color: #112244; border: 2px solid #5577aa; border-radius: 10px;
-      padding: 15px 10px; text-align: center; cursor: pointer; transition: all 0.2s;
+      padding: 15px; text-align: center; cursor: pointer; transition: all 0.2s;
       display: flex; flex-direction: column; align-items: center; gap: 10px;
     }
     .tama-card:hover {
@@ -161,28 +161,27 @@
     .tama-card.selected { border-color: #88ff88; background-color: #224422; }
     .tama-card.default-card { border-color: #ffb3d9; border-style: dashed; }
     
-    /* Mini Sprite Renderer (Absolute positioning fixes broken images) */
+    /* Mini Sprite Renderer - Using exact main view logic but scaled up */
     .mini-sprite {
-      width: 150px; height: 150px; 
-      position: relative;
+      width: 100%; height: 180px; /* Increased height */
       overflow: hidden;
       display: flex; justify-content: center; align-items: center;
     }
     .mini-sprite-inner {
+      display: grid;
       width: 260px; height: 260px; 
-      transform: scale(0.57); /* 150/260 */
+      transform: scale(0.7); /* Scaled up so sprites are bigger */
       transform-origin: center center;
-      position: relative;
     }
     .mini-sprite-inner img {
-      position: absolute;
-      top: 0; left: 0;
+      grid-column: 1; grid-row: 1; 
       width: 130px; height: 130px;
       pointer-events: none;
+      /* Using the standard transform that perfectly stacks grid items */
     }
 
     .tama-name {
-      font-size: 0.9em; color: #ccc; font-weight: bold; line-height: 1.2;
+      font-size: 0.95em; color: #fff; font-weight: bold; line-height: 1.2;
     }
   </style>
 </head>
@@ -451,15 +450,15 @@
         const card = document.createElement('div');
         card.className = `tama-card ${isSelected ? 'selected' : ''}`;
         
-        // Use absolute pixel transforms to guarantee stacking and centering even on broken images
+        // Using standard grid transforms, which are perfectly consistent
         card.innerHTML = `
           <div class="mini-sprite">
             <div class="mini-sprite-inner">
-              <img loading="lazy" src="images/tamas/${tama.id}/color.png" style="transform: translate(65px, 123.5px);" />
-              <img loading="lazy" src="images/tamas/${tama.id}/color.png" style="transform: translate(65px, 123.5px); filter: opacity(0.5) drop-shadow(0 0 0 #${data.color}) saturate(500%);" />
-              <img loading="lazy" src="images/tamas/${tama.id}/base.png" style="transform: translate(65px, 123.5px);" />
-              <img loading="lazy" src="images/tamas/${tama.id}/eyes.png" style="transform: translate(65px, 123.5px) translate(${eyeX}px, ${eyeY}px);" />
-              <img loading="lazy" src="images/tamas/${tama.id}/face.png" style="transform: translate(65px, 123.5px);" />
+              <img loading="lazy" src="images/tamas/${tama.id}/color.png" style="transform: translate(50%, 95%);" />
+              <img loading="lazy" src="images/tamas/${tama.id}/color.png" style="transform: translate(50%, 95%); filter: opacity(0.5) drop-shadow(0 0 0 #${data.color}) saturate(500%);" />
+              <img loading="lazy" src="images/tamas/${tama.id}/base.png" style="transform: translate(50%, 95%);" />
+              <img loading="lazy" src="images/tamas/${tama.id}/eyes.png" style="transform: translate(50%, 95%) translate(${eyeX}px, ${eyeY}px);" />
+              <img loading="lazy" src="images/tamas/${tama.id}/face.png" style="transform: translate(50%, 95%);" />
             </div>
           </div>
           <div class="tama-name">${tama.name}</div>
@@ -601,8 +600,8 @@
       const eyeX = currentTamaData.offsets ? currentTamaData.offsets.x : 0;
       const eyeY = currentTamaData.offsets ? currentTamaData.offsets.y : 0;
       
-      // Apply absolute pixel transform for main view too, to match modal exactly
-      document.getElementById('TamaEyes').style.transform = `translate(65px, 123.5px) translate(${eyeX}px, ${eyeY}px)`;
+      // Main view uses the standard transform
+      document.getElementById('TamaEyes').style.transform = `translate(50%, 95%) translate(${eyeX}px, ${eyeY}px)`;
       document.getElementById('CellEyes').style.transform = `translate(50%, 44.5%)`;
 
       const hexColor = appState.colorOverride === 'default' ? currentTamaData.color : tamaData[appState.colorOverride].color;
