@@ -83,7 +83,6 @@
     .image-stack { display: flex; flex-direction: column; gap: 10px; }
 
     .sprite-container {
-      /* Background image handled by JS */
       background-color: #111; background-size: cover; background-position: center;
       width: 260px; height: 260px; border-radius: 10px; border: 3px solid #fff; overflow: hidden; transition: background-image 0.3s ease;
     }
@@ -242,7 +241,7 @@
     let currentStage = 0; // Global tracker (0-3)
     let currentPathKey = null; // Tracks the selected path button
 
-    // Field mapping based on user request
+    // Field mapping
     const fieldNames = ["land", "water", "sky", "forest", "tropical", "ice", "cosmic", "new-tamagotchi", "tamagotchi"];
 
     // 1. Fetch the JSON Data
@@ -290,7 +289,7 @@
 
       let breedableAdults = [];
 
-      // Convert object to array and sort alphabetically by name for better UX
+      // Sort alphabetically by name
       const sortedTamaIds = Object.keys(tamaData).sort((a, b) => tamaData[a].name.localeCompare(tamaData[b].name));
 
       sortedTamaIds.forEach(id => {
@@ -323,7 +322,6 @@
         colorSelect.appendChild(colorOpt);
       });
 
-      // Trigger path population for the first selected base Tama
       if (baseSelect.options.length > 0) {
         baseSelect.selectedIndex = 0;
         onBaseTamaChange();
@@ -337,8 +335,9 @@
       pathsContainer.innerHTML = '';
       currentPathKey = null; // Reset
 
-      if (baseId && tamaData[baseId] && tamaData[baseId].path) {
-        const paths = tamaData[baseId].path;
+      // FIXED: Accessing data.path instead of path
+      if (baseId && tamaData[baseId] && tamaData[baseId].data && tamaData[baseId].data.path) {
+        const paths = tamaData[baseId].data.path;
         const pathKeys = Object.keys(paths);
         
         if (pathKeys.length > 0) {
@@ -395,9 +394,9 @@
       // Handle Advance Button Visibility
       const advanceBtn = document.getElementById('advanceBtn');
       if (currentStage === 3) {
-        advanceBtn.style.display = 'none'; // Hide on Adult stage
+        advanceBtn.style.display = 'none'; 
       } else {
-        advanceBtn.style.display = 'block'; // Show on earlier stages
+        advanceBtn.style.display = 'block'; 
       }
 
       updateUI();
@@ -413,8 +412,9 @@
       const fieldContainer = document.getElementById('tamaPreviewField');
       let bgImage = 'images/fields/land.png'; // Default fallback
 
-      if (currentPathKey && tamaData[baseId].path[currentPathKey]) {
-        const method = tamaData[baseId].path[currentPathKey]["0"].method;
+      // FIXED: Accessing data.path
+      if (currentPathKey && tamaData[baseId].data && tamaData[baseId].data.path && tamaData[baseId].data.path[currentPathKey]) {
+        const method = tamaData[baseId].data.path[currentPathKey]["0"].method;
         if (method && method.field !== undefined) {
           const fieldIndex = method.field;
           if (fieldIndex >= 0 && fieldIndex < fieldNames.length) {
@@ -424,7 +424,7 @@
       }
       
       fieldContainer.style.backgroundImage = `url('${bgImage}')`;
-      fieldContainer.style.backgroundColor = '#111'; // Fallback if image fails to load
+      fieldContainer.style.backgroundColor = '#111'; 
 
       // --- Update Requirements Text ---
       const reqBox = document.getElementById('requirementsDisplay');
@@ -432,10 +432,11 @@
       if (currentStage === 3) {
         reqBox.innerHTML = `<h4>Adult Stage</h4><ul><li>Congratulations! You have reached the final result.</li><li>You can now breed this Tama in the Gene Viewer.</li></ul>`;
       } else {
-        if (!currentPathKey || !tamaData[baseId].path[currentPathKey]) {
+        // FIXED: Accessing data.path
+        if (!currentPathKey || !tamaData[baseId].data || !tamaData[baseId].data.path || !tamaData[baseId].data.path[currentPathKey]) {
           reqBox.innerHTML = `<h4>Stage Requirements</h4><ul><li style="color:#ff8888;">No path data available for this Tama yet.</li></ul>`;
         } else {
-          const method = tamaData[baseId].path[currentPathKey][currentStage].method;
+          const method = tamaData[baseId].data.path[currentPathKey][currentStage].method;
           
           let reqHTML = '';
           if (currentStage === 0) {
@@ -466,12 +467,11 @@
       const baseId = document.getElementById('baseTamaSelect').value;
       if (!baseId || !tamaData[baseId]) return;
 
-      // Determine which Tama sprite to show based on the current stage and path
       let currentTamaId = baseId; // Default to adult if something goes wrong
 
-      if (currentStage < 3 && currentPathKey && tamaData[baseId].path[currentPathKey]) {
-        // Grab the specific Baby/Kid/Young ID from the path
-        currentTamaId = tamaData[baseId].path[currentPathKey][currentStage].tama;
+      // FIXED: Accessing data.path
+      if (currentStage < 3 && currentPathKey && tamaData[baseId].data && tamaData[baseId].data.path && tamaData[baseId].data.path[currentPathKey]) {
+        currentTamaId = tamaData[baseId].data.path[currentPathKey][currentStage].tama;
       }
 
       const currentTamaData = tamaData[currentTamaId];
@@ -500,8 +500,6 @@
 
       // --- Color Override Logic ---
       const colorOverrideId = document.getElementById('colorSelect').value;
-      
-      // If override is selected, use that color. Otherwise use the CURRENT Tama's default color.
       const hexColor = colorOverrideId === 'default' ? currentTamaData.color : tamaData[colorOverrideId].color;
       
       const colorImg = document.getElementById('TamaColor');
