@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Paradise Growth Calculator</title>
+    <link rel="icon" href="images/favicon.png" />
+  </head>
+  <body style="background-image: url(images/bg.png)">
+    <div style="display: flex; gap: 25px; padding: 5px">
+      <img
+        src="images/logo.png"
+        alt="Tamadachi Paradise Logo"
+        width="204"
+        height="90"
+      />
+      <div style="color: rgb(60, 255, 0)">
+        <p>Calculate the care you need to raise a certain Tama</p>
+        <p>and see what they'd look like when breeded!</p>
+      </div>
+    </div>
+    <h3 style="gap: 25px; color: rgb(0, 153, 255)">
+      Growth and Gene Calculator
+    </h3>
+    <br />
+    <br />
+    <div
+      style="display: flex; gap: 15px; padding: 5px; justify-content: center"
+    >
+      <div
+        id="TamaModifiers"
+        style="background-color: gray; width: 300px; height: 535px"
+      >
+        <div id="FieldChange" style="display: none"></div>
+      </div>
+      <div
+        id="CurrentTamaView"
+        style="
+          background-image: url(images/fields/land.png);
+          width: 260px;
+          height: 260px;
+        "
+      >
+        <div style="display: grid">
+          <img
+            id="TamaColorBase"
+            alt="Tama Color"
+            src="images/tamas/babymarutchi/color.png"
+            width="130"
+            height="130"
+            style="transform: translate(50%, 95%); grid-column: 1; grid-row: 1"
+          />
+          <img
+            id="TamaColor"
+            alt="Tama Color"
+            src="images/tamas/babymarutchi/color.png"
+            width="130"
+            height="130"
+            style="
+              filter: opacity(0.5) drop-shadow(0 0 0 #ffd2ef) saturate(500%);
+              transform: translate(50%, 95%);
+              grid-column: 1;
+              grid-row: 1;
+            "
+          />
+          <img
+            id="TamaBody"
+            src="images/tamas/babymarutchi/base.png"
+            alt="Tama Base Body"
+            width="130"
+            height="130"
+            style="transform: translate(50%, 95%); grid-column: 1; grid-row: 1"
+          />
+          <img
+            id="TamaEyes"
+            src="images/tamas/babymarutchi/eyes.png"
+            alt="Tama Eyes"
+            width="130"
+            height="130"
+            style="transform: translate(50%, 117%); grid-column: 1; grid-row: 1"
+          />
+          <img
+            id="TamaFace"
+            src="images/tamas/babymarutchi/face.png"
+            alt="Tama Face"
+            width="130"
+            height="130"
+            style="transform: translate(50%, 95%); grid-column: 1; grid-row: 1"
+          />
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div
+          id="CurrentCellView"
+          style="
+            background-image: url(images/cell/bg.png);
+            width: 260px;
+            height: 260px;
+          "
+        >
+          <div style="display: grid">
+            <img
+              id="CellBase"
+              src="images/cell/base.png"
+              alt="Cell Base"
+              width="130"
+              height="130"
+              style="
+                transform: translate(50%, 50%);
+                grid-column: 1;
+                grid-row: 1;
+              "
+            />
+            <img
+              id="CellEyes"
+              src="images/tamas/babymarutchi/eyes.png"
+              alt="Cell Eyes"
+              width="130"
+              height="130"
+              style="
+                transform: translate(50%, 44.5%);
+                grid-column: 1;
+                grid-row: 1;
+              "
+            />
+            <img
+              id="CellFace"
+              src="images/cell/face.png"
+              alt="Cell Face"
+              width="130"
+              height="130"
+              style="
+                transform: translate(50%, 50%);
+                grid-column: 1;
+                grid-row: 1;
+              "
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,2174 @@
+{
+  "babymarutchi": {
+    "name": "Babymarutchi",
+    "stage": 0,
+    "color": "FFF394",
+    "offsets": { "x": 0, "y": 22 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "land_kid": {
+    "name": "Land Kid",
+    "stage": 1,
+    "color": "FFD2EF",
+    "offsets": { "x": 0, "y": 65 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "water_kid": {
+    "name": "Water Kid",
+    "stage": 1,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "sky_kid": {
+    "name": "Sky Kid",
+    "stage": 1,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "roar_young": {
+    "name": "Roar Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "toddle_young": {
+    "name": "Toddle Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "lick_young": {
+    "name": "Lick Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "sprout_young": {
+    "name": "Sprout Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "glide_young": {
+    "name": "Glide Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "leap_young": {
+    "name": "Leap Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "paddle_young": {
+    "name": "Paddle Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "float_young": {
+    "name": "Float Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "flap_young": {
+    "name": "Flap Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "chirp_young": {
+    "name": "Chirp Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "bumble_young": {
+    "name": "Bumble Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "rocky_young": {
+    "name": "Rocky Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "meowtchi": {
+    "name": "Meowtchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "pochitchi": {
+    "name": "Pochitchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "gumax": {
+    "name": "Gumax",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "ratchi": {
+    "name": "Ratchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "mametchi": {
+    "name": "Mametchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "mimitchi": {
+    "name": "Mimitchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "molmotchi": {
+    "name": "Molmotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "sheeptchi": {
+    "name": "Sheeptchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "leopatchi": {
+    "name": "Leopatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "sebiretchi": {
+    "name": "Sebiretchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "elizardotchi": {
+    "name": "Elizardotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "heavytchi": {
+    "name": "Heavytchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "furawatchi": {
+    "name": "Furawatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "potsunentchi": {
+    "name": "Potsunentchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tustustchi": {
+    "name": "Tustustchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "shigemi_san": {
+    "name": "Shigemi-san",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "chodracotchi": {
+    "name": "Chodracotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "irukatchi": {
+    "name": "Irukatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "kametchi": {
+    "name": "Kametchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "kujiratchi": {
+    "name": "Kujiratchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "uruotchi": {
+    "name": "Uruotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "axolopatchi": {
+    "name": "Axolopatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "imoritchi": {
+    "name": "Imoritchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "kawazutchi": {
+    "name": "Kawazutchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "beavertchi": {
+    "name": "Beavertchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tachutchi": {
+    "name": "Tachutchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "sharktchi": {
+    "name": "Sharktchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "ankotchi": {
+    "name": "Ankotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "otototchi": {
+    "name": "Otototchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "kuraratchi": {
+    "name": "Kuraratchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "mendakotchi": {
+    "name": "Mendakotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "amefuratchi": {
+    "name": "Amefuratchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "gusokutchi": {
+    "name": "Gusokutchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "mermarintchi": {
+    "name": "Mermarintchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "horhotchi": {
+    "name": "Horhotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "mongatchi": {
+    "name": "Mongatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "eagletchi": {
+    "name": "Eagletchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "batchi": {
+    "name": "Batchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "peacotchi": {
+    "name": "Peacotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "batatchi": {
+    "name": "Batatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "kuchipatchi": {
+    "name": "Kuchipatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "kiwitchi": {
+    "name": "Kiwitchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "papillotchi": {
+    "name": "Papillotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "kabutotchi": {
+    "name": "Kabutotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tentotchi": {
+    "name": "Tentotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "hatchitchi": {
+    "name": "Hatchitchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "gemtchi": {
+    "name": "Gemtchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "oretatchi": {
+    "name": "Oretatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "ishikorotchi": {
+    "name": "Ishikorotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "magmatchi": {
+    "name": "Magmatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "yayacorntchi": {
+    "name": "Yayacorntchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "bbmarutchi": {
+    "name": "Bbmarutchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "forest_kid": {
+    "name": "Forest Kid",
+    "stage": 1,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "forest_roar_young": {
+    "name": "Forest Roar Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "forest_toddle_young": {
+    "name": "Forest Toddle Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "forest_chirp_young": {
+    "name": "Forest Chirp Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "forest_sprout_young": {
+    "name": "Forest Sprout Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "forest_horhotchi": {
+    "name": "Forest Horhotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "konkotchi": {
+    "name": "Konkotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tigaotchi": {
+    "name": "Tigaotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tanoontchi": {
+    "name": "Tanoontchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "lessapantchi": {
+    "name": "Lessapantchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "kanokotchi": {
+    "name": "Kanokotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "suigyutchi": {
+    "name": "Suigyutchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "panbootchi": {
+    "name": "Panbootchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "kachitchi": {
+    "name": "Kachitchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tokipatchi": {
+    "name": "Tokipatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "sparrotchi": {
+    "name": "Sparrotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "shiitaketchi": {
+    "name": "Shiitaketchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "peatchi": {
+    "name": "Peatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "nappatchi": {
+    "name": "Nappatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "rushraditchi": {
+    "name": "Rushraditchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tatsutchi": {
+    "name": "Tatsutchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tropical_kid": {
+    "name": "Tropical Kid",
+    "stage": 1,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "frozen_kid": {
+    "name": "Frozen Kid",
+    "stage": 1,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tropical_roar_young": {
+    "name": "Tropical Roar Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tropical_toddle_young": {
+    "name": "Tropical Toddle Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tropical_lick_young": {
+    "name": "Tropical Lick Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tropical_sprout_young": {
+    "name": "Tropical Sprout Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "frozen_roar_young": {
+    "name": "Frozen Roar Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "frozen_glide_young": {
+    "name": "Frozen Glide Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "frozen_toddle_young": {
+    "name": "Frozen Toddle Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "frozen_float_young": {
+    "name": "Frozen Float Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tropical_meowtchi": {
+    "name": "Tropical Meowtchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "madillotchi": {
+    "name": "Madillotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tarantytchi": {
+    "name": "Tarantytchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "crocotchi": {
+    "name": "Crocotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tropical_mametchi": {
+    "name": "Tropical Mametchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "parorotchi": {
+    "name": "Parorotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tenatchi": {
+    "name": "Tenatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "namakemotchi": {
+    "name": "Namakemotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "kuikuitchi": {
+    "name": "Kuikuitchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "poizutchi": {
+    "name": "Poizutchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "chameleotchi": {
+    "name": "Chameleotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "iguanatchi": {
+    "name": "Iguanatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "yashikitchi": {
+    "name": "Yashikitchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tropical_potsunentchi": {
+    "name": "Tropical Potsunentchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "ananatchi": {
+    "name": "Ananatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "avovotchi": {
+    "name": "Avovotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "manapatchi": {
+    "name": "Manapatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "okojotchi": {
+    "name": "Okojotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "wolftchi": {
+    "name": "Wolftchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "polakumatchi": {
+    "name": "Polakumatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "azaratchi": {
+    "name": "Azaratchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "icy_irukatchi": {
+    "name": "Icy Irukatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "ginjirotchi": {
+    "name": "Ginjirotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "rakkotchi": {
+    "name": "Rakkotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "hoppentchi": {
+    "name": "Hoppentchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "lemmingtchi": {
+    "name": "Lemmingtchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "moosetchi": {
+    "name": "Moosetchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "raichotchi": {
+    "name": "Raichotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "yukiusatchi": {
+    "name": "Yukiusatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "nerinetchi": {
+    "name": "Nerinetchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "dangouotchi": {
+    "name": "Dangouotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "yaytytchi": {
+    "name": "Yaytytchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "yukiraratchi": {
+    "name": "Yukiraratchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "hobohorntchi": {
+    "name": "Hobohorntchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "galaxy_kid": {
+    "name": "Galaxy Kid",
+    "stage": 1,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "newtama_kid": {
+    "name": "Newtama Kid",
+    "stage": 1,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "marutchi_kid": {
+    "name": "Marutchi Kid",
+    "stage": 1,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "piko_young": {
+    "name": "Piko Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "slithr_young": {
+    "name": "Slithr Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "orbit_young": {
+    "name": "Orbit Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "mech_young": {
+    "name": "Mech Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "curl_young": {
+    "name": "Curl Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "sparkl_young": {
+    "name": "Sparkl Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "fluffy_young": {
+    "name": "Fluffy Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "tama_young": {
+    "name": "Tama Young",
+    "stage": 2,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": false,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "cosmitchi": {
+    "name": "Cosmitchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "hoshimortchi": {
+    "name": "Hoshimortchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "uchutchi": {
+    "name": "Uchutchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "kumamutchi": {
+    "name": "Kumamutchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "ukiukitchi": {
+    "name": "Ukiukitchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "pochipotchi": {
+    "name": "Pochipotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "takonyatchi": {
+    "name": "Takonyatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "kumarstchi": {
+    "name": "Kumarstchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "hanawatchi": {
+    "name": "Hanawatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "nagarebotchi": {
+    "name": "Nagarebotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "planetchi": {
+    "name": "Planetchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "quepealetchi": {
+    "name": "Quepealetchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "mamerobotchi": {
+    "name": "Mamerobotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "uchuhikotchi": {
+    "name": "Uchuhikotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "satelatchi": {
+    "name": "Satelatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "parabolatchi": {
+    "name": "Parabolatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "mimimimitchi": {
+    "name": "Mimimimitchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "memetchi": {
+    "name": "Memetchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "makiko": {
+    "name": "Makiko",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "gozarutchi": {
+    "name": "Gozarutchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "lovelitchi": {
+    "name": "Lovelitchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "melodytchi": {
+    "name": "Melodytchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "moriritchi": {
+    "name": "Moriritchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "kuromametchi": {
+    "name": "Kuromametchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "neliatchi": {
+    "name": "Neliatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "milktchi": {
+    "name": "Milktchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "unimarutchi": {
+    "name": "Unimarutchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "weeptchi": {
+    "name": "Weeptchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "shyontchi": {
+    "name": "Shyontchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "meertchi": {
+    "name": "Meertchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "omarutchi": {
+    "name": "Omarutchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "pooptchi": {
+    "name": "Pooptchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "platyputchi": {
+    "name": "Platyputchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "shykutchi": {
+    "name": "Shykutchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "gorimatchi": {
+    "name": "Gorimatchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "camelitchi": {
+    "name": "Camelitchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  },
+  "falcotchi": {
+    "name": "Falcotchi",
+    "stage": 3,
+    "color": "FFD2EF",
+    "offsets": { "x": 4.5, "y": 24 },
+    "data": {
+      "breedable": true,
+      "secret": false,
+      "lab_only": false,
+      "path": {}
+    }
+  }
+}

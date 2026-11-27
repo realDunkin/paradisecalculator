@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Paradise Growth Calculator</title>
+  <link rel="icon" href="images/favicon.png" />
+  <style>
+    /* Global Styles */
+    body {
+      background-image: url(images/bg.png);
+      background-color: #000033;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Header */
+    .header { display: flex; align-items: center; gap: 25px; margin-bottom: 20px; width: 100%; max-width: 900px; }
+    .header-text { color: #fffbbf; font-size: 1.1em; text-shadow: 1px 1px 2px black; }
+    .main-title { color: #ffb3d9; font-size: 1.5em; margin: 0 0 5px 0; text-shadow: 2px 2px 0px #000; }
+
+    /* Tab Navigation */
+    .tabs { display: flex; gap: 10px; width: 100%; max-width: 900px; margin-bottom: 20px; }
+    .tab-btn {
+      background-color: #001a4d; color: #8899cc; border: 2px solid #334488; border-bottom: none;
+      padding: 10px 20px; border-radius: 10px 10px 0 0; cursor: pointer; font-size: 1.1em; font-weight: bold; transition: all 0.2s;
+    }
+    .tab-btn:hover { background-color: #002266; color: white; }
+    .tab-btn.active { background-color: #334488; color: white; border-color: #88bbff; }
+
+    /* Content Containers */
+    .tab-content {
+      display: none; width: 100%; max-width: 900px; background-color: rgba(0, 20, 60, 0.85);
+      border: 3px solid #88bbff; border-radius: 15px; padding: 20px; box-sizing: border-box; box-shadow: 0 0 15px rgba(136, 187, 255, 0.3);
+    }
+    .tab-content.active { display: flex; flex-direction: column; }
+
+    /* Shared UI Elements */
+    .ui-card { background-color: rgba(10, 30, 80, 0.9); border: 2px solid #5577aa; border-radius: 10px; padding: 15px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
+    .pixel-btn { background-color: #ffb3d9; color: #000; border: 3px solid white; border-radius: 5px; padding: 8px 15px; font-weight: bold; cursor: pointer; box-shadow: 2px 2px 0 #000; transition: transform 0.1s; }
+    .pixel-btn:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0 #000; }
+
+    /* --- TAB 1: STEP-BY-STEP LAYOUT --- */
+    .step-by-step-container { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+    .controls-panel { width: 320px; display: flex; flex-direction: column; gap: 15px; }
+
+    .custom-select-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
+    .custom-select-group label { font-size: 0.9em; color: #88bbff; }
+    .custom-select-group select { padding: 8px; border-radius: 5px; background-color: #112244; color: white; border: 1px solid #5577aa; font-family: inherit; }
+
+    .stage-tabs { display: flex; gap: 5px; margin-bottom: 15px; }
+    .stage-tab { flex: 1; background-color: #222; color: #888; padding: 8px 5px; text-align: center; border: 2px solid #555; border-radius: 5px; cursor: pointer; font-weight: bold; }
+    .stage-tab:hover { background-color: #333; color: #ccc; }
+    .stage-tab.active { background-color: #44aa44; color: white; border-color: #88ff88; }
+
+    .requirements-box {
+      background-color: #000; border: 1px solid #44aa44; padding: 15px; border-radius: 5px;
+      min-height: 100px; color: #88ff88; font-family: 'Courier New', Courier, monospace; font-size: 0.95em; box-shadow: inset 0 0 10px rgba(68, 170, 68, 0.2);
+    }
+    .requirements-box h4 { margin: 0 0 10px 0; color: #fff; border-bottom: 1px dashed #44aa44; padding-bottom: 5px;}
+    .requirements-box ul { margin: 0; padding-left: 20px; }
+    .requirements-box li { margin-bottom: 5px; }
+
+    .visuals-panel { display: flex; align-items: center; gap: 15px; }
+    .nav-arrow { font-size: 2em; color: #88bbff; cursor: pointer; user-select: none; }
+    .nav-arrow:hover { color: white; text-shadow: 0 0 10px #88bbff; }
+    .image-stack { display: flex; flex-direction: column; gap: 10px; }
+
+    .sprite-container {
+      background-color: #44aa44; background-size: cover; background-position: center;
+      width: 260px; height: 260px; border-radius: 10px; border: 3px solid #fff; overflow: hidden; transition: background-image 0.3s ease;
+    }
+    .sprite-container.cell-bg { background-image: url(images/cell/bg.png); background-color: #225588; margin-top: 10px; }
+
+    /* Grids for sprites */
+    .sprite-grid { display: grid; width: 100%; height: 100%; }
+    .sprite-grid img { grid-column: 1; grid-row: 1; pointer-events: none; }
+    
+    /* Base transforms for centering the sprites */
+    .base-transform { transform: translate(50%, 95%); }
+
+    /* --- TAB 2 & 3 --- */
+    .gene-viewer-container { display: flex; flex-direction: column; gap: 20px; }
+    .parents-container { display: flex; justify-content: space-around; align-items: center; gap: 20px; }
+    .parent-box { text-align: center; width: 200px; }
+    .parent-image-placeholder { width: 150px; height: 150px; background-color: #222; border: 2px solid #5577aa; border-radius: 10px; margin: 10px auto; display: flex; align-items: center; justify-content: center; color: #555; }
+    .family-tree-container { display: flex; flex-direction: column; gap: 15px; }
+    .tree-toolbar { display: flex; gap: 10px; background-color: #112244; padding: 10px; border-radius: 8px; }
+    .tree-canvas { height: 400px; background-color: #0a0a1a; background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 20px 20px; border: 2px dashed #5577aa; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #5577aa; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <img src="images/logo.png" alt="Tamagotchi Paradise Logo" width="204" height="90" />
+    <div class="header-text">
+      <h2 class="main-title">Paradise Growth Calculator</h2>
+      <p style="margin: 0;">Calculate the care you need to raise a certain Tama and see what they'd look like when bred!</p>
+    </div>
+  </div>
+
+  <!-- Tab Navigation -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="openTab('step-by-step', this)">📈 Step-by-Step</button>
+    <button class="tab-btn" onclick="openTab('gene-viewer', this)">🧬 Gene Viewer</button>
+    <button class="tab-btn" onclick="openTab('family-tree', this)">🌳 Family Tree</button>
+  </div>
+
+  <!-- TAB 1: STEP-BY-STEP -->
+  <div id="step-by-step" class="tab-content active">
+    <div class="step-by-step-container">
+      
+      <!-- Left Side: Controls & Modifiers -->
+      <div class="controls-panel ui-card">
+        
+        <!-- TAMA CUSTOMIZATION -->
+        <h3 style="margin-top: 0; color: #ffb3d9; border-bottom: 2px solid #5577aa; padding-bottom: 5px;">Tama Selector</h3>
+        
+        <div class="custom-select-group">
+          <label for="baseTamaSelect">Base Tama (Filtered by Stage):</label>
+          <select id="baseTamaSelect" onchange="updatePreview()">
+            <option>Loading data...</option>
+          </select>
+        </div>
+
+        <div class="custom-select-group">
+          <label for="eyesSelect">Eyes Override:</label>
+          <select id="eyesSelect" onchange="updatePreview()">
+            <option value="default">Default (Do not override)</option>
+            <option value="happy">Happy Eyes</option>
+            <option value="sleepy">Sleepy Eyes</option>
+          </select>
+        </div>
+
+        <div class="custom-select-group">
+          <label for="colorSelect">Color Override:</label>
+          <select id="colorSelect" onchange="updatePreview()">
+            <option value="default">Default (Use JSON Color)</option>
+          </select>
+        </div>
+
+        <hr style="border-color: #5577aa; width: 100%; margin: 10px 0;">
+
+        <!-- STAGE REQUIREMENTS -->
+        <h3 style="margin-top: 0; color: #88ff88; border-bottom: 2px solid #5577aa; padding-bottom: 5px;">Stage Requirements</h3>
+        
+        <div class="stage-tabs">
+          <div class="stage-tab active" id="tab-baby" onclick="updateStage(0)">Baby</div>
+          <div class="stage-tab" id="tab-kid" onclick="updateStage(1)">Kid</div>
+          <div class="stage-tab" id="tab-young" onclick="updateStage(2)">Young</div>
+        </div>
+
+        <!-- Read-Only Requirements Box -->
+        <div class="requirements-box" id="requirementsDisplay">
+          <!-- Content injected by JS -->
+        </div>
+        
+        <button class="pixel-btn" style="margin-top: 15px; width: 100%;">Advance to Next Stage ➔</button>
+      </div>
+
+      <!-- Right Side: Visuals & Arrows -->
+      <div class="visuals-panel">
+        <div class="nav-arrow">◀</div>
+        
+        <div class="image-stack">
+          <!-- Tama Environment View -->
+          <div class="sprite-container" id="tamaPreviewField">
+            <div class="sprite-grid">
+              <img id="TamaColorBase" alt="Tama Color" src="" width="130" height="130" class="base-transform" />
+              <img id="TamaColor" alt="Tama Color" src="" width="130" height="130" class="base-transform" />
+              <img id="TamaBody" src="" alt="Tama Base Body" width="130" height="130" class="base-transform" />
+              <!-- TamaEyes gets dynamic transform via JS -->
+              <img id="TamaEyes" src="" alt="Tama Eyes" width="130" height="130" />
+              <img id="TamaFace" src="" alt="Tama Face" width="130" height="130" class="base-transform" />
+            </div>
+          </div>
+
+          <!-- Cell View -->
+          <div class="sprite-container cell-bg">
+            <div class="sprite-grid">
+              <img id="CellBase" src="images/cell/base.png" alt="Cell Base" width="130" height="130" style="transform: translate(50%, 50%);" />
+              <!-- CellEyes gets static transform via JS -->
+              <img id="CellEyes" src="" alt="Cell Eyes" width="130" height="130" />
+              <img id="CellFace" src="images/cell/face.png" alt="Cell Face" width="130" height="130" style="transform: translate(50%, 50%);" />
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-arrow">▶</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: GENE VIEWER (Placeholder) -->
+  <div id="gene-viewer" class="tab-content">
+    <div class="gene-viewer-container">
+      <h2 style="text-align: center; color: #ffb3d9; margin-top: 0;">Breeding Simulator</h2>
+      <div class="parents-container">
+        <div class="parent-box ui-card">
+          <h3>Parent 1</h3>
+          <div class="parent-image-placeholder">Select Parent 1</div>
+        </div>
+        <h1 style="color: #ffb3d9; font-size: 3em; text-shadow: 2px 2px 0 #000;">+</h1>
+        <div class="parent-box ui-card">
+          <h3>Parent 2</h3>
+          <div class="parent-image-placeholder">Select Parent 2</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: FAMILY TREE (Placeholder) -->
+  <div id="family-tree" class="tab-content">
+    <div class="family-tree-container">
+      <div class="tree-toolbar">
+        <button class="pixel-btn">➕ Add Tama</button>
+        <button class="pixel-btn">🔗 Connect Lineage</button>
+      </div>
+      <div class="tree-canvas"><p>Canvas Area</p></div>
+    </div>
+  </div>
+
+  <!-- Main Application Logic -->
+  <script>
+    let tamaData = {};
+    let currentStage = 0; // 0: Baby, 1: Kid, 2: Young, 3: Adult
+
+    // 1. Fetch the JSON Data
+    async function loadTamaData() {
+      try {
+        const response = await fetch('tama_defs.json');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        tamaData = await response.json();
+        updateStage(0); // Initialize with Baby stage
+        
+      } catch (error) {
+        console.error("Failed to load tama_defs.json:", error);
+        document.getElementById('requirementsDisplay').innerHTML = `
+          <p style="color: #ff4444; font-weight: bold;">⚠️ Failed to load data.</p>
+          <p style="font-size: 0.8em; color: #ffaaaa;">If you are opening this file directly (file://), your browser might be blocking local file access. Please use a local web server (like VS Code Live Server).</p>
+        `;
+      }
+    }
+
+    // 2. Tab Switching Logic
+    function openTab(tabName, btnElement) {
+      var i;
+      var tabContents = document.getElementsByClassName("tab-content");
+      for (i = 0; i < tabContents.length; i++) {
+        tabContents[i].classList.remove("active");
+      }
+      var tabButtons = document.getElementsByClassName("tab-btn");
+      for (i = 0; i < tabButtons.length; i++) {
+        tabButtons[i].classList.remove("active");
+      }
+      document.getElementById(tabName).classList.add("active");
+      btnElement.classList.add("active");
+    }
+
+    // 3. Stage Switching & Dropdown Population
+    function updateStage(stageNum) {
+      currentStage = stageNum;
+      
+      // Update Tab UI
+      document.getElementById('tab-baby').classList.remove('active');
+      document.getElementById('tab-kid').classList.remove('active');
+      document.getElementById('tab-young').classList.remove('active');
+      document.getElementById('tab-' + (stageNum === 0 ? 'baby' : stageNum === 1 ? 'kid' : 'young')).classList.add('active');
+
+      // Update Requirements Text
+      const requirements = {
+        '0': { title: "Baby Stage", text: `<h4>Required Field:</h4><ul><li><strong>Meadow</strong></li><li>Ensure the background matches the required environment.</li></ul>` },
+        '1': { title: "Kid Stage", text: `<h4>Required Food:</h4><ul><li><strong>Apples</strong> (x3)</li><li><strong>Bread</strong> (x1)</li><li>Do not feed snacks yet.</li></ul>` },
+        '2': { title: "Young Stage", text: `<h4>Care Parameters:</h4><ul><li><strong>Care Mistakes:</strong> Min 1, Max 3</li><li><strong>Max Food:</strong> 5 times</li><li><strong>Max Happiness:</strong> 5 times</li></ul>` }
+      };
+      document.getElementById('requirementsDisplay').innerHTML = requirements[stageNum].text;
+
+      // Update Background Field Color based on stage
+      const fieldContainer = document.getElementById('tamaPreviewField');
+      if(stageNum === 0) fieldContainer.style.backgroundColor = '#44aa44'; // Green meadow
+      if(stageNum === 1) fieldContainer.style.backgroundColor = '#ccaa44'; // Sandy
+      if(stageNum === 2) fieldContainer.style.backgroundColor = '#44aacc'; // Water/Sky
+
+      // Populate Dropdown
+      populateDropdown(stageNum);
+    }
+
+    // 4. Populate the Dropdown
+    function populateDropdown(stageNum) {
+      const select = document.getElementById('baseTamaSelect');
+      select.innerHTML = ''; 
+
+      for (const [id, data] of Object.entries(tamaData)) {
+        if (data.stage === stageNum) {
+          const option = document.createElement('option');
+          option.value = id;
+          option.textContent = data.name;
+          select.appendChild(option);
+        }
+      }
+
+      if (select.options.length > 0) {
+        select.selectedIndex = 0;
+        updatePreview();
+      } else {
+        document.getElementById('TamaBody').src = '';
+        document.getElementById('TamaEyes').src = '';
+        document.getElementById('TamaFace').src = '';
+        document.getElementById('CellEyes').src = '';
+      }
+    }
+
+    // 5. Update Images, Colors, and Eye Offsets
+    function updatePreview() {
+      const tamaId = document.getElementById('baseTamaSelect').value;
+      if (!tamaId || !tamaData[tamaId]) return;
+
+      const data = tamaData[tamaId];
+      
+      // --- Update Image Sources ---
+      document.getElementById('TamaColorBase').src = `images/tamas/${tamaId}/color.png`;
+      document.getElementById('TamaColor').src = `images/tamas/${tamaId}/color.png`;
+      document.getElementById('TamaBody').src = `images/tamas/${tamaId}/base.png`;
+      document.getElementById('TamaFace').src = `images/tamas/${tamaId}/face.png`;
+
+      // Eyes Override Logic
+      const eyesSelect = document.getElementById('eyesSelect').value;
+      const eyeImgSrc = eyesSelect === 'default' ? `images/tamas/${tamaId}/eyes.png` : `images/tamas/${tamaId}/${eyesSelect}_eyes.png`;
+      
+      document.getElementById('TamaEyes').src = eyeImgSrc;
+      document.getElementById('CellEyes').src = eyeImgSrc;
+
+      // --- Apply Eye Offsets ---
+      // Get offset values from JSON (defaults to 0 if missing)
+      const eyeX = data.offsets ? data.offsets.x : 0;
+      const eyeY = data.offsets ? data.offsets.y : 0;
+
+      // Outdoor View: Default is translate(50%, 95%), then we add the specific X/Y pixel offsets
+      document.getElementById('TamaEyes').style.transform = `translate(50%, 95%) translate(${eyeX}px, ${eyeY}px)`;
+      
+      // Cell View: The cell sprites already have the offset baked in. We just use the default mockup position.
+      document.getElementById('CellEyes').style.transform = `translate(50%, 44.5%)`;
+
+      // --- Apply Color Tint ---
+      const hexColor = data.color; // e.g. "FFF394" from JSON
+      const colorImg = document.getElementById('TamaColor');
+      
+      // Apply the JSON hex color to the CSS filter tint
+      colorImg.style.filter = `opacity(0.5) drop-shadow(0 0 0 #${hexColor}) saturate(500%)`;
+    }
+
+    // Initialize on Load
+    window.onload = loadTamaData;
+  </script>
+
+</body>
+</html>
