@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Paradise Growth Calculator</title>
   <link rel="icon" href="images/favicon.png" />
   <style>
@@ -19,25 +20,30 @@
     }
 
     /* Header */
-    .header { display: flex; align-items: center; gap: 25px; margin-bottom: 20px; width: 100%; max-width: 900px; }
+    .header { display: flex; align-items: center; gap: 25px; margin-bottom: 20px; width: 100%; max-width: 1300px; }
     .header-text { color: #fffbbf; font-size: 1.1em; text-shadow: 1px 1px 2px black; }
     .main-title { color: #ffb3d9; font-size: 1.5em; margin: 0 0 5px 0; text-shadow: 2px 2px 0px #000; }
 
-    /* Tab Navigation */
-    .tabs { display: flex; gap: 10px; width: 100%; max-width: 900px; margin-bottom: 20px; }
+    /* Page layout: tab sidebar on the left, content on the right */
+    .app-layout { display: flex; align-items: flex-start; width: 100%; max-width: 1300px; }
+    .tab-panels { flex: 1; min-width: 0; }
+
+    /* Tab Navigation (vertical, attached to the content's left edge) */
+    .tabs { display: flex; flex-direction: column; gap: 8px; width: 170px; flex-shrink: 0; margin-top: 20px; }
     .tab-btn {
-      background-color: #001a4d; color: #8899cc; border: 2px solid #334488; border-bottom: none;
-      padding: 10px 20px; border-radius: 10px 10px 0 0; cursor: pointer; font-size: 1.1em; font-weight: bold; transition: all 0.2s;
+      background-color: #001a4d; color: #8899cc; border: 2px solid #334488; border-right: none; text-align: left;
+      padding: 12px 14px; border-radius: 10px 0 0 10px; cursor: pointer; font-size: 1.05em; font-weight: bold; transition: all 0.2s;
     }
     .tab-btn:hover { background-color: #002266; color: white; }
     .tab-btn.active { background-color: #334488; color: white; border-color: #88bbff; }
 
     /* Content Containers */
     .tab-content {
-      display: none; width: 100%; max-width: 900px; background-color: rgba(0, 20, 60, 0.85);
+      display: none; width: 100%; background-color: rgba(0, 20, 60, 0.85);
       border: 3px solid #88bbff; border-radius: 15px; padding: 20px; box-sizing: border-box; box-shadow: 0 0 15px rgba(136, 187, 255, 0.3);
     }
     .tab-content.active { display: flex; flex-direction: column; }
+    .mobile-switch { display: none; } /* phone-only section switcher, shown in the phone media query */
 
     /* Shared UI Elements */
     .ui-card { background-color: rgba(10, 30, 80, 0.9); border: 2px solid #5577aa; border-radius: 10px; padding: 15px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
@@ -45,8 +51,41 @@
     .pixel-btn:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0 #000; }
 
     /* --- TAB 1: STEP-BY-STEP LAYOUT --- */
-    .step-by-step-container { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-    .controls-panel { width: 320px; display: flex; flex-direction: column; gap: 15px; }
+    .step-by-step-container { display: flex; gap: 20px; justify-content: center; align-items: flex-start; flex-wrap: wrap; }
+    .left-column { flex: 0 0 340px; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+    .right-column { flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+
+    /* DESKTOP: Selector + Paths on the left, Preview on the right, Stage across the full width below */
+    @media (min-width: 951px) {
+      .step-by-step-container {
+        display: grid; grid-template-columns: 340px minmax(0, 1fr); grid-template-rows: auto 1fr auto;
+        grid-template-areas: "selector preview" "paths preview" "stage stage"; align-items: start;
+      }
+      .left-column, .right-column { display: contents; }
+      .selector-panel { grid-area: selector; }
+      .paths-panel { grid-area: paths; align-self: stretch; }
+      .visuals-panel { grid-area: preview; align-self: stretch; justify-content: center; }
+      .controls-panel { grid-area: stage; }
+
+      /* Condensed selector so Selector + Paths line up with the Preview's height */
+      .selector-panel, .paths-panel { padding: 12px; }
+      .selector-panel { gap: 0; }
+      .selector-panel h3, .paths-panel h3 { margin-bottom: 8px; font-size: 1.05em; }
+      .selector-panel .custom-select-group { gap: 3px; margin-bottom: 8px; }
+      .selector-panel .custom-select-group:last-child { margin-bottom: 0; }
+      .selector-panel .custom-select-group label { font-size: 0.82em; }
+      .selector-panel .select-trigger { padding: 6px 10px; }
+      .selector-panel .help-text { margin: 0; font-size: 0.68em; }
+      .paths-panel .path-btn { padding: 6px 10px; }
+    }
+    @media (min-width: 951px) and (max-width: 1260px) {
+      .step-by-step-container { grid-template-columns: 280px minmax(0, 1fr); }
+      /* Slightly smaller preview boxes so the field and cell stay side by side */
+      .image-stack > .sprite-container { zoom: 0.82; }
+    }
+    .selector-panel { display: flex; flex-direction: column; gap: 5px; }
+    .paths-panel .paths-container { margin-bottom: 0; }
+    .controls-panel { box-sizing: border-box; display: flex; flex-direction: column; gap: 15px; }
 
     .custom-select-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
     .custom-select-group label { font-size: 0.9em; color: #88bbff; }
@@ -60,6 +99,7 @@
     .select-trigger::after { content: '▼'; font-size: 0.8em; color: #88bbff; }
 
     .help-text { font-size: 0.75em; color: #8899cc; margin-top: -5px; margin-bottom: 10px; }
+    .reset-default-btn { width: 100%; margin-top: 6px; padding: 6px 10px; font-size: 0.85em; }
 
     /* Paths Buttons */
     .paths-container { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px; }
@@ -78,16 +118,53 @@
     #tab-adult.active { background-color: #aa44aa; border-color: #ff88ff; }
 
     .requirements-box {
-      background-color: #000; border: 1px solid #44aa44; padding: 15px; border-radius: 5px;
-      min-height: 100px; color: #88ff88; font-family: 'Courier New', Courier, monospace; font-size: 0.95em; box-shadow: inset 0 0 10px rgba(68, 170, 68, 0.2);
+      background-color: rgba(0, 10, 30, 0.9); border: 2px solid #44aa44; padding: 12px; border-radius: 8px;
+      min-height: 100px; color: #e8f0ff; font-size: 0.95em; box-shadow: inset 0 0 10px rgba(68, 170, 68, 0.2);
     }
-    .requirements-box h4 { margin: 0 0 10px 0; color: #fff; border-bottom: 1px dashed #44aa44; padding-bottom: 5px;}
-    .requirements-box ul { margin: 0; padding-left: 20px; }
-    .requirements-box li { margin-bottom: 5px; }
+    .guide-step-header { font-size: 0.8em; font-weight: bold; color: #88ff88; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .guide-instruction { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; line-height: 1.35; }
+    .guide-instruction b { color: #ffb3d9; }
+    .guide-tip { font-size: 0.8em; color: #8899cc; margin-bottom: 8px; }
+    .guide-next { font-size: 0.9em; color: #fffbbf; border-top: 1px dashed #44aa44; padding-top: 8px; }
+    .guide-error { color: #ff8888; }
+    .guide-secret {
+      font-size: 0.85em; color: #fff; background: linear-gradient(90deg, rgba(170, 68, 170, 0.55), rgba(170, 68, 170, 0.15));
+      border: 1px solid #ff88ff; border-radius: 6px; padding: 6px 10px; margin-bottom: 10px;
+    }
+    .guide-secret b { color: #ffd6ff; }
+    .guide-foods { margin-bottom: 8px; }
+    .guide-foods-title { font-size: 0.8em; color: #88bbff; margin-bottom: 5px; }
+    .guide-foods-title b { color: #ffb3d9; }
+    .guide-foods-note { color: #8899cc; }
+    .food-list { display: flex; flex-wrap: wrap; gap: 5px; }
+    .food-chip {
+      display: flex; align-items: center; gap: 4px; padding: 2px 7px 2px 3px; min-height: 28px; box-sizing: border-box;
+      background: #112244; border: 1px solid #5577aa; border-radius: 6px; font-size: 0.8em;
+    }
+    .food-chip img { width: 24px; height: 24px; image-rendering: pixelated; }
+    .food-points { font-weight: bold; color: #88ff88; }
+
+    /* Pixel icons: single 16x16 images, scaled up crisply */
+    .icon-sprite {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background-size: 100% 100%; background-position: center; background-repeat: no-repeat; image-rendering: pixelated;
+    }
+    .icon-sprite.sm { width: 24px; height: 24px; }
+    .icon-fallback {
+      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+      min-width: 32px; height: 32px; padding: 0 4px; box-sizing: border-box;
+      background: #334488; border: 1px solid #88bbff; border-radius: 6px; font-size: 0.65em; font-weight: bold; color: #fff;
+    }
+    .icon-fallback.sm { min-width: 24px; height: 24px; }
 
     /* Visuals Panel */
-    .visuals-panel { display: flex; justify-content: center; align-items: center; flex: 1; }
-    .image-stack { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+    /* Full-width preview section under the selector, paths and stage sections */
+    .visuals-panel { box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
+    .preview-heading { margin: 0 0 10px 0; align-self: stretch; color: #88bbff; border-bottom: 2px solid #5577aa; padding-bottom: 5px; }
+    .image-stack { display: flex; flex-direction: row; flex-wrap: wrap; gap: 15px; align-items: center; justify-content: center; }
+    .image-stack > .preview-header { flex-basis: 100%; }
+    .preview-header { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    #debugPanel { box-sizing: border-box; max-width: 260px; margin-left: auto; margin-right: auto; }
     
     .current-tama-title {
       color: #88bbff; font-size: 1.2em; font-weight: bold; text-align: center; 
@@ -98,7 +175,12 @@
       background-color: #111; background-size: cover; background-position: center;
       width: 260px; height: 260px; border-radius: 10px; border: 3px solid #fff; overflow: hidden; transition: background-image 0.3s ease;
     }
-    .sprite-container.cell-bg { background-image: url(images/cell/bg.png); background-color: #225588; margin-top: 10px; }
+    .sprite-container.cell-bg { background-image: url(images/cell/bg.png); background-color: #225588; position: relative; }
+
+    /* Care icons orbiting the cell */
+    .cell-icons { position: absolute; inset: 0; pointer-events: none; }
+    .cell-icon-slot { position: absolute; }
+    .cell-icon-slot.icon-fallback { font-size: 0.5em; padding: 0 2px; overflow: hidden; width: 32px; }
 
     /* Use the standard 260x260 grid layout */
     .sprite-grid { display: grid; width: 100%; height: 100%; }
@@ -114,6 +196,10 @@
     #debugPanel h4 { margin: 0 0 10px 0; color: #ff4444; text-align: center; text-transform: uppercase; }
     .debug-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
     .debug-row span { color: #fff; font-family: monospace; }
+    .debug-row { flex-wrap: wrap; gap: 4px; }
+    .debug-readout { flex-basis: 100%; }
+    .debug-row .debug-nudge { color: #ffaa66; }
+    .debug-row b { color: #88ff88; }
     .debug-btn {
       background-color: #444; color: white; border: 1px solid #666;
       border-radius: 3px; padding: 2px 6px; cursor: pointer; font-weight: bold;
@@ -123,19 +209,210 @@
     .debug-reset:hover { background-color: #cc4455; }
 
     /* --- TAB 2 & 3 --- */
-    .gene-viewer-container { display: flex; flex-direction: column; gap: 20px; }
-    .parents-container { display: flex; justify-content: space-around; align-items: center; gap: 20px; }
-    .parent-box { text-align: center; width: 200px; }
-    .parent-image-placeholder { width: 150px; height: 150px; background-color: #222; border: 2px solid #5577aa; border-radius: 10px; margin: 10px auto; display: flex; align-items: center; justify-content: center; color: #555; }
-    .family-tree-container { display: flex; flex-direction: column; gap: 15px; }
-    .tree-toolbar { display: flex; gap: 10px; background-color: #112244; padding: 10px; border-radius: 8px; }
-    .tree-canvas { height: 400px; background-color: #0a0a1a; background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 20px 20px; border: 2px dashed #5577aa; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #5577aa; }
+    /* --- GENE VIEWER --- */
+    /* Grid: Parent 1 | ✕ | Parent 2 on the first row, Possible Babies spanning the same width below */
+    .gene-viewer-container {
+      display: grid; grid-template-columns: minmax(0, 380px) auto minmax(0, 380px);
+      justify-content: center; column-gap: 15px; row-gap: 20px;
+    }
+    .gene-parents { display: contents; }
+    .gene-parent { min-width: 0; display: flex; flex-direction: column; }
+    .gene-results-panel { grid-column: 1 / -1; min-width: 0; }
+    .gene-cross { align-self: center; font-size: 2em; font-weight: bold; color: #ffb3d9; text-shadow: 2px 2px 0 #000; }
+    .gene-heading { margin: 0 0 10px 0; color: #ffb3d9; border-bottom: 2px solid #5577aa; padding-bottom: 5px; font-size: 1.1em; }
+    .gene-parent-preview { display: flex; justify-content: center; margin-bottom: 12px; }
+    .gene-passes { font-size: 0.8em; color: #c8d4ff; margin-top: 2px; }
+    .gene-passes b { color: #fff; }
+    .gene-results-help { margin: -4px 0 12px 0; }
+    .gene-results { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; }
+    .gene-result {
+      background: #112244; border: 2px solid #5577aa; border-radius: 10px; padding: 10px;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .gene-result-info { font-size: 0.82em; color: #c8d4ff; align-self: stretch; display: flex; flex-direction: column; gap: 3px; }
+    .gene-result-info b { color: #fff; }
+    .gene-from { color: #8899cc; }
+    .gene-use-btn { width: 100%; font-size: 0.85em; padding: 6px 10px; }
+    .gene-placeholder { color: #8899cc; font-style: italic; padding: 10px 0; }
+    .color-swatch {
+      display: inline-block; width: 0.9em; height: 0.9em; border-radius: 3px; border: 1px solid #fff; vertical-align: -1px;
+    }
+
+    /* Small layered sprite (same 260px layout as the main preview, shrunk) */
+    .mini-preview {
+      width: 260px; height: 260px; zoom: 0.6; flex-shrink: 0;
+      background-color: #1a2a5a; background-size: cover; background-position: center;
+      border: 3px solid #fff; border-radius: 10px; overflow: hidden;
+    }
+    .mini-preview.gene-empty { display: flex; align-items: center; justify-content: center; color: #8899cc; font-size: 1.5em; font-style: italic; }
+    .gene-result .mini-preview { background: radial-gradient(circle at 50% 60%, #2a4a8a, #13204a); }
+    /* --- FAMILY TREE --- */
+    .family-tree-container { display: flex; flex-direction: column; gap: 12px; }
+    .tree-tabs-bar { display: flex; gap: 8px; align-items: center; border-bottom: 2px solid #334488; padding-bottom: 8px; }
+    .tree-tabs { display: flex; gap: 6px; flex: 1; min-width: 0; overflow-x: auto; }
+    .tree-tab {
+      flex-shrink: 0; padding: 7px 14px; border-radius: 8px 8px 0 0; border: 2px solid #334488; border-bottom: none;
+      background: #001a4d; color: #8899cc; font-weight: bold; font-family: inherit; cursor: pointer; white-space: nowrap;
+    }
+    .tree-tab:hover { background: #002266; color: #fff; }
+    .tree-tab.active { background: #334488; color: #fff; border-color: #88bbff; }
+    .tree-count {
+      display: inline-block; margin-left: 7px; min-width: 18px; padding: 0 5px; border-radius: 9px;
+      background: rgba(255, 255, 255, 0.15); font-size: 0.8em; text-align: center;
+    }
+    .tree-toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; background-color: #112244; padding: 10px; border-radius: 8px; }
+    .tree-toolbar-spacer { flex: 1; }
+    .tree-connect-banner {
+      display: none; align-items: center; gap: 10px; flex-wrap: wrap; padding: 8px 12px; border-radius: 8px;
+      background: rgba(68, 170, 68, 0.25); border: 1px solid #88ff88; color: #fff; font-size: 0.9em;
+    }
+    .tree-connect-banner b { color: #88ff88; }
+    .tree-canvas {
+      position: relative; min-height: 420px; max-height: 75vh; overflow: auto; border: 2px dashed #5577aa; border-radius: 8px;
+      background-color: #0a0a1a; background-size: 20px 20px;
+      background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    }
+    /* Shell chosen: its field behind a darkened grid, so boxes and lines stay readable */
+    .tree-canvas.has-shell {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(rgba(5, 10, 35, 0.55), rgba(5, 10, 35, 0.55)), var(--tree-field);
+      background-size: 20px 20px, 20px 20px, cover, cover;
+      background-position: 0 0, 0 0, center, center;
+      image-rendering: pixelated;
+    }
+
+    /* Shell picker */
+    .shell-picker { position: relative; }
+    .shell-picker-btn { display: flex; align-items: center; gap: 6px; padding: 4px 10px 4px 4px; }
+    .shell-picker-btn img, .shell-option img { width: 28px; height: 28px; object-fit: contain; }
+    .shell-none-icon { width: 28px; text-align: center; font-size: 1.1em; }
+    .shell-menu {
+      display: none; position: absolute; top: calc(100% + 6px); left: 0; z-index: 20; min-width: 200px; padding: 6px;
+      background: #001a4d; border: 2px solid #88bbff; border-radius: 10px; box-shadow: 0 6px 16px rgba(0,0,0,0.6);
+      flex-direction: column; gap: 3px;
+    }
+    .shell-menu.open { display: flex; }
+    .shell-option {
+      display: flex; align-items: center; gap: 8px; padding: 4px 8px; border-radius: 6px; border: 1px solid transparent;
+      background: transparent; color: #fff; font-family: inherit; font-weight: bold; font-size: 0.85em; cursor: pointer; text-align: left;
+    }
+    .shell-option:hover { background: #1a3366; }
+    .shell-option.active { border-color: #ffb3d9; background: #2a2a5a; }
+    .tree-empty {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(90%, 420px);
+      text-align: center; color: #8899cc; line-height: 1.6; pointer-events: none;
+    }
+    .tree-empty b { color: #ffb3d9; }
+    .tree-stage { position: relative; margin: 0 auto; }
+    .tree-lines { position: absolute; inset: 0; pointer-events: none; }
+    .tree-lines path { fill: none; stroke: #88bbff; stroke-width: 3; stroke-linejoin: round; }
+    .tree-lines path.pair { stroke: #ff88c8; stroke-width: 4; }
+
+    /* Lineage columns */
+    .tree-line-column {
+      position: absolute; box-sizing: border-box; border-radius: 10px;
+      background: rgba(136, 187, 255, 0.04); border: 1px dashed rgba(136, 187, 255, 0.25);
+    }
+    .tree-line-header {
+      display: flex; align-items: center; justify-content: center; gap: 4px; padding: 6px; position: relative; z-index: 2;
+    }
+    .tree-line-name {
+      background: #1a2a5a; color: #fff; border: 1px solid #5577aa; border-radius: 6px; padding: 4px 10px;
+      font-weight: bold; font-size: 0.8em; font-family: inherit; cursor: pointer; max-width: 120px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .tree-line-move, .tree-line-delete {
+      width: 24px; height: 24px; padding: 0; border-radius: 6px; cursor: pointer; font-size: 0.7em;
+      background: #334488; color: #fff; border: 1px solid #88bbff; opacity: 0; transition: opacity 0.15s;
+    }
+    .tree-line-delete { background: #aa3344; border-color: #ff5566; }
+    .tree-line-header:hover .tree-line-move, .tree-line-header:hover .tree-line-delete,
+    .tree-line-header:focus-within .tree-line-move, .tree-line-header:focus-within .tree-line-delete { opacity: 1; }
+    .tree-line-move:disabled { opacity: 0 !important; cursor: default; }
+    @media (hover: none) { .tree-line-move, .tree-line-delete { opacity: 1; } } /* touch: always show line controls */
+
+    .tree-box {
+      position: absolute; width: 150px; height: 196px; box-sizing: border-box; padding: 10px 8px 8px; z-index: 1;
+      background: #112244; border: 2px solid #5577aa; border-radius: 10px; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 4px; box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+    }
+    .tree-box:hover, .tree-box.selected { border-color: #ffb3d9; z-index: 3; }
+
+    /* Action bar under a box: only while hovered or tapped */
+    .tree-actions {
+      position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+      display: none; gap: 5px; padding: 4px; border-radius: 8px; background: #001a4d; border: 1px solid #88bbff;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.6); white-space: nowrap;
+    }
+    .tree-actions::before { content: ''; position: absolute; left: 0; right: 0; top: -8px; height: 8px; } /* keeps hover alive across the gap */
+    .tree-box:hover .tree-actions, .tree-box.selected .tree-actions { display: flex; }
+    .tree-action {
+      min-width: 36px; height: 30px; padding: 0 6px; border-radius: 6px; cursor: pointer; font-size: 0.95em;
+      background: #334488; color: #fff; border: 1px solid #5577aa;
+    }
+    .tree-action:hover, .tree-action.active { background: #44aa44; border-color: #88ff88; }
+    .tree-action.unlink:hover { background: #aa3344; border-color: #ff5566; }
+
+    /* ◀ ▶ move arrows at the box sides (after ↔️) */
+    .tree-move {
+      position: absolute; top: 50%; transform: translateY(-50%); width: 26px; height: 44px; padding: 0; border-radius: 8px;
+      background: #44aa44; color: #fff; border: 2px solid #88ff88; cursor: pointer; font-size: 0.8em; box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    }
+    .tree-move.left { left: -18px; }
+    .tree-move.right { right: -18px; }
+    .tree-move:disabled { opacity: 0.25; cursor: default; }
+
+    /* 💕 between partners */
+    .tree-heart {
+      position: absolute; transform: translate(-50%, -50%); width: 34px; height: 34px; padding: 0; border-radius: 50%; z-index: 2;
+      background: #2a1030; border: 2px solid #ff88c8; cursor: pointer; font-size: 1em; box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    }
+    .tree-heart:hover { background: #ff88c8; transform: translate(-50%, -50%) scale(1.1); }
+    .tree-box .tree-sprite { zoom: 0.46; border-width: 4px; }
+    .tree-box-name { font-size: 0.85em; font-weight: bold; color: #fff; text-align: center; line-height: 1.15; }
+    .tree-box-sub { font-size: 0.7em; color: #8899cc; text-align: center; }
+    .tree-edit-btn {
+      position: absolute; top: -10px; left: -10px; width: 30px; height: 30px; border-radius: 50%; padding: 0;
+      background: #ffb3d9; border: 2px solid #fff; cursor: pointer; font-size: 0.9em; box-shadow: 1px 1px 0 #000;
+    }
+    .tree-box.connect-source { border-color: #88ff88; box-shadow: 0 0 0 3px rgba(136,255,136,0.4); }
+    .tree-box.connect-target { border-color: #88ff88; cursor: pointer; animation: treePulse 1.2s ease-in-out infinite; }
+    .tree-box.connect-target:hover { background: #1f3f2a; }
+    .tree-box.connect-disabled { opacity: 0.4; }
+    @keyframes treePulse { 50% { box-shadow: 0 0 0 4px rgba(136,255,136,0.35); } }
+    .tree-save-note { font-size: 0.75em; color: #8899cc; text-align: right; }
+
+    /* Dialogs (Add/Edit Tama, Add to Tree) */
+    .dialog-content {
+      background-color: #001a4d; border: 3px solid #88bbff; border-radius: 15px; width: 92%; max-width: 620px; max-height: 92vh;
+      display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 0 20px rgba(136, 187, 255, 0.5);
+    }
+    .dialog-content.small { max-width: 440px; }
+    .dialog-body { padding: 15px; display: flex; flex-wrap: wrap; gap: 15px; overflow-y: auto; }
+    .dialog-body.column { flex-direction: column; flex-wrap: nowrap; gap: 10px; }
+    .dialog-preview { flex: 0 0 auto; display: flex; justify-content: center; }
+    .dialog-fields { flex: 1 1 240px; min-width: 0; }
+    .dialog-select {
+      padding: 8px 10px; border-radius: 5px; background-color: #112244; color: white; border: 1px solid #5577aa; font-family: inherit;
+    }
+    .dialog-parents { flex-basis: 100%; display: flex; flex-direction: column; gap: 6px; }
+    .dialog-label { font-size: 0.85em; color: #88bbff; }
+    .dialog-parent-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: #112244; padding: 6px 10px; border-radius: 6px; }
+    .dialog-actions { display: flex; gap: 8px; align-items: center; padding: 12px 15px; border-top: 2px solid #334488; flex-wrap: wrap; }
+    .add-to-tree-summary { background: #112244; border: 1px solid #5577aa; border-radius: 6px; padding: 8px 10px; color: #fff; font-weight: bold; font-size: 0.9em; }
+    .add-to-tree-list { display: flex; flex-direction: column; gap: 6px; }
+    .add-to-tree-option { text-align: left; }
+    .add-to-tree-new { display: flex; gap: 8px; flex-wrap: wrap; }
+    .add-to-tree-new .modal-search { min-width: 0; flex: 1 1 160px; }
+    .add-to-tree-btn { width: 100%; }
 
     /* --- CUSTOM TAMA SELECTOR MODAL --- */
     .modal-overlay {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.8); z-index: 1000; justify-content: center; align-items: center;
     }
+    #tamaModal { z-index: 1100; } /* the Tama picker can open on top of the tree dialogs */
     .modal-content {
       background-color: #001a4d; border: 3px solid #88bbff; border-radius: 15px;
       width: 90%; max-width: 950px; height: 85vh; display: flex; flex-direction: column;
@@ -156,7 +433,18 @@
     .modal-btn:hover { background-color: #4466aa; }
     .modal-btn.close { background-color: #aa3344; border-color: #ff5566; }
     .modal-btn.close:hover { background-color: #cc4455; }
-    
+
+    /* Field filter chips */
+    .modal-filters {
+      display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 15px; border-bottom: 2px solid #334488; flex-shrink: 0;
+    }
+    .filter-chip {
+      padding: 5px 11px; border-radius: 999px; background-color: #112244; color: #aabbdd;
+      border: 1px solid #5577aa; cursor: pointer; font-size: 0.85em; font-weight: bold; font-family: inherit;
+    }
+    .filter-chip:hover { background-color: #1a3366; color: #fff; }
+    .filter-chip.active { background-color: #ffb3d9; color: #000; border-color: #fff; }
+
     .modal-body {
       padding: 15px 15px 100px 15px; 
       overflow-y: auto; display: grid; 
@@ -198,6 +486,62 @@
     .tama-name {
       font-size: 0.95em; color: #fff; font-weight: bold; line-height: 1.2;
     }
+
+    /* --- TABLET: tabs move back above the content; two flex columns (Selector+Paths | Preview+Stage) --- */
+    @media (max-width: 950px) {
+      .left-column { flex: 0 0 280px; }
+      .app-layout { flex-direction: column; align-items: stretch; }
+      .tabs { flex-direction: row; width: 100%; margin-top: 0; gap: 5px; }
+      .tab-btn { flex: 1; text-align: center; border: 2px solid #334488; border-bottom: none; border-radius: 10px 10px 0 0; }
+      .tab-btn.active { border-color: #88bbff; }
+    }
+
+    /* --- PHONE: single column --- */
+    @media (max-width: 640px) {
+      body { padding: 10px; }
+      .header { flex-direction: column; gap: 8px; text-align: center; margin-bottom: 12px; }
+      .header img { width: 160px; height: auto; }
+      .main-title { font-size: 1.3em; }
+      .header-text { font-size: 0.95em; }
+
+      .tab-btn { padding: 8px 4px; font-size: 0.9em; }
+
+      .tab-content { padding: 10px; border-radius: 0 0 12px 12px; }
+      .step-by-step-container { gap: 12px; }
+      .left-column, .right-column { flex: 1 1 100%; min-width: 0; gap: 12px; }
+
+      /* Gene Viewer: parents stacked, two babies per row */
+      .gene-viewer-container { grid-template-columns: minmax(0, 1fr); row-gap: 12px; }
+      .gene-cross { font-size: 1.5em; }
+      .gene-results { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+      .gene-result .mini-preview { zoom: 0.5; }
+      .gene-result-info { font-size: 0.75em; }
+
+      /* Section switcher: one half of the tab at a time */
+      .mobile-switch {
+        display: flex; gap: 6px; position: sticky; top: 0; z-index: 5; margin: -10px -10px 12px; padding: 8px 10px;
+        background: rgba(0, 20, 60, 0.97); border-bottom: 2px solid #334488;
+      }
+      .mobile-switch-btn {
+        flex: 1; padding: 9px 6px; border-radius: 8px; border: 2px solid #334488; background: #001a4d;
+        color: #8899cc; font-weight: bold; font-size: 0.9em; font-family: inherit; cursor: pointer;
+      }
+      .mobile-switch-btn.active { background: #ffb3d9; color: #000; border-color: #fff; }
+      .step-by-step-container[data-mobile-section="setup"] .right-column,
+      .step-by-step-container[data-mobile-section="progress"] .left-column { display: none; }
+      .image-stack { flex-direction: column; }
+
+      /* Selector modal */
+      .modal-content { width: 96%; height: 92vh; }
+      .modal-header { padding: 10px; }
+      .modal-filters { flex-wrap: nowrap; overflow-x: auto; padding: 8px 10px; }
+      .filter-chip { flex-shrink: 0; }
+      .modal-search { min-width: 0; flex-basis: 100%; order: 3; }
+      .modal-body { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; padding: 10px 10px 80px 10px; }
+      .tama-card { padding: 8px; gap: 6px; }
+      .mini-sprite { height: 120px; }
+      .mini-sprite-inner { transform: scale(0.55); }
+    }
   </style>
 </head>
 <body>
@@ -211,19 +555,29 @@
     </div>
   </div>
 
-  <!-- Tab Navigation -->
+  <div class="app-layout">
+
+  <!-- Tab Navigation (left sidebar) -->
   <div class="tabs">
     <button class="tab-btn active" onclick="openTab('step-by-step', this)">📈 Step-by-Step</button>
     <button class="tab-btn" onclick="openTab('gene-viewer', this)">🧬 Gene Viewer</button>
     <button class="tab-btn" onclick="openTab('family-tree', this)">🌳 Family Tree</button>
   </div>
 
+  <div class="tab-panels">
+
   <!-- TAB 1: STEP-BY-STEP -->
   <div id="step-by-step" class="tab-content active">
-    <div class="step-by-step-container">
+    <!-- Phone only: switch between the two halves of the Step-by-Step tab -->
+    <div class="mobile-switch" role="tablist">
+      <button class="mobile-switch-btn active" data-section="setup" onclick="showMobileSection('setup')">🎯 Tama &amp; Path</button>
+      <button class="mobile-switch-btn" data-section="progress" onclick="showMobileSection('progress')">👀 Preview &amp; Stage</button>
+    </div>
+    <div class="step-by-step-container" id="stepContainer" data-mobile-section="setup">
       
-      <!-- Left Side: Controls & Modifiers -->
-      <div class="controls-panel ui-card">
+      <!-- Left Column: Tama Selector, Paths -->
+      <div class="left-column">
+      <div class="selector-panel ui-card">
         
         <!-- TAMA CUSTOMIZATION -->
         <h3 style="margin-top: 0; color: #ffb3d9; border-bottom: 2px solid #5577aa; padding-bottom: 5px;">Tama Selector</h3>
@@ -252,44 +606,36 @@
           <div class="help-text">*Pulls color from any Breedable Adult Tama.</div>
         </div>
 
-        <hr style="border-color: #5577aa; width: 100%; margin: 10px 0;">
+        <button class="modal-btn reset-default-btn" onclick="resetStepToDefault()">↺ Reset to Default</button>
+      </div>
 
-        <!-- PATHS -->
+      <!-- PATHS -->
+      <div class="paths-panel ui-card">
         <h3 style="margin-top: 0; color: #ffb3d9; border-bottom: 2px solid #5577aa; padding-bottom: 5px;">Paths</h3>
         <div id="pathsContainer" class="paths-container">
           <div style="color: #8899cc; font-size: 0.9em; font-style: italic;">Select a Base Tama first...</div>
         </div>
-
-        <hr style="border-color: #5577aa; width: 100%; margin: 10px 0;">
-
-        <!-- STAGE -->
-        <h3 style="margin-top: 0; color: #88ff88; border-bottom: 2px solid #5577aa; padding-bottom: 5px;">Stage</h3>
-        
-        <div class="stage-tabs">
-          <div class="stage-tab active" id="tab-baby" onclick="updateStage(0)">Baby</div>
-          <div class="stage-tab" id="tab-kid" onclick="updateStage(1)">Kid</div>
-          <div class="stage-tab" id="tab-young" onclick="updateStage(2)">Young</div>
-          <div class="stage-tab" id="tab-adult" onclick="updateStage(3)">Adult</div>
-        </div>
-
-        <div class="requirements-box" id="requirementsDisplay"></div>
-        
-        <button id="advanceBtn" class="pixel-btn" style="margin-top: 15px; width: 100%;" onclick="advanceStage()">Advance to Next Stage ➔</button>
+      </div>
       </div>
 
-      <!-- Right Side: Visuals -->
-      <div class="visuals-panel">
+      <!-- Right Column: Preview, Stage -->
+      <div class="right-column">
+
+      <!-- PREVIEW -->
+      <div class="visuals-panel ui-card">
+        <h3 class="preview-heading">Preview</h3>
         <div class="image-stack">
-          <div class="current-tama-title" id="currentTamaName">Current Tama:<br>Loading...</div>
-          
-          <!-- Debug Toggle Button -->
-          <button class="pixel-btn" style="font-size: 0.8em; padding: 4px 10px; margin-bottom: 5px; background-color: #ff4444; color: white; border-color: #ff8888;" onclick="toggleDebug()">🛠️ Toggle Debug Panel</button>
+          <div class="preview-header">
+            <div class="current-tama-title" id="currentTamaName">Current Tama:<br>Loading...</div>
+
+            <!-- Debug Toggle Button -->
+            <button class="pixel-btn" style="font-size: 0.8em; padding: 4px 10px; margin-bottom: 5px; background-color: #ff4444; color: white; border-color: #ff8888;" onclick="toggleDebug()">🛠️ Toggle Debug Panel</button>
 
           <!-- Debug Panel -->
           <div id="debugPanel">
             <h4>Eye Offset Debugger</h4>
             <div class="debug-row">
-              <span>X Offset: <span id="debugXVal">0</span></span>
+              <span class="debug-readout">X: <span id="debugXVal">0</span></span>
               <div>
                 <button class="debug-btn" onclick="adjustOffset('x', -1)">-1</button>
                 <button class="debug-btn" onclick="adjustOffset('x', -0.5)">-0.5</button>
@@ -298,7 +644,7 @@
               </div>
             </div>
             <div class="debug-row">
-              <span>Y Offset: <span id="debugYVal">0</span></span>
+              <span class="debug-readout">Y: <span id="debugYVal">0</span></span>
               <div>
                 <button class="debug-btn" onclick="adjustOffset('y', -1)">-1</button>
                 <button class="debug-btn" onclick="adjustOffset('y', -0.5)">-0.5</button>
@@ -308,10 +654,10 @@
             </div>
             <button class="debug-btn debug-reset" onclick="resetDebug()">Reset to 0</button>
           </div>
+          </div>
 
           <div class="sprite-container" id="tamaPreviewField">
             <div class="sprite-grid">
-              <img id="TamaColorBase" alt="" src="" width="130" height="130" class="base-transform" />
               <img id="TamaColor" alt="" src="" width="130" height="130" class="base-transform" />
               <img id="TamaBody" src="" alt="" width="130" height="130" class="base-transform" />
               <img id="TamaEyes" src="" alt="" width="130" height="130" />
@@ -324,9 +670,30 @@
               <img id="CellEyes" src="" alt="" width="130" height="130" />
               <img id="CellFace" src="images/cell/face.png" alt="" width="130" height="130" style="transform: translate(50%, 50%);" />
             </div>
+            <div class="cell-icons" id="cellIcons"></div>
           </div>
         </div>
       </div>
+
+      <!-- STAGE & GUIDE -->
+      <div class="controls-panel ui-card">
+
+        <!-- STAGE -->
+        <h3 style="margin-top: 0; color: #88ff88; border-bottom: 2px solid #5577aa; padding-bottom: 5px;">Stage</h3>
+
+        <div class="stage-tabs">
+          <div class="stage-tab active" id="tab-baby" onclick="updateStage(0)">Baby</div>
+          <div class="stage-tab" id="tab-kid" onclick="updateStage(1)">Kid</div>
+          <div class="stage-tab" id="tab-young" onclick="updateStage(2)">Young</div>
+          <div class="stage-tab" id="tab-adult" onclick="updateStage(3)">Adult</div>
+        </div>
+
+        <div class="requirements-box" id="requirementsDisplay"></div>
+
+        <!-- Shown on the Adult stage only -->
+        <button class="pixel-btn add-to-tree-btn" id="addToTreeBtn" onclick="openAddToTreeDialog()">🌳 Add to Family Tree</button>
+      </div>
+      </div><!-- /.right-column -->
 
     </div>
   </div>
@@ -334,19 +701,111 @@
   <!-- TAB 2: GENE VIEWER -->
   <div id="gene-viewer" class="tab-content">
     <div class="gene-viewer-container">
-      <h2 style="text-align: center; color: #ffb3d9; margin-top: 0;">Breeding Simulator</h2>
-      <p style="text-align: center; color: #8899cc;">(Coming Soon)</p>
+      <!-- Parents: filled by renderGeneViewer() -->
+      <div class="gene-parents">
+        <div class="gene-parent ui-card" id="geneParentA"></div>
+        <div class="gene-cross">✕</div>
+        <div class="gene-parent ui-card" id="geneParentB"></div>
+      </div>
+
+      <!-- Possible babies -->
+      <div class="gene-results-panel ui-card">
+        <h3 class="gene-heading">Possible Babies</h3>
+        <div class="help-text gene-results-help">A baby takes its eyes from one parent and its color from one parent.</div>
+        <div class="gene-results" id="geneResults"></div>
+      </div>
     </div>
   </div>
 
   <!-- TAB 3: FAMILY TREE -->
   <div id="family-tree" class="tab-content">
     <div class="family-tree-container">
-      <div class="tree-toolbar">
-        <button class="pixel-btn">➕ Add Tama</button>
-        <button class="pixel-btn">🔗 Connect Lineage</button>
+      <!-- One tab per saved tree -->
+      <div class="tree-tabs-bar">
+        <div class="tree-tabs" id="treeTabs"></div>
+        <button class="modal-btn" onclick="createTree()">＋ New Tree</button>
+        <button class="modal-btn" onclick="document.getElementById('treeImportInput').click()">⬇ Import</button>
+        <input type="file" id="treeImportInput" accept=".json,application/json" hidden onchange="importTree(this)">
       </div>
-      <div class="tree-canvas"><p>Canvas Area</p></div>
+
+      <div class="tree-toolbar">
+        <button class="pixel-btn" onclick="openTreeDialog()">➕ Add Tama</button>
+        <button class="modal-btn" onclick="addTreeLine()">➕ New Line</button>
+        <!-- Tama shell this tree belongs to: sets the grid background -->
+        <div class="shell-picker">
+          <button class="modal-btn shell-picker-btn" id="shellPickerBtn" onclick="toggleShellMenu(event)"></button>
+          <div class="shell-menu" id="shellMenu"></div>
+        </div>
+        <span class="tree-toolbar-spacer"></span>
+        <button class="modal-btn" onclick="renameTree()">✎ Rename</button>
+        <button class="modal-btn" onclick="exportTree()">⬆ Export</button>
+        <button class="modal-btn close" onclick="deleteTree()">🗑 Delete</button>
+      </div>
+
+      <div class="tree-connect-banner" id="treeConnectBanner"></div>
+      <div class="tree-canvas" id="treeCanvas"></div>
+      <div class="tree-save-note">Trees are saved in this browser automatically. Use Export to keep a copy as a file.</div>
+    </div>
+  </div>
+
+  </div><!-- /.tab-panels -->
+  </div><!-- /.app-layout -->
+
+  <!-- FAMILY TREE: ADD / EDIT TAMA DIALOG -->
+  <div id="treeDialog" class="modal-overlay dialog-overlay">
+    <div class="dialog-content">
+      <div class="modal-header">
+        <h2 id="treeDialogTitle">Add Tama</h2>
+        <button class="modal-btn close" onclick="closeTreeDialog()">✖</button>
+      </div>
+      <div class="dialog-body">
+        <div class="dialog-preview" id="treeDialogPreview"></div>
+        <div class="dialog-fields">
+          <div class="custom-select-group">
+            <label>Adult Tama:</label>
+            <div class="select-trigger" onclick="openModalFor('tree-tama')"><span id="treeTamaDisplay">Select Tama...</span></div>
+          </div>
+          <div class="custom-select-group">
+            <label>Eyes Override:</label>
+            <div class="select-trigger" onclick="openModalFor('tree-eyes')"><span id="treeEyesDisplay">Default (Tama's own)</span></div>
+          </div>
+          <div class="custom-select-group">
+            <label>Color Override:</label>
+            <div class="select-trigger" onclick="openModalFor('tree-color')"><span id="treeColorDisplay">Default (Tama's own)</span></div>
+          </div>
+          <div class="custom-select-group">
+            <label for="treeFieldSelect">Field it came from:</label>
+            <select id="treeFieldSelect" class="dialog-select" onchange="treeDraft.field = this.value === '' ? null : Number(this.value); renderTreeDialogPreview()"></select>
+          </div>
+        </div>
+        <div class="dialog-parents" id="treeDialogParents"></div>
+      </div>
+      <div class="dialog-actions">
+        <button class="modal-btn close" id="treeDeleteBtn" onclick="deleteTreeMember()">🗑 Remove from Tree</button>
+        <span class="tree-toolbar-spacer"></span>
+        <button class="modal-btn" onclick="closeTreeDialog()">Cancel</button>
+        <button class="pixel-btn" onclick="saveTreeDialog()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP-BY-STEP: ADD TO TREE DIALOG -->
+  <div id="addToTreeDialog" class="modal-overlay dialog-overlay">
+    <div class="dialog-content small">
+      <div class="modal-header">
+        <h2>Add to Family Tree</h2>
+        <button class="modal-btn close" onclick="closeAddToTreeDialog()">✖</button>
+      </div>
+      <div class="dialog-body column">
+        <div class="add-to-tree-summary" id="addToTreeSummary"></div>
+        <label class="dialog-label">Add to one of your trees:</label>
+        <div class="add-to-tree-list" id="addToTreeList"></div>
+        <label class="dialog-label" for="newTreeName">Or create a new tree:</label>
+        <div class="add-to-tree-new">
+          <input type="text" id="newTreeName" class="modal-search" placeholder="New tree name..." maxlength="40">
+          <button class="pixel-btn" onclick="addCurrentToNewTree()">Create &amp; Add</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -359,6 +818,7 @@
         <button class="modal-btn" id="sortBtn" onclick="toggleSort()">Sort: A-Z</button>
         <button class="modal-btn close" onclick="closeModal()">✖</button>
       </div>
+      <div class="modal-filters" id="modalFilters"></div>
       <div class="modal-body" id="modalGrid">
         <!-- Cards generated by JS -->
       </div>
@@ -378,17 +838,446 @@
       currentStage: 0 // 0-3
     };
 
+    // Gene Viewer state: kept separate from the Step-by-Step choices
+    let geneState = {
+      a: { id: null, eyes: 'default', color: 'default' },
+      b: { id: null, eyes: 'default', color: 'default' }
+    };
+
     // Debug State
     let isDebugMode = false;
     let debugX = 0;
     let debugY = 0;
 
-    const fieldNames = ["land", "water", "sky", "forest", "tropical", "ice", "cosmic", "new-tamagotchi", "tamagotchi"];
+    const fieldNames = ["land", "water", "sky", "forest", "tropical", "ice", "cosmic", "new_tamagotchi", "tamagotchi"];
+
+    // Diet table: key = the path's Baby-stage field index, list position = the Kid-stage food index
+    const FOOD_TABLE = {
+      "0": ["meat", "carrot", "worm"],
+      "1": ["seafood", "seaweed", "plankton"],
+      "2": ["chicken", "corn", "honey"],
+      "3": ["peking_meat", "bamboo_grass", "pomegranate"],
+      "4": ["tropical_meat", "banana", "butterflies"],
+      "5": ["frozen_meat", "northern_seafood", "red_berries"],
+      "6": ["sparkle_fruit", "squiggle_ham", "mobius_donut"],
+      "7": ["land", "water", "sky"],
+      "8": ["curl", "sparkl", "fluffy"]
+    };
+
+    // Foods that add points to each diet cell: diet key -> [[food name, points], ...]
+    // Every 5 points adds one food icon to the Tama Cells. Source: Tamagotchi Wiki item list.
+    const DIET_FOODS = {
+      "meat": [["Steak", 4], ["Big Meat", 2], ["Small Meat", 1]],
+      "carrot": [["Apple Pie", 4], ["Shredded Carrot", 4], ["Apple", 2], ["Carrot", 1]],
+      "worm": [["Bug Cookie", 4], ["Meal Bugs", 2], ["Meal Worms", 1]],
+      "seafood": [["Fried Fish", 4], ["Grilled Shellfish", 4], ["Seafood", 2], ["Shellfish", 1]],
+      "seaweed": [["Seaweed Salad", 4], ["Green Seaweed", 2], ["Red Seaweed", 1]],
+      "plankton": [["Plankton Dumplings", 4], ["Meal Shrimp", 2], ["Meal Plankton", 1]],
+      "chicken": [["Chicken Steak", 4], ["Whole Chicken", 2], ["Piece of Chicken", 1]],
+      "corn": [["Cherry Pie", 4], ["Corn Flakes", 4], ["Cherries", 2], ["Corn", 1]],
+      "honey": [["Flower Drops", 4], ["Flower Syrup", 2], ["Honey Syrup", 1]],
+      "peking_meat": [["Warm Buns", 4], ["Chashu Pork", 2], ["Peking Meat", 1]],
+      "bamboo_grass": [["Bamboo Leaf Rice Cake", 4], ["Sesame Pancake", 4], ["Bamboo Grass", 2], ["Sesame Leaves", 1]],
+      "pomegranate": [["Che Thai", 4], ["Persimmon", 2], ["Pomegranate", 1]],
+      "tropical_meat": [["Hawaiian Burger", 4], ["Tropical Steak", 2], ["Tropical Patty", 1]],
+      "banana": [["Banana on a Stick", 4], ["Fruit Jelly", 4], ["Tropical Fruits", 2], ["Banana", 1]],
+      "butterflies": [["Butterfly Salad", 4], ["Butterfly Snacks", 2], ["Meal Critters", 1]],
+      "frozen_meat": [["Beef Stroganoff", 4], ["Frozen Meat", 2], ["Canned Meat", 1]],
+      "northern_seafood": [["Blinis", 4], ["Northern Seafood", 2], ["Salmon Roe", 1]],
+      "red_berries": [["Borscht", 4], ["Hot Tea with Jam", 4], ["Beet", 2], ["Red Berries", 1]],
+      "sparkle_fruit": [["Stargaze Pie", 4], ["Zero-Gravity Juice", 4], ["Sparkle Fruit", 2], ["Sparkle Berry", 1]],
+      "squiggle_ham": [["Invader Sandwich", 4], ["Squiggle Ham", 2], ["Squiggle Sausages", 1]],
+      "mobius_donut": [["Moonsault Donut", 4], ["Whirly Baumkuchen", 2], ["Mobius Donut", 1]],
+      "land": [["Shredded Carrot", 4], ["Big Meat", 2], ["Carrot", 1]],
+      "water": [["Fried Fish", 4], ["Grilled Shellfish", 4], ["Seafood", 2], ["Shellfish", 1]],
+      "sky": [["Corn Flakes", 4], ["Whole Chicken", 2], ["Corn", 1]],
+      "curl": [["Strawberry Tart", 4], ["Matsutake", 2], ["Strawberry", 1]],
+      "sparkl": [["Spaghetti", 4], ["TamaDonuts", 2], ["Tomato", 1]],
+      "fluffy": [["Rice Ball Lunch", 4], ["Sandwich Roll", 4], ["Rice Ball", 2], ["Long Roll", 1]]
+    };
+
+    // "Banana on a Stick" -> images/foods/banana_on_a_stick.png
+    function foodSpritePath(name) {
+      return `images/foods/${name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '')}.png`;
+    }
+
+    // A row of food chips; `points` is shown only when given
+    function renderFoodList(title, items) {
+      const wrap = document.createElement('div');
+      wrap.className = 'guide-foods';
+      const heading = document.createElement('div');
+      heading.className = 'guide-foods-title';
+      heading.innerHTML = title;
+      wrap.appendChild(heading);
+      const list = document.createElement('div');
+      list.className = 'food-list';
+      items.forEach(([name, points]) => {
+        const chip = document.createElement('div');
+        chip.className = 'food-chip';
+        const img = document.createElement('img');
+        img.src = foodSpritePath(name);
+        img.alt = '';
+        img.onerror = () => img.remove(); // sprite not added yet: show the name only
+        chip.appendChild(img);
+        const label = document.createElement('span');
+        label.textContent = name;
+        chip.appendChild(label);
+        if (points !== undefined) {
+          const pts = document.createElement('span');
+          pts.className = 'food-points';
+          pts.textContent = `+${points}`;
+          chip.appendChild(pts);
+        }
+        list.appendChild(chip);
+      });
+      wrap.appendChild(list);
+      return wrap;
+    }
+
+    const STAGE_NAMES = ["Baby", "Kid", "Young", "Adult"];
+
+    // "peking_meat" -> "Peking Meat", "new-tamagotchi" -> "New Tamagotchi"
+    function prettyName(key) {
+      return String(key).split(/[_-]/).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    }
+
+    function getFieldKey(path) {
+      const field = path && path["0"] && path["0"].method ? path["0"].method.field : undefined;
+      return fieldNames[field];
+    }
+
+    function getDietKey(path) {
+      if (!path || !path["0"] || !path["1"] || isAnyDiet(path)) return undefined;
+      const list = FOOD_TABLE[String(path["0"].method.field)];
+      return list ? list[path["1"].method.food] : undefined;
+    }
+
+    // Secret paths: the Kid may keep any diet except an indeterminate one ("food": "any"),
+    // the Young stage lists every Young that works, and the requirement is a connection ("connect": 2)
+    function isAnyDiet(path) {
+      return !!(path && path["1"] && path["1"].method.food === "any");
+    }
+
+    function getAnyDietKeys(path) {
+      return FOOD_TABLE[String(path["0"].method.field)] || [];
+    }
+
+    function isConnectPath(path) {
+      return !!(path && path["2"] && path["2"].method.connect !== undefined);
+    }
+
+    // A stage's tama may be one id or a list of ids
+    function tamaIds(t) {
+      return Array.isArray(t) ? t : [t];
+    }
+
+    // ["a", "b", "c"] -> "a, b or c"
+    function orList(items) {
+      return items.length <= 1 ? (items[0] || '') : `${items.slice(0, -1).join(', ')} or ${items[items.length - 1]}`;
+    }
+
+    // Young-stage care level: 0 = 0 mistakes + max fullness/happiness, 1 = 0-1, 2 = 2-5, 3 = 6+
+    const MISTAKE_TEXT = ["0", "0-1", "2-5", "6+"];
+
+    function getMistakeText(method) {
+      return MISTAKE_TEXT[Number(method.mistakes)] || "6+";
+    }
+
+    function needsMaxCare(method) {
+      return Number(method.mistakes) === 0;
+    }
+
+    function getMistakeInstruction(text) {
+      return {
+        "0": "Make <b>no</b> care mistakes",
+        "0-1": "Make <b>at most 1</b> care mistake",
+        "2-5": "Make <b>2–5</b> care mistakes",
+        "6+": "Make <b>6 or more</b> care mistakes"
+      }[text];
+    }
+
+    // Builds an animated 2-frame icon. Falls back to a text badge when the sprite doesn't exist yet.
+    const iconExistsCache = {};
+    function makeIcon(src, label, small) {
+      const el = document.createElement('div');
+      el.className = 'icon-sprite' + (small ? ' sm' : '');
+      el.title = label;
+      const toFallback = () => {
+        el.classList.remove('icon-sprite');
+        el.classList.add('icon-fallback');
+        el.style.backgroundImage = '';
+        el.textContent = label;
+      };
+      if (iconExistsCache[src] === false) { toFallback(); return el; }
+      el.style.backgroundImage = `url('${src}')`;
+      if (iconExistsCache[src] === undefined) {
+        const probe = new Image();
+        probe.onload = () => { iconExistsCache[src] = true; };
+        probe.onerror = () => { iconExistsCache[src] = false; toFallback(); };
+        probe.src = src;
+      }
+      return el;
+    }
+
+    const ICON_PATHS = {
+      field: key => `images/cell/icons/fields/${key}.png`,
+      diet: key => `images/cell/icons/diets/${key}.png`,
+      fullness: () => 'images/cell/icons/fullness.png',
+      happiness: () => 'images/cell/icons/happiness.png',
+      mistake: () => 'images/cell/icons/mistake.png'
+    };
+
+    // Cell icon layout (container is 260x260, cell centred at 130,130, icons are 32x32)
+    const CELL_CENTER = 130;
+    const INNER_RADIUS = 84;   // ring of 4 field icons hugging the cell
+    const OUTER_RADIUS = 113;  // ring of 6 fullness/happiness icons, with mistakes in the gaps
+    const DIET_RADIUS = 74;    // 4 diet icons tucked between the field icons
+    const FIELD_ANGLES = [-135, -45, 45, 135];               // diagonals
+    const DIET_ANGLES = [-90, 0, 90, 180];                   // top, right, bottom, left
+    const CARE_ANGLES = [-90, -30, 30, 90, 150, 210];         // 6 evenly spaced, starting at the top
+    const MISTAKE_ANGLES = [-60, 0, 60, 120, 180, 240];       // the gaps between the care icons
+
+    // Highest number of mistakes the path allows -> how many mistake icons to draw
+    const MISTAKE_ICON_COUNT = { "0": 0, "0-1": 1, "2-5": 5, "6+": 6 };
+
+    // Pick `count` of the 6 gap slots, spread as evenly as possible
+    function spreadSlots(count, slots) {
+      const picked = [];
+      for (let i = 0; i < count; i++) picked.push(slots[Math.round(i * slots.length / count) % slots.length]);
+      return picked;
+    }
+
+    function placeCellIcon(container, src, label, angleDeg, radius) {
+      const rad = angleDeg * Math.PI / 180;
+      const icon = makeIcon(src, label);
+      icon.classList.add('cell-icon-slot');
+      icon.style.left = `${CELL_CENTER + radius * Math.cos(rad) - 16}px`;
+      icon.style.top = `${CELL_CENTER + radius * Math.sin(rad) - 16}px`;
+      container.appendChild(icon);
+    }
+
+    function renderCellIcons(path, stage) {
+      const container = document.getElementById('cellIcons');
+      container.innerHTML = '';
+      if (!path) return;
+
+      // Baby onward: field icons
+      const fieldKey = getFieldKey(path);
+      if (fieldKey) {
+        FIELD_ANGLES.forEach(a => placeCellIcon(container, ICON_PATHS.field(fieldKey), prettyName(fieldKey), a, INNER_RADIUS));
+      }
+
+      // Kid onward: diet icons
+      const dietKey = getDietKey(path);
+      if (stage >= 1 && dietKey) {
+        DIET_ANGLES.forEach(a => placeCellIcon(container, ICON_PATHS.diet(dietKey), prettyName(dietKey), a, DIET_RADIUS));
+      }
+
+      // Young onward: care icons (secret paths need a connection instead, so they have none)
+      if (stage >= 2 && path["2"] && path["2"].method.mistakes !== undefined) {
+        const m = path["2"].method;
+        if (needsMaxCare(m)) {
+          CARE_ANGLES.forEach((a, i) => {
+            const isFull = i % 2 === 0;
+            placeCellIcon(container, isFull ? ICON_PATHS.fullness() : ICON_PATHS.happiness(),
+              isFull ? 'Max Fullness' : 'Max Happiness', a, OUTER_RADIUS);
+          });
+        }
+        const mistakeCount = MISTAKE_ICON_COUNT[getMistakeText(m)] || 0;
+        spreadSlots(mistakeCount, MISTAKE_ANGLES).forEach(a =>
+          placeCellIcon(container, ICON_PATHS.mistake(), 'Care Mistake', a, OUTER_RADIUS));
+      }
+    }
+
+    function renderGuide(baseId, path, stage) {
+      const reqBox = document.getElementById('requirementsDisplay');
+      reqBox.innerHTML = '';
+      if (!path) {
+        reqBox.innerHTML = `<div class="guide-step-header">Stage Guide</div><div class="guide-error">No path data available for this Tama yet.</div>`;
+        return;
+      }
+
+      // nameOf accepts one id or a list of ids ("Roar Young, Toddle Young or Lick Young")
+      const nameOf = t => orList(tamaIds(t).map(id => (tamaData[id] ? tamaData[id].name : prettyName(id))));
+      const tamaAt = s => (s >= 3 ? baseId : path[String(s)].tama);
+      const baseInfo = tamaData[baseId].data;
+      const version = baseInfo.version;
+
+      // Secret Tamas: only raisable on one Paradise version
+      if (baseInfo.secret) {
+        const banner = document.createElement('div');
+        banner.className = 'guide-secret';
+        banner.innerHTML = `🔒 <b>Secret Tama</b> · only obtainable on the <b>${version || 'matching'}</b> version`;
+        reqBox.appendChild(banner);
+      }
+
+      const header = document.createElement('div');
+      header.className = 'guide-step-header';
+      header.textContent = stage < 3 ? `Step ${stage + 1} of 3 · ${STAGE_NAMES[stage]}` : 'Complete · Adult';
+      reqBox.appendChild(header);
+
+      // Each instruction line: [icon(s), html]
+      const lines = [];
+      let tip = '';
+      if (stage === 0) {
+        const fieldKey = getFieldKey(path);
+        lines.push([[makeIcon(ICON_PATHS.field(fieldKey), prettyName(fieldKey), true)],
+          `Raise <b>${nameOf(tamaAt(0))}</b> ${/Planet$/.test(path.display || '') ? 'on' : 'in'} the <b>${path.display || prettyName(fieldKey) + ' Field'}</b>.`]);
+        tip = 'The field your baby lives in decides which Kid it grows into.';
+      } else if (stage === 1 && isAnyDiet(path)) {
+        const keys = getAnyDietKeys(path);
+        lines.push([keys.map(k => makeIcon(ICON_PATHS.diet(k), prettyName(k), true)),
+          `Maintain <b>any diet except an indeterminate diet</b> for <b>${nameOf(tamaAt(1))}</b>: ${orList(keys.map(k => `<b>${prettyName(k)}</b>`))}.`]);
+        tip = `Each diet leads to a different Young, and any of them can become <b>${nameOf(baseId)}</b>.`;
+      } else if (stage === 1) {
+        const dietKey = getDietKey(path);
+        if (dietKey) {
+          const dietLabel = prettyName(dietKey);
+          lines.push([[makeIcon(ICON_PATHS.diet(dietKey), dietLabel, true)],
+            `Maintain a <b>${dietLabel}</b> diet for <b>${nameOf(tamaAt(1))}</b>.`]);
+          tip = `Keep ${dietLabel} as the most common food icon in its Tama Cells when it evolves.`;
+        } else {
+          // No food in the table for this index: the Young comes from an indeterminate diet (no icon)
+          lines.push([[], `Keep an <b>indeterminate diet</b> for <b>${nameOf(tamaAt(1))}</b>.`]);
+          tip = 'Feed only meals with no point value (such as the default Pellets), or keep equal amounts of different food types in its Tama Cells.';
+        }
+      } else if (stage === 2 && isConnectPath(path)) {
+        const count = path["2"].method.connect;
+        lines.push([[], `Connect with <b>${count} different</b> Tamagotchi Paradise versions during the Young stage.`]);
+        lines.push([[], `Neither can be the <b>${version}</b> version.`]);
+        tip = `Works from ${nameOf(tamaAt(2))}. It can't come from a Young raised on an indeterminate diet.`;
+      } else if (stage === 2) {
+        const m = path["2"].method;
+        const careIcons = () => [makeIcon(ICON_PATHS.fullness(), 'Full', true), makeIcon(ICON_PATHS.happiness(), 'Happy', true)];
+        if (needsMaxCare(m)) {
+          lines.push([careIcons(), `Fill the <b>Hunger</b> and <b>Happy</b> meters <b>5+ times</b> each.`]);
+        } else if (Number(m.mistakes) === 1) {
+          lines.push([careIcons(), `If you make 0 mistakes, <b>don't</b> fill the Hunger and Happy meters 5+ times each.`]);
+        }
+        lines.push([[makeIcon(ICON_PATHS.mistake(), 'Mistake', true)], getMistakeInstruction(getMistakeText(m)) + '.']);
+        tip = `How well you care for <b>${nameOf(tamaAt(2))}</b> decides which Adult it grows into.`;
+      } else {
+        lines.push([[], `🎉 You raised <b>${nameOf(baseId)}</b>!`]);
+        tip = 'Use the stage buttons above to review each step.';
+      }
+
+      lines.forEach(([icons, html]) => {
+        const row = document.createElement('div');
+        row.className = 'guide-instruction';
+        icons.forEach(ic => row.appendChild(ic));
+        const text = document.createElement('div');
+        text.innerHTML = html;
+        row.appendChild(text);
+        reqBox.appendChild(row);
+      });
+
+      const tipEl = document.createElement('div');
+      tipEl.className = 'guide-tip';
+      tipEl.innerHTML = tip;
+      reqBox.appendChild(tipEl);
+
+      // What it eats:
+      //   Baby  -> Milk
+      //   Kid   -> diet-cell foods (with points, since the Kid's diet decides its Young) + Pellets
+      //   Young -> diet-cell foods + Pellets
+      //   Adult -> diet-cell foods only, no Pellets
+      // An indeterminate diet has no diet-cell foods, so every stage after Baby eats Pellets only.
+      const dietKey = stage >= 1 ? getDietKey(path) : undefined;
+      const dietFoods = dietKey ? DIET_FOODS[dietKey] : undefined;
+      const anyDiet = isAnyDiet(path);
+      const anyDietNames = anyDiet ? orList(getAnyDietKeys(path).map(prettyName)) : '';
+      if (stage === 0) {
+        reqBox.appendChild(renderFoodList('Food', [['Milk']]));
+      } else if (stage === 1 && anyDiet) {
+        // Any of the field's diets works: show every cell's foods with points
+        const note = document.createElement('div');
+        note.className = 'guide-foods-title';
+        note.innerHTML = 'Foods that add points to each cell <span class="guide-foods-note">(every 5 points adds 1 icon)</span>';
+        reqBox.appendChild(note);
+        getAnyDietKeys(path).forEach(k => {
+          if (DIET_FOODS[k]) reqBox.appendChild(renderFoodList(`<b>${prettyName(k)}</b> cell`, DIET_FOODS[k]));
+        });
+        reqBox.appendChild(renderFoodList('Also eats', [['Pellets']]));
+      } else if (stage === 2 && anyDiet) {
+        reqBox.appendChild(renderFoodList(`Food <span class="guide-foods-note">(the diet it kept as a Kid: ${anyDietNames}, + Pellets)</span>`, [['Pellets']]));
+      } else if (stage === 3 && anyDiet) {
+        reqBox.appendChild(renderFoodList(`Food <span class="guide-foods-note">(the diet it kept as a Kid: ${anyDietNames}; no Pellets)</span>`, []));
+      } else if (stage === 1 && dietFoods) {
+        reqBox.appendChild(renderFoodList(
+          `Foods that add points to the <b>${prettyName(dietKey)}</b> cell <span class="guide-foods-note">(every 5 points adds 1 icon)</span>`,
+          dietFoods));
+        reqBox.appendChild(renderFoodList('Also eats', [['Pellets']]));
+      } else if (stage === 2) {
+        const items = dietFoods ? [...dietFoods.map(([n]) => [n]), ['Pellets']] : [['Pellets']];
+        reqBox.appendChild(renderFoodList(dietFoods ? `Food <span class="guide-foods-note">(${prettyName(dietKey)} diet + Pellets)</span>` : 'Food', items));
+      } else if (stage === 3 && dietFoods) {
+        reqBox.appendChild(renderFoodList(
+          `Food <span class="guide-foods-note">(${prettyName(dietKey)} diet only, no Pellets)</span>`,
+          dietFoods.map(([n]) => [n])));
+      } else {
+        // Indeterminate diet (Kid or Adult): Pellets only
+        reqBox.appendChild(renderFoodList('Food', [['Pellets']]));
+      }
+
+      if (stage < 3) {
+        const next = document.createElement('div');
+        next.className = 'guide-next';
+        next.innerHTML = `➔ Grows into <b>${nameOf(tamaAt(stage + 1))}</b>`;
+        reqBox.appendChild(next);
+      }
+    }
 
     // --- MODAL STATE ---
     let modalContext = 'base'; // 'base', 'eyes', 'color'
     let modalFilterList = [];
     let isSortAscending = true;
+    let modalFieldFilter = 'all'; // 'all', 'lab', or a field index
+
+    const isLabOnly = id => !!(tamaData[id] && tamaData[id].data && tamaData[id].data.lab_only);
+
+    // Does a Tama pass the chosen filter chip?
+    function matchesFieldFilter(id, filter = modalFieldFilter) {
+      if (filter === 'all') return true;
+      if (filter === 'lab') return isLabOnly(id);
+      return getTamaFields(id).has(filter);
+    }
+
+    const FIELD_LABELS = ["Land Field", "Water Field", "Sky Field", "Forest Field", "Tropical Field", "Ice Field",
+                          "Cosmic Planet", "New Tamagotchi Planet", "Tamagotchi Planet"];
+
+    // Field indices a Tama can be raised in, read from its paths
+    function getTamaFields(id) {
+      const paths = (tamaData[id] && tamaData[id].data && tamaData[id].data.path) || {};
+      return new Set(Object.values(paths)
+        .map(p => p && p["0"] && p["0"].method ? p["0"].method.field : undefined)
+        .filter(f => f !== undefined));
+    }
+
+    function setFieldFilter(value) {
+      modalFieldFilter = value;
+      renderModalFilters();
+      renderModalGrid();
+    }
+
+    // "All" plus one chip per field that has at least one Tama in the current list
+    function renderModalFilters() {
+      const bar = document.getElementById('modalFilters');
+      bar.innerHTML = '';
+      const counts = new Array(FIELD_LABELS.length).fill(0);
+      modalFilterList.forEach(t => getTamaFields(t.id).forEach(f => counts[f]++));
+      const options = [['all', `All (${modalFilterList.length})`]];
+      counts.forEach((n, f) => { if (n > 0) options.push([f, `${FIELD_LABELS[f]} (${n})`]); });
+      // Lab-only Tamas can't be raised (no fields), so they get their own chip in the override pickers
+      const labCount = modalFilterList.filter(t => isLabOnly(t.id)).length;
+      if (labCount > 0) options.push(['lab', `Lab Only (${labCount})`]);
+      options.forEach(([value, label]) => {
+        const chip = document.createElement('button');
+        chip.className = 'filter-chip' + (modalFieldFilter === value ? ' active' : '');
+        chip.textContent = label;
+        chip.onclick = () => setFieldFilter(value);
+        bar.appendChild(chip);
+      });
+    }
 
     // 1. Fetch Data
     async function loadTamaData() {
@@ -409,11 +1298,21 @@
         }
         
         updateStage(0);
-        
+        renderGeneViewer();
+        loadTrees();
+        renderFamilyTree();
+
       } catch (error) {
         console.error("Failed to load tama_defs.json:", error);
         document.getElementById('requirementsDisplay').innerHTML = `<p style="color: #ff4444;">⚠️ Failed to load data. Run via local server.</p>`;
       }
+    }
+
+    // Phone layout: show either the Tama & Path half or the Preview & Stage half
+    function showMobileSection(section) {
+      document.getElementById('stepContainer').dataset.mobileSection = section;
+      document.querySelectorAll('.mobile-switch-btn').forEach(b => b.classList.toggle('active', b.dataset.section === section));
+      document.getElementById('step-by-step').scrollIntoView({ block: 'start' });
     }
 
     // 2. Tab Switching
@@ -432,51 +1331,89 @@
     }
 
     function adjustOffset(axis, amount) {
-      if (axis === 'x') {
-        debugX += amount;
-        document.getElementById('debugXVal').textContent = debugX;
-      } else if (axis === 'y') {
-        debugY += amount;
-        document.getElementById('debugYVal').textContent = debugY;
-      }
-      updateUI(); // Re-render to apply the new offset
+      if (axis === 'x') debugX += amount;
+      else if (axis === 'y') debugY += amount;
+      updateUI(); // Re-render to apply the new offset (also refreshes the readout)
     }
 
     function resetDebug() {
       debugX = 0;
       debugY = 0;
-      document.getElementById('debugXVal').textContent = "0";
-      document.getElementById('debugYVal').textContent = "0";
       updateUI();
     }
 
+    // Readout: saved offset (from tama_defs.json) + debug nudge = offset actually drawn
+    function renderDebugReadout(savedX, savedY) {
+      const fmt = (saved, debug) => {
+        const total = saved + debug;
+        const sign = debug < 0 ? '−' : '+';
+        return `${saved} <span class="debug-nudge">${sign} ${Math.abs(debug)}</span> = <b>${total}</b>`;
+      };
+      document.getElementById('debugXVal').innerHTML = fmt(savedX, debugX);
+      document.getElementById('debugYVal').innerHTML = fmt(savedY, debugY);
+    }
+
     // --- MODAL LOGIC ---
+    // Each picker context says which Tamas it lists, what is selected now, and what picking one does.
+    const isRaisableAdult = d => d.stage === 3 && d.data && !d.data.lab_only;
+    const isBreedableAdult = d => d.stage === 3 && d.data && d.data.breedable === true;
+
+    const MODAL_CONTEXTS = {
+      base: {
+        title: 'Select Target Adult Tama', filter: isRaisableAdult,
+        get: () => appState.baseId,
+        set: id => {
+          appState.baseId = id;
+          document.getElementById('baseTamaDisplay').textContent = tamaData[id].name;
+          onBaseTamaChange();
+        }
+      },
+      eyes: {
+        title: 'Select Eyes Override', filter: isBreedableAdult, defaultLabel: 'Current Tama',
+        get: () => appState.eyesOverride, set: id => setStepOverride('eyes', id)
+      },
+      color: {
+        title: 'Select Color Override', filter: isBreedableAdult, defaultLabel: 'Current Tama',
+        get: () => appState.colorOverride, set: id => setStepOverride('color', id)
+      }
+    };
+
+    // Gene Viewer pickers: parent 1/2 and each parent's eyes/color override
+    [['a', 'b', 'Parent 1'], ['b', 'a', 'Parent 2']].forEach(([key, other, label]) => {
+      MODAL_CONTEXTS['gene-' + key] = {
+        title: `Select ${label}`, filter: isBreedableAdult,
+        exclude: () => geneState[other].id, // the two parents must be different Tamas
+        get: () => geneState[key].id,
+        set: id => { geneState[key].id = id; renderGeneViewer(); }
+      };
+      ['eyes', 'color'].forEach(part => {
+        MODAL_CONTEXTS[`gene-${key}-${part}`] = {
+          title: `${label} ${part === 'eyes' ? 'Eyes' : 'Color'} Override`, filter: isBreedableAdult,
+          defaultLabel: `${label}'s own`,
+          get: () => geneState[key][part],
+          set: id => { geneState[key][part] = id; renderGeneViewer(); }
+        };
+      });
+    });
 
     function openModalFor(context) {
       modalContext = context;
-      const titleEl = document.getElementById('modalTitle');
-      const searchEl = document.getElementById('tamaSearchInput');
-      
-      searchEl.value = '';
+      const ctx = MODAL_CONTEXTS[context];
+      document.getElementById('tamaSearchInput').value = '';
       isSortAscending = true;
       document.getElementById('sortBtn').textContent = 'Sort: A-Z';
+      document.getElementById('modalTitle').textContent = ctx.title;
 
-      if (context === 'base') {
-        titleEl.textContent = "Select Target Adult Tama";
-        modalFilterList = Object.entries(tamaData)
-          .filter(([id, d]) => d.stage === 3 && d.data && d.data.lab_only === false)
-          .map(([id, d]) => ({ id, name: d.name }));
-          
-      } else if (context === 'eyes' || context === 'color') {
-        titleEl.textContent = `Select ${context === 'eyes' ? 'Eyes' : 'Color'} Override`;
-        modalFilterList = Object.entries(tamaData)
-          .filter(([id, d]) => d.stage === 3 && d.data && d.data.breedable === true)
-          .map(([id, d]) => ({ id, name: d.name }));
-          
-        // Filter out the currently selected Base Tama from the Overrides list
-        modalFilterList = modalFilterList.filter(t => t.id !== appState.baseId);
+      const excluded = ctx.exclude ? ctx.exclude() : null;
+      modalFilterList = Object.entries(tamaData)
+        .filter(([id, d]) => ctx.filter(d) && id !== excluded)
+        .map(([id, d]) => ({ id, name: d.name }));
+
+      // Keep the chosen field between opens, unless no Tama in this list has it
+      if (!modalFilterList.some(t => matchesFieldFilter(t.id))) {
+        modalFieldFilter = 'all';
       }
-
+      renderModalFilters();
       renderModalGrid();
       document.getElementById('tamaModal').style.display = 'flex';
     }
@@ -496,18 +1433,21 @@
       const searchTerm = document.getElementById('tamaSearchInput').value.toLowerCase();
       grid.innerHTML = '';
 
-      if (modalContext !== 'base') {
+      const ctx = MODAL_CONTEXTS[modalContext];
+      const selectedId = ctx.get();
+      if (ctx.defaultLabel) {
         const defaultCard = document.createElement('div');
-        defaultCard.className = `tama-card default-card ${appState[modalContext + 'Override'] === 'default' ? 'selected' : ''}`;
+        defaultCard.className = `tama-card default-card ${selectedId === 'default' ? 'selected' : ''}`;
         defaultCard.innerHTML = `
           <div class="mini-sprite" style="display:flex;align-items:center;justify-content:center;color:#8899cc;font-size:1em;text-align:center;">Default</div>
-          <div class="tama-name">Current Tama</div>
+          <div class="tama-name">${ctx.defaultLabel}</div>
         `;
         defaultCard.onclick = () => selectTama('default');
         grid.appendChild(defaultCard);
       }
 
-      let filtered = modalFilterList.filter(t => t.name.toLowerCase().includes(searchTerm));
+      let filtered = modalFilterList.filter(t => t.name.toLowerCase().includes(searchTerm)
+        && matchesFieldFilter(t.id));
 
       filtered.sort((a, b) => {
         return isSortAscending ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
@@ -515,7 +1455,7 @@
 
       filtered.forEach(tama => {
         const data = tamaData[tama.id];
-        const isSelected = appState[modalContext === 'base' ? 'baseId' : modalContext + 'Override'] === tama.id;
+        const isSelected = selectedId === tama.id;
         
         const eyeX = data.offsets ? data.offsets.x : 0;
         const eyeY = data.offsets ? data.offsets.y : 0;
@@ -527,8 +1467,7 @@
         card.innerHTML = `
           <div class="mini-sprite">
             <div class="mini-sprite-inner">
-              <img loading="lazy" src="images/tamas/${tama.id}/color.png" style="transform: translate(22%, 75%);" />
-              <img loading="lazy" src="images/tamas/${tama.id}/color.png" style="transform: translate(22%, 75%); filter: opacity(0.5) drop-shadow(0 0 0 #${data.color}) saturate(500%);" />
+              <img class="card-color" alt="" style="transform: translate(22%, 75%);" />
               <img loading="lazy" src="images/tamas/${tama.id}/base.png" style="transform: translate(22%, 75%);" />
               <img loading="lazy" src="images/tamas/${tama.id}/eyes.png" style="transform: translate(22%, 75%) translate(${eyeX}px, ${eyeY}px);" />
               <img loading="lazy" src="images/tamas/${tama.id}/face.png" style="transform: translate(22%, 75%);" />
@@ -536,26 +1475,978 @@
           </div>
           <div class="tama-name">${tama.name}</div>
         `;
+        applyTint(card.querySelector('.card-color'), `images/tamas/${tama.id}/color.png`, data.color);
         card.onclick = () => selectTama(tama.id);
         grid.appendChild(card);
       });
     }
 
     function selectTama(id) {
-      if (modalContext === 'base') {
-        appState.baseId = id;
-        document.getElementById('baseTamaDisplay').textContent = tamaData[id].name;
-        onBaseTamaChange();
-      } else if (modalContext === 'eyes') {
-        appState.eyesOverride = id;
-        document.getElementById('eyesDisplay').textContent = id === 'default' ? 'Default (Current Tama)' : tamaData[id].name;
-        updateUI();
-      } else if (modalContext === 'color') {
-        appState.colorOverride = id;
-        document.getElementById('colorDisplay').textContent = id === 'default' ? 'Default (Current Tama)' : tamaData[id].name;
-        updateUI();
-      }
+      MODAL_CONTEXTS[modalContext].set(id);
       closeModal();
+    }
+
+    // Step-by-Step eyes/color override ('default' = the current Tama's own)
+    function setStepOverride(part, id) {
+      appState[part + 'Override'] = id;
+      document.getElementById(part + 'Display').textContent = id === 'default' ? 'Default (Current Tama)' : tamaData[id].name;
+      updateUI();
+    }
+
+    function resetStepToDefault() {
+      setStepOverride('eyes', 'default');
+      setStepOverride('color', 'default');
+    }
+
+    // --- GENE VIEWER ---
+
+    const tamaName = id => (tamaData[id] ? tamaData[id].name : id);
+
+    // A standalone layered sprite: body from one Tama, eyes from another, body tinted with a color.
+    // Same layering and eye offsets as the Step-by-Step preview (offsets come from the body Tama).
+    function buildSprite(bodyId, eyesId, colorHex, background) {
+      const body = tamaData[bodyId];
+      const ox = body.offsets ? body.offsets.x : 0;
+      const oy = body.offsets ? body.offsets.y : 0;
+      const wrap = document.createElement('div');
+      wrap.className = 'mini-preview';
+      if (background) wrap.style.backgroundImage = `url('${background}')`;
+      wrap.innerHTML = `
+        <div class="sprite-grid">
+          <img class="sp-color base-transform" alt="" width="130" height="130" />
+          <img class="base-transform" alt="" width="130" height="130" src="images/tamas/${bodyId}/base.png" />
+          <img alt="" width="130" height="130" src="images/tamas/${eyesId}/eyes.png"
+               style="transform: translate(50%, 95%) translate(${ox}px, ${oy}px);" />
+          <img class="base-transform" alt="" width="130" height="130" src="images/tamas/${bodyId}/face.png" />
+        </div>`;
+      applyTint(wrap.querySelector('.sp-color'), `images/tamas/${bodyId}/color.png`, colorHex);
+      return wrap;
+    }
+
+    // What a parent passes on: its own eyes/color unless overridden
+    function parentGenes(p) {
+      const eyesId = p.eyes === 'default' ? p.id : p.eyes;
+      const colorId = p.color === 'default' ? p.id : p.color;
+      return { eyesId, colorId, colorHex: tamaData[colorId].color };
+    }
+
+    function firstFieldImage(id) {
+      const fields = [...getTamaFields(id)];
+      return `images/fields/${fieldNames[fields.length ? fields[0] : 0]}.png`;
+    }
+
+    function colorSwatch(hex) {
+      return `<span class="color-swatch" style="background:#${hex}"></span>`;
+    }
+
+    function renderGeneParent(key, label) {
+      const p = geneState[key];
+      const card = document.getElementById(key === 'a' ? 'geneParentA' : 'geneParentB');
+      card.innerHTML = `<h3 class="gene-heading">${label}</h3>`;
+
+      const previewSlot = document.createElement('div');
+      previewSlot.className = 'gene-parent-preview';
+      if (p.id) {
+        const g = parentGenes(p);
+        previewSlot.appendChild(buildSprite(p.id, g.eyesId, g.colorHex, firstFieldImage(p.id)));
+      } else {
+        previewSlot.innerHTML = '<div class="mini-preview gene-empty">Pick a Tama</div>';
+      }
+      card.appendChild(previewSlot);
+
+      const pickers = [
+        [`gene-${key}`, 'Tama', p.id ? tamaName(p.id) : 'Select Tama...'],
+        [`gene-${key}-eyes`, 'Eyes Override', p.eyes === 'default' ? `Default (${label}'s own)` : tamaName(p.eyes)],
+        [`gene-${key}-color`, 'Color Override', p.color === 'default' ? `Default (${label}'s own)` : tamaName(p.color)]
+      ];
+      pickers.forEach(([context, text, value]) => {
+        const group = document.createElement('div');
+        group.className = 'custom-select-group';
+        group.innerHTML = `<label>${text}:</label><div class="select-trigger"><span></span></div>`;
+        group.querySelector('span').textContent = value;
+        group.querySelector('.select-trigger').onclick = () => openModalFor(context);
+        card.appendChild(group);
+      });
+
+      if (p.id) {
+        const g = parentGenes(p);
+        const passes = document.createElement('div');
+        passes.className = 'gene-passes';
+        passes.innerHTML = `Passes on: <b>${tamaName(g.eyesId)}</b> eyes · ${colorSwatch(g.colorHex)} <b>${tamaName(g.colorId)}</b> color`;
+        card.appendChild(passes);
+      }
+    }
+
+    function renderGeneResults() {
+      const box = document.getElementById('geneResults');
+      box.innerHTML = '';
+      const { a, b } = geneState;
+      if (!a.id || !b.id) {
+        box.innerHTML = '<div class="gene-placeholder">Pick two parents to see the possible babies.</div>';
+        return;
+      }
+      const ga = parentGenes(a), gb = parentGenes(b);
+      const eyeOptions = [[ga.eyesId, 'Parent 1'], [gb.eyesId, 'Parent 2']];
+      const colorOptions = [[ga.colorId, ga.colorHex, 'Parent 1'], [gb.colorId, gb.colorHex, 'Parent 2']];
+
+      // Every eyes x color combination; identical-looking babies are shown once
+      const seen = new Set();
+      eyeOptions.forEach(([eyesId, eyesFrom]) => {
+        colorOptions.forEach(([colorId, colorHex, colorFrom]) => {
+          const key = `${eyesId}|${colorHex}`;
+          if (seen.has(key)) return;
+          seen.add(key);
+
+          const card = document.createElement('div');
+          card.className = 'gene-result';
+          card.appendChild(buildSprite('babymarutchi', eyesId, colorHex));
+          const info = document.createElement('div');
+          info.className = 'gene-result-info';
+          info.innerHTML = `
+            <div>👀 Eyes: <b>${tamaName(eyesId)}</b> <span class="gene-from">(${eyesFrom})</span></div>
+            <div>🎨 Color: ${colorSwatch(colorHex)} <b>${tamaName(colorId)}</b> <span class="gene-from">(${colorFrom})</span></div>`;
+          card.appendChild(info);
+          const btn = document.createElement('button');
+          btn.className = 'pixel-btn gene-use-btn';
+          btn.textContent = 'Use in Step-by-Step ➔';
+          btn.onclick = () => useGeneResult(eyesId, colorId);
+          card.appendChild(btn);
+          box.appendChild(card);
+        });
+      });
+    }
+
+    function renderGeneViewer() {
+      renderGeneParent('a', 'Parent 1');
+      renderGeneParent('b', 'Parent 2');
+      renderGeneResults();
+    }
+
+    // Copy a baby's eyes/color into the Step-by-Step overrides; the Gene Viewer picks stay as they are
+    function useGeneResult(eyesId, colorId) {
+      setStepOverride('eyes', eyesId);
+      setStepOverride('color', colorId);
+      openTab('step-by-step', document.querySelector('.tab-btn'));
+      showMobileSection('progress');
+    }
+
+    // --- FAMILY TREE ---
+    // treeStore = { trees: [tree], selectedId }
+    // tree   = { id, name, lines: [{ id, name }], members: [member] }
+    // member = { id, tama, eyes, color, field, line, partner, parents }
+    //   eyes/color: a Tama id or 'default'      field: field index or null
+    //   line:    the lineage column it sits in (generations are the rows)
+    //   partner: one pair link (🫂)              parents: one parent link (🍼): [] | [soloId] | [pairA, pairB]
+    const TREE_STORAGE_KEY = 'paradiseCalc.familyTrees.v1';
+    const TREE_FILE_FORMAT = 'paradise-family-tree';
+    const SHELL_IDS = ['pink_land', 'blue_water', 'purple_sky', 'jade_forest', 'orange_tropics', 'white_glacier', 'neon_planets'];
+    let treeStore = { trees: [], selectedId: null };
+    let treeDraft = null;        // the Tama being added/edited in the dialog
+    let treeConnect = null;      // { fromId, mode: 'child' | 'pair' } while linking two Tamas
+    let treeSelectedId = null;   // box highlighted by a tap (touch screens have no hover)
+    let treeMoveId = null;       // box currently showing its ◀ ▶ move arrows
+
+    const uid = prefix => prefix + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    const currentTree = () => treeStore.trees.find(t => t.id === treeStore.selectedId) || null;
+    const memberById = (tree, id) => tree.members.find(m => m.id === id) || null;
+
+    function newLine(tree) {
+      let n = tree.lines.length + 1;
+      const names = new Set(tree.lines.map(l => l.name));
+      while (names.has(`Line ${n}`)) n++;
+      const line = { id: uid('l'), name: `Line ${n}` };
+      tree.lines.push(line);
+      return line;
+    }
+
+    // Bring saved or imported trees (including the older parents-only format) up to the current shape
+    function normalizeTree(tree) {
+      tree.members = Array.isArray(tree.members) ? tree.members : [];
+      tree.lines = Array.isArray(tree.lines) ? tree.lines : [];
+      if (!SHELL_IDS.includes(tree.shell)) tree.shell = null;
+      const ids = new Set(tree.members.map(m => m.id));
+      tree.members.forEach(m => {
+        m.parents = (Array.isArray(m.parents) ? m.parents : []).filter(p => ids.has(p) && p !== m.id).slice(0, 2);
+        m.partner = ids.has(m.partner) && m.partner !== m.id ? m.partner : null;
+      });
+      // Older trees: a Tama with two parents becomes the child of a pair
+      tree.members.forEach(m => {
+        if (m.parents.length !== 2) return;
+        const [a, b] = m.parents.map(id => memberById(tree, id));
+        if (a.partner === b.id && b.partner === a.id) return;
+        if (!a.partner && !b.partner) { a.partner = b.id; b.partner = a.id; }
+        else m.parents = [a.id];
+      });
+      // Pair links always go both ways
+      tree.members.forEach(m => {
+        if (!m.partner) return;
+        const p = memberById(tree, m.partner);
+        if (p.partner && p.partner !== m.id) m.partner = null; else p.partner = m.id;
+      });
+      // Every member sits on a line: its parent's or partner's line if it has none, otherwise a new one
+      const lineIds = () => new Set(tree.lines.map(l => l.id));
+      for (let pass = 0; pass < 2; pass++) {
+        tree.members.forEach(m => {
+          if (lineIds().has(m.line)) return;
+          const kin = [...m.parents, m.partner].map(id => id && memberById(tree, id)).find(k => k && lineIds().has(k.line));
+          if (kin) m.line = kin.line;
+          else if (pass === 1) m.line = newLine(tree).id;
+        });
+      }
+      if (!tree.lines.length) newLine(tree);
+      return tree;
+    }
+
+    function saveTrees() {
+      try { localStorage.setItem(TREE_STORAGE_KEY, JSON.stringify(treeStore)); }
+      catch (e) { console.warn('Could not save family trees to this browser:', e); }
+    }
+
+    function loadTrees() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(TREE_STORAGE_KEY) || 'null');
+        if (saved && Array.isArray(saved.trees)) treeStore = saved;
+      } catch (e) { console.warn('Saved family trees could not be read:', e); }
+      treeStore.trees.forEach(normalizeTree);
+      if (!treeStore.trees.length) treeStore.trees.push(normalizeTree({ id: uid('t'), name: 'Family Tree 1', members: [] }));
+      if (!currentTree()) treeStore.selectedId = treeStore.trees[0].id;
+      saveTrees();
+    }
+
+    function uniqueTreeName(base) {
+      const names = new Set(treeStore.trees.map(t => t.name));
+      if (!names.has(base)) return base;
+      if (!names.has(`${base} (copy)`)) return `${base} (copy)`;
+      for (let i = 2; ; i++) if (!names.has(`${base} (copy ${i})`)) return `${base} (copy ${i})`;
+    }
+
+    function addTree(name, members = [], lines = [], shell = null) {
+      const tree = normalizeTree({ id: uid('t'), name: uniqueTreeName(name), members, lines, shell });
+      treeStore.trees.push(tree);
+      treeStore.selectedId = tree.id;
+      saveTrees();
+      return tree;
+    }
+
+    function resetTreeUI() {
+      treeConnect = null;
+      treeSelectedId = null;
+      treeMoveId = null;
+    }
+
+    function createTree() {
+      const name = prompt('Name for the new family tree:', uniqueTreeName(`Family Tree ${treeStore.trees.length + 1}`));
+      if (name === null) return;
+      addTree(name.trim() || 'Family Tree');
+      resetTreeUI();
+      renderFamilyTree();
+    }
+
+    function selectTree(id) {
+      treeStore.selectedId = id;
+      resetTreeUI();
+      saveTrees();
+      renderFamilyTree();
+    }
+
+    function renameTree() {
+      const tree = currentTree();
+      const name = prompt('Rename this family tree:', tree.name);
+      if (name === null || !name.trim()) return;
+      tree.name = name.trim();
+      saveTrees();
+      renderFamilyTree();
+    }
+
+    function deleteTree() {
+      const tree = currentTree();
+      if (!confirm(`Delete "${tree.name}" and its ${tree.members.length} Tama(s)? Export it first if you want a copy.`)) return;
+      treeStore.trees = treeStore.trees.filter(t => t.id !== tree.id);
+      if (!treeStore.trees.length) treeStore.trees.push(normalizeTree({ id: uid('t'), name: 'Family Tree 1', members: [] }));
+      treeStore.selectedId = treeStore.trees[0].id;
+      resetTreeUI();
+      saveTrees();
+      renderFamilyTree();
+    }
+
+    // Export the selected tree as a JSON file (trees are always saved in the browser as well)
+    function exportTree() {
+      const tree = currentTree();
+      saveTrees();
+      const data = { format: TREE_FILE_FORMAT, version: 2, name: tree.name, shell: tree.shell, exportedAt: new Date().toISOString(), lines: tree.lines, members: tree.members };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `${tree.name.replace(/[^a-z0-9 _-]+/gi, '').trim().replace(/\s+/g, '_') || 'family_tree'}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    }
+
+    // Import a tree file as a new tree; ids are regenerated so it never clashes with existing trees
+    function importTree(input) {
+      const file = input.files && input.files[0];
+      input.value = '';
+      if (!file) return;
+      file.text().then(text => {
+        const data = JSON.parse(text);
+        if (!data || data.format !== TREE_FILE_FORMAT || !Array.isArray(data.members)) throw new Error('This is not a Paradise family tree file.');
+        const idMap = {}, lineMap = {};
+        data.members.forEach(m => { if (m && m.id) idMap[m.id] = uid('m'); });
+        const lines = (Array.isArray(data.lines) ? data.lines : []).filter(l => l && l.id).map(l => {
+          lineMap[l.id] = uid('l');
+          return { id: lineMap[l.id], name: String(l.name || 'Line').slice(0, 30) };
+        });
+        let skipped = 0;
+        const members = data.members.filter(m => {
+          const ok = m && idMap[m.id] && tamaData[m.tama];
+          if (!ok) skipped++;
+          return ok;
+        }).map(m => ({
+          id: idMap[m.id],
+          tama: m.tama,
+          eyes: tamaData[m.eyes] ? m.eyes : 'default',
+          color: tamaData[m.color] ? m.color : 'default',
+          field: Number.isInteger(m.field) ? m.field : null,
+          line: lineMap[m.line] || null,
+          partner: idMap[m.partner] || null,
+          parents: (Array.isArray(m.parents) ? m.parents : []).map(p => idMap[p]).filter(Boolean)
+        }));
+        addTree(String(data.name || file.name.replace(/\.json$/i, '')).slice(0, 40), members, lines, data.shell);
+        resetTreeUI();
+        renderFamilyTree();
+        if (skipped) alert(`Imported, but ${skipped} Tama(s) were skipped because they aren't in this calculator.`);
+      }).catch(err => alert(`Couldn't import that file: ${err.message}`));
+    }
+
+    // --- Add / edit dialog ---
+    const resolveEyes = m => (m.eyes === 'default' ? m.tama : m.eyes);
+    const resolveColorHex = m => tamaData[m.color === 'default' ? m.tama : m.color].color;
+
+    MODAL_CONTEXTS['tree-tama'] = {
+      title: 'Select Adult Tama', filter: isRaisableAdult,
+      get: () => treeDraft && treeDraft.tama,
+      set: id => {
+        treeDraft.tama = id;
+        const fields = [...getTamaFields(id)];
+        if (!fields.includes(treeDraft.field)) treeDraft.field = fields.length ? fields[0] : null;
+        renderTreeDialog();
+      }
+    };
+    ['eyes', 'color'].forEach(part => {
+      MODAL_CONTEXTS['tree-' + part] = {
+        title: `Select ${part === 'eyes' ? 'Eyes' : 'Color'} Override`, filter: isBreedableAdult, defaultLabel: "Tama's own",
+        get: () => treeDraft && treeDraft[part],
+        set: id => { treeDraft[part] = id; renderTreeDialog(); }
+      };
+    });
+
+    function openTreeDialog(memberId) {
+      const existing = memberId ? memberById(currentTree(), memberId) : null;
+      treeDraft = existing
+        ? { id: existing.id, tama: existing.tama, eyes: existing.eyes, color: existing.color, field: existing.field, editing: true }
+        : { id: uid('m'), tama: null, eyes: 'default', color: 'default', field: null, editing: false };
+      document.getElementById('treeDialogTitle').textContent = existing ? 'Edit Tama' : 'Add Tama';
+      document.getElementById('treeDeleteBtn').style.display = existing ? '' : 'none';
+      renderTreeDialog();
+      document.getElementById('treeDialog').style.display = 'flex';
+    }
+
+    function closeTreeDialog() {
+      document.getElementById('treeDialog').style.display = 'none';
+      treeDraft = null;
+    }
+
+    function renderTreeDialogPreview() {
+      const box = document.getElementById('treeDialogPreview');
+      box.innerHTML = '';
+      if (!treeDraft.tama) {
+        box.innerHTML = '<div class="mini-preview gene-empty">Pick a Tama</div>';
+        return;
+      }
+      const bg = treeDraft.field !== null ? `images/fields/${fieldNames[treeDraft.field]}.png` : null;
+      box.appendChild(buildSprite(treeDraft.tama, resolveEyes(treeDraft), resolveColorHex(treeDraft), bg));
+    }
+
+    function renderTreeDialog() {
+      const d = treeDraft;
+      document.getElementById('treeTamaDisplay').textContent = d.tama ? tamaName(d.tama) : 'Select Tama...';
+      document.getElementById('treeEyesDisplay').textContent = d.eyes === 'default' ? "Default (Tama's own)" : tamaName(d.eyes);
+      document.getElementById('treeColorDisplay').textContent = d.color === 'default' ? "Default (Tama's own)" : tamaName(d.color);
+
+      // Field choices: only the fields this Tama can be raised in
+      const select = document.getElementById('treeFieldSelect');
+      select.innerHTML = '';
+      const fields = d.tama ? [...getTamaFields(d.tama)].sort((a, b) => a - b) : [];
+      if (!fields.length) select.add(new Option(d.tama ? 'Not raised in a field' : 'Pick a Tama first', ''));
+      fields.forEach(f => select.add(new Option(FIELD_LABELS[f], f)));
+      select.value = d.field === null ? '' : String(d.field);
+      select.disabled = !fields.length;
+
+      // Links (edit mode): partner and parents, each removable
+      const box = document.getElementById('treeDialogParents');
+      box.innerHTML = '';
+      if (d.editing) {
+        const tree = currentTree();
+        const m = memberById(tree, d.id);
+        const addRow = (label, names, buttonText, action) => {
+          const row = document.createElement('div');
+          row.className = 'dialog-parent-row';
+          row.innerHTML = '<span></span>';
+          row.firstChild.textContent = `${label}: ${names}`;
+          if (buttonText) {
+            const btn = document.createElement('button');
+            btn.className = 'modal-btn close';
+            btn.textContent = buttonText;
+            btn.onclick = action;
+            row.appendChild(btn);
+          }
+          box.appendChild(row);
+        };
+        const partner = m.partner && memberById(tree, m.partner);
+        addRow('🫂 Partner', partner ? tamaName(partner.tama) : 'none', partner ? 'Unpair' : null, () => { unpairMember(m.id); renderTreeDialog(); });
+        const parentNames = m.parents.map(p => tamaName(memberById(tree, p).tama)).join(' & ');
+        addRow('🍼 Parents', parentNames || 'none', m.parents.length ? 'Unlink' : null, () => { m.parents = []; saveTrees(); renderFamilyTree(); renderTreeDialog(); });
+      }
+      renderTreeDialogPreview();
+    }
+
+    function saveTreeDialog() {
+      if (!treeDraft.tama) { alert('Pick a Tama first.'); return; }
+      const tree = currentTree();
+      const { id, tama, eyes, color, field } = treeDraft;
+      const existing = memberById(tree, id);
+      if (existing) Object.assign(existing, { tama, eyes, color, field });
+      else tree.members.push({ id, tama, eyes, color, field, line: newLine(tree).id, partner: null, parents: [] }); // new Tamas start on their own line
+      saveTrees();
+      closeTreeDialog();
+      renderFamilyTree(id);
+    }
+
+    function deleteTreeMember() {
+      const tree = currentTree();
+      const id = treeDraft.id;
+      if (!confirm(`Remove ${tamaName(treeDraft.tama)} from this tree? Its pair and parent links are removed too.`)) return;
+      tree.members = tree.members.filter(m => m.id !== id);
+      tree.members.forEach(m => {
+        if (m.partner === id) m.partner = null;
+        m.parents = m.parents.filter(p => p !== id); // a pair's child keeps the remaining parent
+      });
+      saveTrees();
+      closeTreeDialog();
+      renderFamilyTree();
+    }
+
+    // Breaking a pair also unlinks the pair's children (they belonged to the pair)
+    function unpairMember(id) {
+      const tree = currentTree();
+      const m = memberById(tree, id);
+      const p = m.partner && memberById(tree, m.partner);
+      if (!p) return;
+      const kids = tree.members.filter(k => k.parents.length === 2 && k.parents.includes(m.id) && k.parents.includes(p.id));
+      if (kids.length && !confirm(`Unpairing will also unlink their ${kids.length} child(ren). Continue?`)) return;
+      kids.forEach(k => { k.parents = []; });
+      m.partner = null;
+      p.partner = null;
+      saveTrees();
+      renderFamilyTree();
+    }
+
+    // ✂️ Unlink: detach a Tama from its partner, its parents and its children, and put it on a new line.
+    // Children it shared with a partner stay linked to that partner.
+    function unlinkMember(id) {
+      const tree = currentTree();
+      const m = memberById(tree, id);
+      const kids = tree.members.filter(k => k.parents.includes(id));
+      if (kids.length && !confirm(`Unlink ${tamaName(m.tama)}? Its ${kids.length} child(ren) will no longer be linked to it.`)) return;
+      if (m.partner) {
+        const p = memberById(tree, m.partner);
+        if (p) p.partner = null;
+      }
+      m.partner = null;
+      m.parents = [];
+      kids.forEach(k => { k.parents = k.parents.filter(p => p !== id); });
+      m.line = newLine(tree).id;
+      treeSelectedId = id;
+      treeMoveId = null;
+      saveTrees();
+      renderFamilyTree(id);
+    }
+
+    const hasLinks = (tree, m) => !!(m.partner || m.parents.length || tree.members.some(k => k.parents.includes(m.id)));
+
+    // --- Linking Tamas (🍼 child of a solo Tama or pair, 🫂 pair two solo Tamas) ---
+    function isAncestor(tree, ancestorId, memberId, seen = new Set()) {
+      const m = memberById(tree, memberId);
+      if (!m || seen.has(memberId)) return false;
+      seen.add(memberId);
+      return m.parents.some(p => p === ancestorId || isAncestor(tree, ancestorId, p, seen));
+    }
+
+    const parentSetOf = (tree, target) => (target.partner ? [target.id, target.partner] : [target.id]);
+
+    function canConnect(tree, fromId, targetId, mode) {
+      const from = memberById(tree, fromId), target = memberById(tree, targetId);
+      if (!from || !target || fromId === targetId) return false;
+      if (mode === 'pair') {
+        return !from.partner && !target.partner && !isAncestor(tree, fromId, targetId) && !isAncestor(tree, targetId, fromId);
+      }
+      // child: `from` becomes the child of `target` (or of target's pair)
+      if (from.parents.length) return false;
+      return parentSetOf(tree, target).every(p => p !== fromId && !isAncestor(tree, fromId, p));
+    }
+
+    function startConnect(fromId, mode) {
+      treeConnect = treeConnect && treeConnect.fromId === fromId && treeConnect.mode === mode ? null : { fromId, mode };
+      treeMoveId = null;
+      renderFamilyTree();
+    }
+
+    function finishConnect(targetId) {
+      const tree = currentTree();
+      const { fromId, mode } = treeConnect;
+      if (!canConnect(tree, fromId, targetId, mode)) return;
+      const from = memberById(tree, fromId), target = memberById(tree, targetId);
+      if (mode === 'pair') {
+        from.partner = target.id;
+        target.partner = from.id;
+        target.line = from.line; // partners sit side by side on the same line
+      } else {
+        from.parents = parentSetOf(tree, target);
+        from.line = target.line; // a child joins its parents' line
+      }
+      treeConnect = null;
+      treeSelectedId = fromId;
+      saveTrees();
+      renderFamilyTree();
+    }
+
+    // ↔️ / ◀ ▶: move a solo Tama to the neighbouring line
+    function moveMemberLine(id, dir) {
+      const tree = currentTree();
+      const m = memberById(tree, id);
+      const i = tree.lines.findIndex(l => l.id === m.line) + dir;
+      if (m.partner || i < 0 || i >= tree.lines.length) return;
+      m.line = tree.lines[i].id;
+      saveTrees();
+      renderFamilyTree();
+    }
+
+    // --- Tama shell (device version) of the tree: sets the grid background to that shell's field ---
+    const SHELLS = [
+      { id: 'pink_land', name: 'Pink Land', field: 'land' },
+      { id: 'blue_water', name: 'Blue Water', field: 'water' },
+      { id: 'purple_sky', name: 'Purple Sky', field: 'sky' },
+      { id: 'jade_forest', name: 'Jade Forest', field: 'forest' },
+      { id: 'orange_tropics', name: 'Orange Tropics', field: 'tropical' },
+      { id: 'white_glacier', name: 'White Glacier', field: 'ice' },
+      { id: 'neon_planets', name: 'Neon Planets', field: 'cosmic' }
+    ];
+    const shellById = id => SHELLS.find(s => s.id === id) || null;
+
+    function renderShellPicker() {
+      const shell = shellById(currentTree().shell);
+      const btn = document.getElementById('shellPickerBtn');
+      btn.innerHTML = shell
+        ? `<img src="images/shells/${shell.id}.png" alt=""><span></span>`
+        : '<span class="shell-none-icon">🥚</span><span></span>';
+      btn.lastChild.textContent = shell ? shell.name : 'Choose Shell';
+      btn.title = 'Tama shell this tree belongs to';
+
+      const menu = document.getElementById('shellMenu');
+      menu.innerHTML = '';
+      [null, ...SHELLS].forEach(s => {
+        const opt = document.createElement('button');
+        opt.className = 'shell-option' + ((s ? s.id : null) === (shell ? shell.id : null) ? ' active' : '');
+        opt.innerHTML = s ? `<img src="images/shells/${s.id}.png" alt=""><span></span>` : '<span class="shell-none-icon">✕</span><span></span>';
+        opt.lastChild.textContent = s ? s.name : 'No shell';
+        opt.onclick = e => { e.stopPropagation(); setTreeShell(s ? s.id : null); };
+        menu.appendChild(opt);
+      });
+    }
+
+    function toggleShellMenu(e) {
+      e.stopPropagation();
+      document.getElementById('shellMenu').classList.toggle('open');
+    }
+
+    function setTreeShell(id) {
+      currentTree().shell = id;
+      document.getElementById('shellMenu').classList.remove('open');
+      saveTrees();
+      renderFamilyTree();
+    }
+
+    document.addEventListener('click', () => {
+      const menu = document.getElementById('shellMenu');
+      if (menu) menu.classList.remove('open');
+    });
+
+    // --- Lines (lineage columns) ---
+    function addTreeLine() {
+      newLine(currentTree());
+      saveTrees();
+      renderFamilyTree();
+    }
+
+    function moveTreeLine(lineId, dir) {
+      const lines = currentTree().lines;
+      const i = lines.findIndex(l => l.id === lineId), j = i + dir;
+      if (j < 0 || j >= lines.length) return;
+      [lines[i], lines[j]] = [lines[j], lines[i]];
+      saveTrees();
+      renderFamilyTree();
+    }
+
+    function renameTreeLine(lineId) {
+      const line = currentTree().lines.find(l => l.id === lineId);
+      const name = prompt('Name this line:', line.name);
+      if (name === null || !name.trim()) return;
+      line.name = name.trim().slice(0, 30);
+      saveTrees();
+      renderFamilyTree();
+    }
+
+    function deleteTreeLine(lineId) {
+      const tree = currentTree();
+      if (tree.members.some(m => m.line === lineId) || tree.lines.length <= 1) return;
+      tree.lines = tree.lines.filter(l => l.id !== lineId);
+      saveTrees();
+      renderFamilyTree();
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && (treeConnect || treeMoveId)) { treeConnect = null; treeMoveId = null; renderFamilyTree(); }
+    });
+
+    // --- Layout: generations are rows, lines are columns ---
+    const TREE = { W: 150, H: 196, PAIR_GAP: 46, UNIT_GAP: 26, COL_GAP: 26, COL_MIN: 190, COL_PAD: 14, ROW_H: 300, HEADER: 46, PAD: 16 };
+
+    // A pair shares a generation; a child is one generation below its parents
+    function computeGenerations(tree) {
+      const g = Object.fromEntries(tree.members.map(m => [m.id, 0]));
+      for (let iter = 0; iter <= tree.members.length * 2; iter++) {
+        let changed = false;
+        tree.members.forEach(m => {
+          let v = m.parents.length ? 1 + Math.max(...m.parents.map(p => g[p] || 0)) : 0;
+          if (m.partner) v = Math.max(v, g[m.partner] || 0);
+          if (v > g[m.id]) { g[m.id] = v; changed = true; }
+        });
+        if (!changed) break;
+      }
+      return g;
+    }
+
+    function layoutTree(tree) {
+      const gen = computeGenerations(tree);
+      const maxGen = Math.max(0, ...Object.values(gen));
+      const order = Object.fromEntries(tree.members.map((m, i) => [m.id, i]));
+      const lineIndex = Object.fromEntries(tree.lines.map((l, i) => [l.id, i]));
+
+      // Each line × generation cell holds units: a solo Tama, or a pair side by side
+      const cells = {};
+      const placed = new Set();
+      tree.members.forEach(m => {
+        if (placed.has(m.id)) return;
+        const p = m.partner && memberById(tree, m.partner);
+        const unit = p && p.line === m.line && gen[p.id] === gen[m.id] ? [m.id, p.id] : [m.id];
+        unit.forEach(id => placed.add(id));
+        const key = `${lineIndex[m.line]}|${gen[m.id]}`;
+        (cells[key] = cells[key] || []).push(unit);
+      });
+      const unitW = u => (u.length === 2 ? TREE.W * 2 + TREE.PAIR_GAP : TREE.W);
+      const cellW = units => units.reduce((s, u) => s + unitW(u), 0) + Math.max(0, units.length - 1) * TREE.UNIT_GAP;
+
+      let pos = {}, colX = [], colW = [];
+      const place = () => {
+        pos = {};
+        colW = tree.lines.map((l, i) => {
+          let w = TREE.COL_MIN;
+          for (let g = 0; g <= maxGen; g++) if (cells[`${i}|${g}`]) w = Math.max(w, cellW(cells[`${i}|${g}`]) + TREE.COL_PAD * 2);
+          return w;
+        });
+        let x = TREE.PAD;
+        colX = colW.map(w => { const cx = x; x += w + TREE.COL_GAP; return cx; });
+        Object.entries(cells).forEach(([key, units]) => {
+          const [i, g] = key.split('|').map(Number);
+          let ux = colX[i] + (colW[i] - cellW(units)) / 2;
+          const y = TREE.PAD + TREE.HEADER + g * TREE.ROW_H;
+          units.forEach(u => {
+            u.forEach((id, k) => { pos[id] = { x: ux + k * (TREE.W + TREE.PAIR_GAP), y }; });
+            ux += unitW(u) + TREE.UNIT_GAP;
+          });
+        });
+        return x - TREE.COL_GAP + TREE.PAD;
+      };
+      place();
+      // Second pass: order each cell under its parents, then place again
+      const anchor = id => {
+        const m = memberById(tree, id);
+        const ps = m.parents.filter(p => pos[p]);
+        return ps.length ? ps.reduce((s, p) => s + pos[p].x, 0) / ps.length : null;
+      };
+      Object.values(cells).forEach(units => units.sort((a, b) => {
+        const key = u => { const xs = u.map(anchor).filter(v => v !== null); return xs.length ? xs.reduce((s, v) => s + v, 0) / xs.length : 1e9 + order[u[0]]; };
+        return key(a) - key(b);
+      }));
+      const width = place();
+      const height = TREE.PAD + TREE.HEADER + maxGen * TREE.ROW_H + TREE.H + 60;
+      return { pos, colX, colW, width, height, maxGen };
+    }
+
+    // --- Drawing ---
+    function renderTreeTabs() {
+      const bar = document.getElementById('treeTabs');
+      bar.innerHTML = '';
+      treeStore.trees.forEach(t => {
+        const tab = document.createElement('button');
+        tab.className = 'tree-tab' + (t.id === treeStore.selectedId ? ' active' : '');
+        tab.innerHTML = '<span></span><span class="tree-count"></span>';
+        tab.firstChild.textContent = t.name;
+        tab.lastChild.textContent = t.members.length;
+        tab.lastChild.title = `${t.members.length} Tama(s)`;
+        tab.onclick = () => selectTree(t.id);
+        bar.appendChild(tab);
+      });
+    }
+
+    function makeTreeButton(cls, text, title, onClick, disabled) {
+      const b = document.createElement('button');
+      b.className = cls;
+      b.textContent = text;
+      b.title = title;
+      b.disabled = !!disabled;
+      b.onclick = e => { e.stopPropagation(); onClick(); };
+      return b;
+    }
+
+    function svgPath(svg, d, cls) {
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', d);
+      if (cls) path.setAttribute('class', cls);
+      svg.appendChild(path);
+    }
+
+    function renderFamilyTree(focusId) {
+      renderTreeTabs();
+      renderShellPicker();
+      const tree = currentTree();
+      const canvas = document.getElementById('treeCanvas');
+      const shell = shellById(tree.shell);
+      canvas.classList.toggle('has-shell', !!shell);
+      canvas.style.setProperty('--tree-field', shell ? `url('images/fields/${shell.field}.png')` : 'none');
+      const banner = document.getElementById('treeConnectBanner');
+      canvas.innerHTML = '';
+
+      // Linking banner
+      if (treeConnect) {
+        const from = memberById(tree, treeConnect.fromId);
+        banner.innerHTML = treeConnect.mode === 'pair'
+          ? '🫂 Click a highlighted solo Tama to pair it with <b></b>. <button class="modal-btn">Cancel</button>'
+          : '🍼 Click a highlighted Tama or pair to make <b></b> their child. <button class="modal-btn">Cancel</button>';
+        banner.querySelector('b').textContent = tamaName(from.tama);
+        banner.querySelector('button').onclick = () => { treeConnect = null; renderFamilyTree(); };
+        banner.style.display = 'flex';
+      } else {
+        banner.style.display = 'none';
+      }
+
+      const { pos, colX, colW, width, height } = layoutTree(tree);
+      const stage = document.createElement('div');
+      stage.className = 'tree-stage';
+      stage.style.width = width + 'px';
+      stage.style.height = height + 'px';
+      stage.onclick = e => {
+        if (e.target === stage && (treeSelectedId || treeMoveId)) { treeSelectedId = null; treeMoveId = null; renderFamilyTree(); }
+      };
+
+      // Line columns with headers (rename, sort ◀ ▶, delete when empty)
+      tree.lines.forEach((line, i) => {
+        const col = document.createElement('div');
+        col.className = 'tree-line-column';
+        Object.assign(col.style, { left: colX[i] + 'px', width: colW[i] + 'px', height: (height - TREE.PAD * 2) + 'px', top: TREE.PAD + 'px' });
+        const header = document.createElement('div');
+        header.className = 'tree-line-header';
+        header.appendChild(makeTreeButton('tree-line-move', '◀', 'Move this line left', () => moveTreeLine(line.id, -1), i === 0));
+        const name = document.createElement('button');
+        name.className = 'tree-line-name';
+        name.textContent = line.name;
+        name.title = 'Rename this line';
+        name.onclick = e => { e.stopPropagation(); renameTreeLine(line.id); };
+        header.appendChild(name);
+        header.appendChild(makeTreeButton('tree-line-move', '▶', 'Move this line right', () => moveTreeLine(line.id, 1), i === tree.lines.length - 1));
+        if (!tree.members.some(m => m.line === line.id) && tree.lines.length > 1) {
+          header.appendChild(makeTreeButton('tree-line-delete', '✕', 'Delete this empty line', () => deleteTreeLine(line.id)));
+        }
+        col.appendChild(header);
+        stage.appendChild(col);
+      });
+
+      // Pair links and parent → child links
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('class', 'tree-lines');
+      svg.setAttribute('width', width);
+      svg.setAttribute('height', height);
+      const centerX = id => pos[id].x + TREE.W / 2;
+      const hearts = [];
+      tree.members.forEach(m => {
+        if (m.partner && m.id < m.partner && pos[m.partner]) {
+          const [l, r] = [m.id, m.partner].sort((a, b) => pos[a].x - pos[b].x);
+          const y1 = pos[l].y + TREE.H / 2, y2 = pos[r].y + TREE.H / 2;
+          const x1 = pos[l].x + TREE.W, x2 = pos[r].x;
+          svgPath(svg, `M${x1} ${y1} H${(x1 + x2) / 2} V${y2} H${x2}`, 'pair');
+          hearts.push({ a: l, b: r, x: (x1 + x2) / 2, y: (y1 + y2) / 2 });
+        }
+        if (m.parents.length && m.parents.every(p => pos[p])) {
+          const cx = centerX(m.id), cy = pos[m.id].y;
+          const mid = cy - 34;
+          let d;
+          if (m.parents.length === 2) {
+            const px = (centerX(m.parents[0]) + centerX(m.parents[1])) / 2;
+            const py = Math.max(pos[m.parents[0]].y, pos[m.parents[1]].y) + TREE.H / 2;
+            d = `M${px} ${py} V${mid} H${cx} V${cy}`;
+          } else {
+            const p = m.parents[0];
+            d = `M${centerX(p)} ${pos[p].y + TREE.H} V${mid} H${cx} V${cy}`;
+          }
+          svgPath(svg, d, 'child');
+        }
+      });
+      stage.appendChild(svg);
+
+      // 💕 between partners: view their possible babies in the Gene Viewer
+      hearts.forEach(h => {
+        const btn = makeTreeButton('tree-heart', '💕', 'View this pair\'s possible babies in the Gene Viewer', () => sendPairToGeneViewer(h.a, h.b));
+        btn.style.left = h.x + 'px';
+        btn.style.top = h.y + 'px';
+        stage.appendChild(btn);
+      });
+
+      // Tama boxes
+      tree.members.forEach(m => {
+        const box = document.createElement('div');
+        box.className = 'tree-box';
+        box.style.left = pos[m.id].x + 'px';
+        box.style.top = pos[m.id].y + 'px';
+        const lineI = tree.lines.findIndex(l => l.id === m.line);
+
+        if (treeConnect) {
+          if (m.id === treeConnect.fromId) box.classList.add('connect-source');
+          else if (canConnect(tree, treeConnect.fromId, m.id, treeConnect.mode)) {
+            box.classList.add('connect-target');
+            box.onclick = () => finishConnect(m.id);
+          } else box.classList.add('connect-disabled');
+        } else {
+          if (m.id === treeSelectedId || m.id === treeMoveId) box.classList.add('selected');
+          box.onclick = () => { treeSelectedId = treeSelectedId === m.id ? null : m.id; if (treeMoveId !== m.id) treeMoveId = null; renderFamilyTree(); };
+        }
+
+        const bg = m.field !== null ? `images/fields/${fieldNames[m.field]}.png` : null;
+        const sprite = buildSprite(m.tama, resolveEyes(m), resolveColorHex(m), bg);
+        sprite.classList.add('tree-sprite');
+        box.appendChild(sprite);
+        const name = document.createElement('div');
+        name.className = 'tree-box-name';
+        name.textContent = tamaName(m.tama);
+        box.appendChild(name);
+        const sub = document.createElement('div');
+        sub.className = 'tree-box-sub';
+        sub.textContent = m.field !== null ? FIELD_LABELS[m.field] : 'No field';
+        box.appendChild(sub);
+
+        box.appendChild(makeTreeButton('tree-edit-btn', '🖌️', 'Edit this Tama', () => openTreeDialog(m.id)));
+
+        // Action bar under the box (shown while the box is hovered or tapped)
+        if (!treeConnect) {
+          const actions = document.createElement('div');
+          actions.className = 'tree-actions';
+          if (!m.parents.length) actions.appendChild(makeTreeButton('tree-action', '🍼', 'Make this a child of a solo Tama or a pair', () => startConnect(m.id, 'child')));
+          if (!m.partner) actions.appendChild(makeTreeButton('tree-action', '🫂', 'Pair with another solo Tama', () => startConnect(m.id, 'pair')));
+          if (!m.partner && tree.lines.length > 1) {
+            actions.appendChild(makeTreeButton('tree-action' + (treeMoveId === m.id ? ' active' : ''), '↔️', 'Move to another line',
+              () => { treeMoveId = treeMoveId === m.id ? null : m.id; treeSelectedId = m.id; renderFamilyTree(); }));
+          }
+          if (hasLinks(tree, m)) actions.appendChild(makeTreeButton('tree-action unlink', '✂️', 'Unlink this Tama and move it to a new line', () => unlinkMember(m.id)));
+          if (actions.children.length) box.appendChild(actions);
+        }
+
+        // ◀ ▶ move arrows (after ↔️)
+        if (treeMoveId === m.id && !m.partner) {
+          box.appendChild(makeTreeButton('tree-move left', '◀', 'Move to the line on the left', () => moveMemberLine(m.id, -1), lineI <= 0));
+          box.appendChild(makeTreeButton('tree-move right', '▶', 'Move to the line on the right', () => moveMemberLine(m.id, 1), lineI >= tree.lines.length - 1));
+        }
+        stage.appendChild(box);
+      });
+      canvas.appendChild(stage);
+
+      if (!tree.members.length) {
+        const empty = document.createElement('div');
+        empty.className = 'tree-empty';
+        empty.innerHTML = 'No Tamas in this tree yet.<br>Use <b>➕ Add Tama</b>, or <b>🌳 Add to Family Tree</b> on the Step-by-Step Adult stage.';
+        canvas.appendChild(empty);
+      }
+
+      if (focusId && pos[focusId]) {
+        canvas.scrollTo({ left: pos[focusId].x - canvas.clientWidth / 2 + TREE.W / 2, top: pos[focusId].y - 60, behavior: 'smooth' });
+      }
+    }
+
+    // 💕: load a pair into the Gene Viewer as Parent 1 and Parent 2 (with their eyes/color overrides)
+    function sendPairToGeneViewer(aId, bId) {
+      const tree = currentTree();
+      const [a, b] = [memberById(tree, aId), memberById(tree, bId)];
+      geneState.a = { id: a.tama, eyes: a.eyes, color: a.color };
+      geneState.b = { id: b.tama, eyes: b.eyes, color: b.color };
+      renderGeneViewer();
+      openTab('gene-viewer', document.querySelectorAll('.tab-btn')[1]);
+    }
+
+    // --- Step-by-Step: Add to Tree ---
+    function currentStepMember(tree) {
+      const path = tamaData[appState.baseId].data.path[appState.currentPathKey];
+      const field = path && path["0"] && path["0"].method ? path["0"].method.field : null;
+      return { id: uid('m'), tama: appState.baseId, eyes: appState.eyesOverride, color: appState.colorOverride,
+               field: Number.isInteger(field) ? field : null, line: tree ? newLine(tree).id : null, partner: null, parents: [] };
+    }
+
+    function openAddToTreeDialog() {
+      const m = currentStepMember(null);
+      document.getElementById('addToTreeSummary').textContent =
+        `${tamaName(m.tama)} · ${m.field !== null ? FIELD_LABELS[m.field] : 'No field'}` +
+        (m.eyes !== 'default' ? ` · ${tamaName(m.eyes)} eyes` : '') + (m.color !== 'default' ? ` · ${tamaName(m.color)} color` : '');
+      const list = document.getElementById('addToTreeList');
+      list.innerHTML = '';
+      treeStore.trees.forEach(t => {
+        const btn = document.createElement('button');
+        btn.className = 'modal-btn add-to-tree-option';
+        btn.textContent = `${t.name} · ${t.members.length} Tama${t.members.length === 1 ? '' : 's'}`;
+        btn.onclick = () => addCurrentToTree(t.id);
+        list.appendChild(btn);
+      });
+      document.getElementById('newTreeName').value = '';
+      document.getElementById('addToTreeDialog').style.display = 'flex';
+    }
+
+    function closeAddToTreeDialog() {
+      document.getElementById('addToTreeDialog').style.display = 'none';
+    }
+
+    function addCurrentToTree(treeId) {
+      const tree = treeStore.trees.find(t => t.id === treeId);
+      const member = currentStepMember(tree); // on its own new line
+      tree.members.push(member);
+      treeStore.selectedId = tree.id;
+      resetTreeUI();
+      saveTrees();
+      closeAddToTreeDialog();
+      openTab('family-tree', document.querySelectorAll('.tab-btn')[2]);
+      renderFamilyTree(member.id);
+    }
+
+    function addCurrentToNewTree() {
+      const name = document.getElementById('newTreeName').value.trim() || `Family Tree ${treeStore.trees.length + 1}`;
+      addCurrentToTree(addTree(name).id);
     }
 
     // --- APP LOGIC ---
@@ -596,10 +2487,69 @@
       updateUI();
     }
 
-    function advanceStage() {
-      if (appState.currentStage < 3) {
-        updateStage(appState.currentStage + 1);
+    // --- BODY COLOR TINTING ---
+    // color.png is a grayscale shading map. The most common gray is the body's main tone: it becomes exactly
+    // the target color. Darker grays become proportionally darker shades of it (shadows), lighter grays
+    // blend toward white (highlights). Results are cached per sprite + color.
+    const tintCache = {};
+
+    function hexToRgb(hex) {
+      const n = parseInt(String(hex).replace('#', ''), 16);
+      return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+    }
+
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+      });
+    }
+
+    function tintSprite(src, hex) {
+      const key = `${src}|${hex}`;
+      if (!tintCache[key]) {
+        tintCache[key] = loadImage(src).then(img => {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const px = imageData.data;
+
+          // Find the body's main tone (most common opaque gray)
+          const counts = new Array(256).fill(0);
+          for (let i = 0; i < px.length; i += 4) if (px[i + 3] > 0) counts[px[i]]++;
+          const mainGray = Math.max(1, counts.indexOf(Math.max(...counts)));
+
+          const [r, g, b] = hexToRgb(hex);
+          for (let i = 0; i < px.length; i += 4) {
+            if (px[i + 3] === 0) continue;
+            const gray = px[i];
+            if (gray <= mainGray) {
+              const k = gray / mainGray;          // shadow: scale the color down
+              px[i] = r * k; px[i + 1] = g * k; px[i + 2] = b * k;
+            } else {
+              const t = (gray - mainGray) / (255 - mainGray); // highlight: blend toward white
+              px[i] = r + (255 - r) * t; px[i + 1] = g + (255 - g) * t; px[i + 2] = b + (255 - b) * t;
+            }
+          }
+          ctx.putImageData(imageData, 0, 0);
+          return canvas.toDataURL();
+        }).catch(() => src); // missing/unreadable sprite: fall back to the untinted image
       }
+      return tintCache[key];
+    }
+
+    // Set an <img> to a tinted sprite, ignoring results that arrive after the img was given another sprite
+    function applyTint(imgEl, src, hex) {
+      const token = `${src}|${hex}`;
+      imgEl.dataset.tint = token;
+      tintSprite(src, hex).then(url => {
+        if (imgEl.dataset.tint === token) imgEl.src = url;
+      });
     }
 
     function updateStage(stageNum) {
@@ -610,8 +2560,8 @@
         if (index === stageNum) el.classList.add('active');
         else el.classList.remove('active');
       });
+      document.getElementById('addToTreeBtn').style.display = stageNum === 3 ? '' : 'none';
 
-      document.getElementById('advanceBtn').style.display = (stageNum === 3) ? 'none' : 'block';
       updateUI();
     }
 
@@ -630,39 +2580,23 @@
       }
       fieldContainer.style.backgroundImage = `url('${bgImage}')`;
 
-      const reqBox = document.getElementById('requirementsDisplay');
-      if (appState.currentStage === 3) {
-        reqBox.innerHTML = `<h4>Adult Stage</h4><ul><li>Congratulations! You have reached the final result.</li></ul>`;
-      } else if (!appState.currentPathKey || !tamaData[baseId].data || !tamaData[baseId].data.path || !tamaData[baseId].data.path[appState.currentPathKey]) {
-        reqBox.innerHTML = `<h4>Stage Requirements</h4><ul><li style="color:#ff8888;">No path data available.</li></ul>`;
-      } else {
-        const method = tamaData[baseId].data.path[appState.currentPathKey][appState.currentStage].method;
-        let reqHTML = '';
-        if (appState.currentStage === 0) {
-          reqHTML = `<h4>Baby Requirements</h4><ul><li><strong>Field ID:</strong> ${method.field}</li></ul>`;
-        } else if (appState.currentStage === 1) {
-          reqHTML = `<h4>Kid Requirements</h4><ul><li><strong>Food Index:</strong> ${method.food}</li></ul>`;
-        } else if (appState.currentStage === 2) {
-          let mistakeText = method.mistakes === "0" ? (method.max ? "0" : "0-1") : (method.mistakes === "1" ? "2-5" : "6+");
-          reqHTML = `<h4>Young Requirements</h4><ul>
-                      <li><strong>Max Food/Happy:</strong> ${method.max ? 'Yes' : 'No'}</li>
-                      <li><strong>Mistakes:</strong> ${mistakeText}</li>
-                     </ul>`;
-        }
-        reqBox.innerHTML = reqHTML;
-      }
+      const baseData = tamaData[baseId].data;
+      const currentPath = (appState.currentPathKey && baseData && baseData.path) ? baseData.path[appState.currentPathKey] : null;
+      renderGuide(baseId, currentPath, appState.currentStage);
+      renderCellIcons(currentPath, appState.currentStage);
 
-      let currentTamaId = baseId;
+      // A stage can list several possible Tamas (secret paths): preview the first, name them all
+      let stageTamas = [baseId];
       if (appState.currentStage < 3 && appState.currentPathKey && tamaData[baseId].data.path[appState.currentPathKey]) {
-        currentTamaId = tamaData[baseId].data.path[appState.currentPathKey][appState.currentStage].tama;
+        stageTamas = tamaIds(tamaData[baseId].data.path[appState.currentPathKey][appState.currentStage].tama);
       }
+      const currentTamaId = stageTamas[0];
       const currentTamaData = tamaData[currentTamaId];
       if (!currentTamaData) return;
 
-      document.getElementById('currentTamaName').innerHTML = `Current Tama:<br>${currentTamaData.name}`;
+      const stageNames = orList(stageTamas.map(id => (tamaData[id] ? tamaData[id].name : id)));
+      document.getElementById('currentTamaName').innerHTML = `Current Tama:<br>${stageNames}`;
 
-      document.getElementById('TamaColorBase').src = `images/tamas/${currentTamaId}/color.png`;
-      document.getElementById('TamaColor').src = `images/tamas/${currentTamaId}/color.png`;
       document.getElementById('TamaBody').src = `images/tamas/${currentTamaId}/base.png`;
       document.getElementById('TamaFace').src = `images/tamas/${currentTamaId}/face.png`;
 
@@ -670,15 +2604,18 @@
       document.getElementById('TamaEyes').src = `images/tamas/${eyesSourceId}/eyes.png`;
       document.getElementById('CellEyes').src = `images/tamas/${eyesSourceId}/eyes.png`;
 
-      const eyeX = (currentTamaData.offsets ? currentTamaData.offsets.x : 0) + debugX;
-      const eyeY = (currentTamaData.offsets ? currentTamaData.offsets.y : 0) + debugY;
-      
+      const savedX = currentTamaData.offsets ? currentTamaData.offsets.x : 0;
+      const savedY = currentTamaData.offsets ? currentTamaData.offsets.y : 0;
+      const eyeX = savedX + debugX;
+      const eyeY = savedY + debugY;
+      renderDebugReadout(savedX, savedY);
+
       // Main view uses the standard transform + debug offsets
       document.getElementById('TamaEyes').style.transform = `translate(50%, 95%) translate(${eyeX}px, ${eyeY}px)`;
       document.getElementById('CellEyes').style.transform = `translate(50%, 44.5%)`;
 
       const hexColor = appState.colorOverride === 'default' ? currentTamaData.color : tamaData[appState.colorOverride].color;
-      document.getElementById('TamaColor').style.filter = `opacity(0.5) drop-shadow(0 0 0 #${hexColor}) saturate(500%)`;
+      applyTint(document.getElementById('TamaColor'), `images/tamas/${currentTamaId}/color.png`, hexColor);
     }
 
     window.onload = loadTamaData;

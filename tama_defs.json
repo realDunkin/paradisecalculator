@@ -3,7 +3,7 @@
     "name": "Babymarutchi",
     "stage": 0,
     "color": "FFF394",
-    "offsets": { "x": 0, "y": 22 },
+    "offsets": { "x": 0, "y": 30 },
     "data": {
       "breedable": false,
       "secret": false,
@@ -201,7 +201,7 @@
       "secret": false,
       "lab_only": false,
       "path": {
-        "base": {
+        "land": {
           "display": "Land Field",
           "0": {
             "tama": "babymarutchi",
@@ -218,13 +218,12 @@
           "2": {
             "tama": "roar_young",
             "method": {
-              "max": true,
-              "mistakes": "0"
+              "mistakes": 0
             }
           }
         },
-        "neon": {
-          "display": "New Tamagotchi Field",
+        "new-tamagotchi": {
+          "display": "New Tamagotchi Planet",
           "0": {
             "tama": "babymarutchi",
             "method": {
@@ -240,8 +239,7 @@
           "2": {
             "tama": "land_young",
             "method": {
-              "max": true,
-              "mistakes": "0"
+              "mistakes": 0
             }
           }
         }
@@ -257,7 +255,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "land": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "roar_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        },
+        "tamagotchi": {
+          "display": "Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 8
+            }
+          },
+          "1": {
+            "tama": "marutchi",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "tama_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "gumax": {
@@ -269,7 +310,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "land": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "roar_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "ratchi": {
@@ -281,19 +344,84 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "land": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "roar_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "mametchi": {
     "name": "Mametchi",
     "stage": 3,
     "color": "FFF394",
-    "offsets": { "x": 0, "y": 0 },
+    "offsets": { "x": 0, "y": 6 },
     "data": {
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "land": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "toddle_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        },
+        "tamagotchi": {
+          "display": "Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 8
+            }
+          },
+          "1": {
+            "tama": "marutchi",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "tama_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "mimitchi": {
@@ -305,7 +433,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "land": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "toddle_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        },
+        "tamagotchi": {
+          "display": "Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 8
+            }
+          },
+          "1": {
+            "tama": "marutchi",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "tama_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "molmotchi": {
@@ -317,7 +488,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "land": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "toddle_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        },
+        "new-tamagotchi": {
+          "display": "New Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 7
+            }
+          },
+          "1": {
+            "tama": "newtama_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "land_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "sheeptchi": {
@@ -329,7 +543,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "land": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "toddle_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "leopatchi": {
@@ -341,7 +577,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "land": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "lick_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "sebiretchi": {
@@ -353,7 +611,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "land": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "lick_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "elizardotchi": {
@@ -365,7 +645,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "land": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "lick_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "heavytchi": {
@@ -377,7 +679,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "land": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "lick_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "furawatchi": {
@@ -389,7 +713,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "land": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "sprout_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        },
+        "tamagotchi": {
+          "display": "Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 8
+            }
+          },
+          "1": {
+            "tama": "marutchi",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "curl_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "potsunentchi": {
@@ -401,7 +768,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "land": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "sprout_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "tustustchi": {
@@ -413,7 +802,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "land": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "sprout_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "shigemi_san": {
@@ -425,7 +836,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "land": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "sprout_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "chodracotchi": {
@@ -437,7 +870,34 @@
       "breedable": true,
       "secret": true,
       "lab_only": false,
-      "path": {}
+      "version": "Pink Land",
+      "path": {
+        "land": {
+          "display": "Land Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 0
+            }
+          },
+          "1": {
+            "tama": "land_kid",
+            "method": {
+              "food": "any"
+            }
+          },
+          "2": {
+            "tama": [
+              "roar_young",
+              "toddle_young",
+              "lick_young"
+            ],
+            "method": {
+              "connect": 2
+            }
+          }
+        }
+      }
     }
   },
   "irukatchi": {
@@ -449,7 +909,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "glide_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        },
+        "new-tamagotchi": {
+          "display": "New Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 7
+            }
+          },
+          "1": {
+            "tama": "newtama_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "water_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "kametchi": {
@@ -461,7 +964,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "glide_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "kujiratchi": {
@@ -473,7 +998,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "glide_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "uruotchi": {
@@ -485,7 +1032,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "glide_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "axolopatchi": {
@@ -497,7 +1066,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "leap_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        },
+        "new-tamagotchi": {
+          "display": "New Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 7
+            }
+          },
+          "1": {
+            "tama": "newtama_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "water_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "imoritchi": {
@@ -509,7 +1121,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "leap_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "kawazutchi": {
@@ -521,7 +1155,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "leap_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        },
+        "new-tamagotchi": {
+          "display": "New Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 7
+            }
+          },
+          "1": {
+            "tama": "newtama_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "water_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "beavertchi": {
@@ -533,7 +1210,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "leap_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "tachutchi": {
@@ -545,7 +1244,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "paddle_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "sharktchi": {
@@ -557,7 +1278,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "paddle_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "ankotchi": {
@@ -569,7 +1312,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "paddle_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "otototchi": {
@@ -581,7 +1346,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "paddle_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "kuraratchi": {
@@ -593,7 +1380,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "float_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "mendakotchi": {
@@ -605,19 +1414,84 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "float_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        },
+        "new-tamagotchi": {
+          "display": "New Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 7
+            }
+          },
+          "1": {
+            "tama": "newtama_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "water_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "amefuratchi": {
     "name": "Amefuratchi",
     "stage": 3,
-    "color": "FFD2EF",
-    "offsets": { "x": 0, "y": 0 },
+    "color": "73CEFF",
+    "offsets": { "x": 0, "y": -5.5 },
     "data": {
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "float_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "gusokutchi": {
@@ -629,7 +1503,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "float_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "mermarintchi": {
@@ -641,7 +1537,34 @@
       "breedable": true,
       "secret": true,
       "lab_only": false,
-      "path": {}
+      "version": "Blue Water",
+      "path": {
+        "water": {
+          "display": "Water Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 1
+            }
+          },
+          "1": {
+            "tama": "water_kid",
+            "method": {
+              "food": "any"
+            }
+          },
+          "2": {
+            "tama": [
+              "glide_young",
+              "leap_young",
+              "paddle_young"
+            ],
+            "method": {
+              "connect": 2
+            }
+          }
+        }
+      }
     }
   },
   "horhotchi": {
@@ -653,7 +1576,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "flap_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        },
+        "new-tamagotchi": {
+          "display": "New Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 7
+            }
+          },
+          "1": {
+            "tama": "newtama_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "sky_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "mongatchi": {
@@ -665,7 +1631,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "flap_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        },
+        "new-tamagotchi": {
+          "display": "New Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 7
+            }
+          },
+          "1": {
+            "tama": "newtama_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "sky_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "eagletchi": {
@@ -677,7 +1686,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "flap_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "batchi": {
@@ -689,7 +1720,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "flap_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        },
+        "new-tamagotchi": {
+          "display": "New Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 7
+            }
+          },
+          "1": {
+            "tama": "newtama_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "sky_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "peacotchi": {
@@ -701,7 +1775,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "chirp_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "batatchi": {
@@ -713,7 +1809,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "chirp_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "kuchipatchi": {
@@ -725,7 +1843,71 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "chirp_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        },
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "forest_chirp_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        },
+        "tamagotchi": {
+          "display": "Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 8
+            }
+          },
+          "1": {
+            "tama": "marutchi",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "tama_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "kiwitchi": {
@@ -737,7 +1919,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "chirp_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "papillotchi": {
@@ -749,7 +1953,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "bumble_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "kabutotchi": {
@@ -761,7 +1987,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "bumble_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "tentotchi": {
@@ -773,7 +2021,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "bumble_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "hatchitchi": {
@@ -785,7 +2055,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "bumble_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "gemtchi": {
@@ -797,7 +2089,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "rocky_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        },
+        "new-tamagotchi": {
+          "display": "New Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 7
+            }
+          },
+          "1": {
+            "tama": "newtama_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "sky_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "oretatchi": {
@@ -809,7 +2144,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "rocky_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "ishikorotchi": {
@@ -821,7 +2178,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "rocky_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "magmatchi": {
@@ -833,7 +2212,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "rocky_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "yayacorntchi": {
@@ -845,7 +2246,34 @@
       "breedable": true,
       "secret": true,
       "lab_only": false,
-      "path": {}
+      "version": "Purple Sky",
+      "path": {
+        "sky": {
+          "display": "Sky Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 2
+            }
+          },
+          "1": {
+            "tama": "sky_kid",
+            "method": {
+              "food": "any"
+            }
+          },
+          "2": {
+            "tama": [
+              "flap_young",
+              "chirp_young",
+              "bumble_young"
+            ],
+            "method": {
+              "connect": 2
+            }
+          }
+        }
+      }
     }
   },
   "bbmarutchi": {
@@ -929,7 +2357,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "forest_roar_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "konkotchi": {
@@ -941,7 +2391,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "forest_roar_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "tigaotchi": {
@@ -953,7 +2425,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "forest_roar_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "tanoontchi": {
@@ -965,7 +2459,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "forest_roar_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "lessapantchi": {
@@ -977,7 +2493,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "forest_toddle_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        },
+        "new-tamagotchi": {
+          "display": "New Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 7
+            }
+          },
+          "1": {
+            "tama": "newtama_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "forest_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "kanokotchi": {
@@ -989,7 +2548,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "forest_toddle_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        },
+        "new-tamagotchi": {
+          "display": "New Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 7
+            }
+          },
+          "1": {
+            "tama": "newtama_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "forest_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "suigyutchi": {
@@ -1001,7 +2603,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "forest_toddle_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "panbootchi": {
@@ -1013,7 +2637,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "forest_toddle_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "kachitchi": {
@@ -1025,7 +2671,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "forest_chirp_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "tokipatchi": {
@@ -1037,7 +2705,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "forest_chirp_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "sparrotchi": {
@@ -1049,7 +2739,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "forest_chirp_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "shiitaketchi": {
@@ -1061,7 +2773,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "forest_sprout_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "peatchi": {
@@ -1073,7 +2807,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "forest_sprout_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "nappatchi": {
@@ -1085,7 +2841,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "forest_sprout_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "rushraditchi": {
@@ -1097,7 +2875,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "forest_sprout_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "tatsutchi": {
@@ -1109,7 +2909,34 @@
       "breedable": true,
       "secret": true,
       "lab_only": false,
-      "path": {}
+      "version": "Jade Forest",
+      "path": {
+        "forest": {
+          "display": "Forest Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 3
+            }
+          },
+          "1": {
+            "tama": "forest_kid",
+            "method": {
+              "food": "any"
+            }
+          },
+          "2": {
+            "tama": [
+              "forest_roar_young",
+              "forest_toddle_young",
+              "forest_chirp_young"
+            ],
+            "method": {
+              "connect": 2
+            }
+          }
+        }
+      }
     }
   },
   "tropical_kid": {
@@ -1241,7 +3068,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "tropical_roar_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "madillotchi": {
@@ -1253,7 +3102,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "tropical_roar_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "tarantytchi": {
@@ -1265,7 +3136,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "tropical_roar_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "crocotchi": {
@@ -1277,7 +3170,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "tropical_roar_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "tropical_mametchi": {
@@ -1289,7 +3204,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "tropical_toddle_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "parorotchi": {
@@ -1301,7 +3238,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "tropical_toddle_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        },
+        "new-tamagotchi": {
+          "display": "New Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 7
+            }
+          },
+          "1": {
+            "tama": "newtama_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "forest_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "tenatchi": {
@@ -1313,7 +3293,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "tropical_toddle_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        },
+        "new-tamagotchi": {
+          "display": "New Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 7
+            }
+          },
+          "1": {
+            "tama": "newtama_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "land_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "namakemotchi": {
@@ -1325,7 +3348,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "tropical_toddle_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "kuikuitchi": {
@@ -1337,7 +3382,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "tropical_lick_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "poizutchi": {
@@ -1349,7 +3416,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "tropical_lick_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "chameleotchi": {
@@ -1361,7 +3450,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "tropical_lick_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "iguanatchi": {
@@ -1373,7 +3484,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "tropical_lick_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "yashikitchi": {
@@ -1385,7 +3518,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "tropical_sprout_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "tropical_potsunentchi": {
@@ -1397,7 +3552,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "tropical_sprout_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "ananatchi": {
@@ -1409,7 +3586,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "tropical_sprout_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "avovotchi": {
@@ -1421,7 +3620,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "tropical_sprout_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "manapatchi": {
@@ -1433,7 +3654,34 @@
       "breedable": true,
       "secret": true,
       "lab_only": false,
-      "path": {}
+      "version": "Orange Tropics",
+      "path": {
+        "tropical": {
+          "display": "Tropical Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 4
+            }
+          },
+          "1": {
+            "tama": "tropical_kid",
+            "method": {
+              "food": "any"
+            }
+          },
+          "2": {
+            "tama": [
+              "tropical_roar_young",
+              "tropical_toddle_young",
+              "tropical_lick_young"
+            ],
+            "method": {
+              "connect": 2
+            }
+          }
+        }
+      }
     }
   },
   "okojotchi": {
@@ -1445,7 +3693,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "frozen_roar_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        },
+        "new-tamagotchi": {
+          "display": "New Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 7
+            }
+          },
+          "1": {
+            "tama": "newtama_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "land_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "wolftchi": {
@@ -1457,7 +3748,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "frozen_roar_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "polakumatchi": {
@@ -1469,7 +3782,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "frozen_roar_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "azaratchi": {
@@ -1481,7 +3816,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "frozen_roar_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "icy_irukatchi": {
@@ -1493,7 +3850,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "frozen_glide_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "ginjirotchi": {
@@ -1505,7 +3884,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "frozen_glide_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "rakkotchi": {
@@ -1517,7 +3918,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "frozen_glide_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "hoppentchi": {
@@ -1529,7 +3952,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "frozen_glide_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "lemmingtchi": {
@@ -1541,7 +3986,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "frozen_toddle_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "moosetchi": {
@@ -1553,7 +4020,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "frozen_toddle_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "raichotchi": {
@@ -1565,7 +4054,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "frozen_toddle_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "yukiusatchi": {
@@ -1577,7 +4088,50 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "frozen_toddle_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        },
+        "new-tamagotchi": {
+          "display": "New Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 7
+            }
+          },
+          "1": {
+            "tama": "newtama_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "forest_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "nerinetchi": {
@@ -1589,7 +4143,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "frozen_float_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "dangouotchi": {
@@ -1601,7 +4177,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "frozen_float_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "yaytytchi": {
@@ -1613,7 +4211,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "frozen_float_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "yukiraratchi": {
@@ -1625,7 +4245,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "frozen_float_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "hobohorntchi": {
@@ -1637,14 +4279,41 @@
       "breedable": true,
       "secret": true,
       "lab_only": false,
-      "path": {}
+      "version": "White Glacier",
+      "path": {
+        "ice": {
+          "display": "Ice Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 5
+            }
+          },
+          "1": {
+            "tama": "frozen_kid",
+            "method": {
+              "food": "any"
+            }
+          },
+          "2": {
+            "tama": [
+              "frozen_roar_young",
+              "frozen_glide_young",
+              "frozen_toddle_young"
+            ],
+            "method": {
+              "connect": 2
+            }
+          }
+        }
+      }
     }
   },
   "galaxy_kid": {
     "name": "Galaxy Kid",
     "stage": 1,
-    "color": "FFD2EF",
-    "offsets": { "x": 0, "y": 0 },
+    "color": "D6D2FF",
+    "offsets": { "x": 0, "y": 33.5 },
     "data": {
       "breedable": false,
       "secret": false,
@@ -1829,7 +4498,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "piko_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "hoshimortchi": {
@@ -1841,7 +4532,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "piko_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "uchutchi": {
@@ -1853,7 +4566,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "piko_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "kumamutchi": {
@@ -1865,7 +4600,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "piko_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "ukiukitchi": {
@@ -1877,7 +4634,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "slithr_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "pochipotchi": {
@@ -1889,7 +4668,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "slithr_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "takonyatchi": {
@@ -1901,7 +4702,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "slithr_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "kumarstchi": {
@@ -1913,7 +4736,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "slithr_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "hanawatchi": {
@@ -1925,7 +4770,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "orbit_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "nagarebotchi": {
@@ -1937,7 +4804,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "orbit_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "planetchi": {
@@ -1949,7 +4838,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "orbit_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "quepealetchi": {
@@ -1961,7 +4872,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "orbit_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "mamerobotchi": {
@@ -1973,7 +4906,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "mech_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "uchuhikotchi": {
@@ -1985,7 +4940,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "mech_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "satelatchi": {
@@ -1997,7 +4974,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "mech_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "parabolatchi": {
@@ -2009,7 +5008,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": 3
+            }
+          },
+          "2": {
+            "tama": "mech_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "mimimimitchi": {
@@ -2021,7 +5042,34 @@
       "breedable": true,
       "secret": true,
       "lab_only": false,
-      "path": {}
+      "version": "Neon Planets",
+      "path": {
+        "cosmic": {
+          "display": "Cosmic Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 6
+            }
+          },
+          "1": {
+            "tama": "galaxy_kid",
+            "method": {
+              "food": "any"
+            }
+          },
+          "2": {
+            "tama": [
+              "piko_young",
+              "slithr_young",
+              "orbit_young"
+            ],
+            "method": {
+              "connect": 2
+            }
+          }
+        }
+      }
     }
   },
   "memetchi": {
@@ -2033,7 +5081,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tamagotchi": {
+          "display": "Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 8
+            }
+          },
+          "1": {
+            "tama": "marutchi",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "curl_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "makiko": {
@@ -2045,7 +5115,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tamagotchi": {
+          "display": "Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 8
+            }
+          },
+          "1": {
+            "tama": "marutchi",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "curl_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "gozarutchi": {
@@ -2057,7 +5149,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tamagotchi": {
+          "display": "Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 8
+            }
+          },
+          "1": {
+            "tama": "marutchi",
+            "method": {
+              "food": 0
+            }
+          },
+          "2": {
+            "tama": "curl_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "lovelitchi": {
@@ -2069,7 +5183,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tamagotchi": {
+          "display": "Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 8
+            }
+          },
+          "1": {
+            "tama": "marutchi",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "sparkl_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "melodytchi": {
@@ -2081,7 +5217,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tamagotchi": {
+          "display": "Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 8
+            }
+          },
+          "1": {
+            "tama": "marutchi",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "sparkl_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "moriritchi": {
@@ -2093,7 +5251,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tamagotchi": {
+          "display": "Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 8
+            }
+          },
+          "1": {
+            "tama": "marutchi",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "sparkl_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "kuromametchi": {
@@ -2105,7 +5285,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tamagotchi": {
+          "display": "Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 8
+            }
+          },
+          "1": {
+            "tama": "marutchi",
+            "method": {
+              "food": 1
+            }
+          },
+          "2": {
+            "tama": "sparkl_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "neliatchi": {
@@ -2117,7 +5319,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tamagotchi": {
+          "display": "Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 8
+            }
+          },
+          "1": {
+            "tama": "marutchi",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "fluffy_young",
+            "method": {
+              "mistakes": 0
+            }
+          }
+        }
+      }
     }
   },
   "milktchi": {
@@ -2129,7 +5353,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tamagotchi": {
+          "display": "Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 8
+            }
+          },
+          "1": {
+            "tama": "marutchi",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "fluffy_young",
+            "method": {
+              "mistakes": 1
+            }
+          }
+        }
+      }
     }
   },
   "unimarutchi": {
@@ -2141,7 +5387,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tamagotchi": {
+          "display": "Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 8
+            }
+          },
+          "1": {
+            "tama": "marutchi",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "fluffy_young",
+            "method": {
+              "mistakes": 2
+            }
+          }
+        }
+      }
     }
   },
   "weeptchi": {
@@ -2153,7 +5421,29 @@
       "breedable": true,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "tamagotchi": {
+          "display": "Tamagotchi Planet",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "field": 8
+            }
+          },
+          "1": {
+            "tama": "marutchi",
+            "method": {
+              "food": 2
+            }
+          },
+          "2": {
+            "tama": "fluffy_young",
+            "method": {
+              "mistakes": 3
+            }
+          }
+        }
+      }
     }
   },
   "shyontchi": {
