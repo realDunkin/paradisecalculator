@@ -5534,7 +5534,7 @@
     "name": "Camelitchi",
     "stage": 3,
     "color": "light_yellow",
-    "offsets": { "x": 0, "y": 0 },
+    "offsets": { "x": -4, "y": -4 },
     "data": {
       "breedable": true,
       "secret": false,
