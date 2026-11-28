@@ -209,9 +209,9 @@
     .debug-reset:hover { background-color: #cc4455; }
 
     /* --- TAB 2 & 3 --- */
-    /* --- GENE VIEWER --- */
+    /* --- GENE MIXER --- */
     /* Grid: Parent 1 | ✕ | Parent 2 on the first row, Possible Babies spanning the same width below */
-    .gene-viewer-container {
+    .gene-mixer-container {
       display: grid; grid-template-columns: minmax(0, 380px) auto minmax(0, 380px);
       justify-content: center; column-gap: 15px; row-gap: 20px;
     }
@@ -403,6 +403,8 @@
     .add-to-tree-summary { background: #112244; border: 1px solid #5577aa; border-radius: 6px; padding: 8px 10px; color: #fff; font-weight: bold; font-size: 0.9em; }
     .add-to-tree-list { display: flex; flex-direction: column; gap: 6px; }
     .add-to-tree-option { text-align: left; }
+    .add-to-tree-option.active { background: #334488; border-color: #88bbff; color: #fff; }
+    .add-to-tree-branch { display: none; flex-direction: column; gap: 6px; background: #112244; border: 1px solid #5577aa; border-radius: 6px; padding: 8px 10px; }
     .add-to-tree-new { display: flex; gap: 8px; flex-wrap: wrap; }
     .add-to-tree-new .modal-search { min-width: 0; flex: 1 1 160px; }
     .add-to-tree-btn { width: 100%; }
@@ -433,6 +435,7 @@
     .modal-btn:hover { background-color: #4466aa; }
     .modal-btn.close { background-color: #aa3344; border-color: #ff5566; }
     .modal-btn.close:hover { background-color: #cc4455; }
+    .modal-btn:disabled { opacity: 0.45; cursor: default; background-color: #334488; }
 
     /* Field filter chips */
     .modal-filters {
@@ -464,6 +467,15 @@
     }
     .tama-card.selected { border-color: #88ff88; background-color: #224422; }
     .tama-card.default-card { border-color: #ffb3d9; border-style: dashed; }
+    /* Color picker: swatch cards instead of Tama sprites */
+    .modal-body.color-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    .color-card { gap: 8px; padding: 14px 10px; }
+    .color-card-swatch {
+      width: 72px; height: 72px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 3px #000062;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .color-card-swatch.none { background: #001a4d; color: #8899cc; font-size: 1.6em; font-weight: bold; }
+    .color-card-sub { font-size: 0.75em; color: #c8d4ff; line-height: 1.2; }
     
     /* Mini Sprite Renderer - Using exact main view logic but scaled up */
     .mini-sprite {
@@ -510,8 +522,8 @@
       .step-by-step-container { gap: 12px; }
       .left-column, .right-column { flex: 1 1 100%; min-width: 0; gap: 12px; }
 
-      /* Gene Viewer: parents stacked, two babies per row */
-      .gene-viewer-container { grid-template-columns: minmax(0, 1fr); row-gap: 12px; }
+      /* Gene Mixer: parents stacked, two babies per row */
+      .gene-mixer-container { grid-template-columns: minmax(0, 1fr); row-gap: 12px; }
       .gene-cross { font-size: 1.5em; }
       .gene-results { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
       .gene-result .mini-preview { zoom: 0.5; }
@@ -560,7 +572,7 @@
   <!-- Tab Navigation (left sidebar) -->
   <div class="tabs">
     <button class="tab-btn active" onclick="openTab('step-by-step', this)">📈 Step-by-Step</button>
-    <button class="tab-btn" onclick="openTab('gene-viewer', this)">🧬 Gene Viewer</button>
+    <button class="tab-btn" onclick="openTab('gene-mixer', this)">🧬 Gene Mixer</button>
     <button class="tab-btn" onclick="openTab('family-tree', this)">🌳 Family Tree</button>
   </div>
 
@@ -629,7 +641,7 @@
             <div class="current-tama-title" id="currentTamaName">Current Tama:<br>Loading...</div>
 
             <!-- Debug Toggle Button -->
-            <button class="pixel-btn" style="font-size: 0.8em; padding: 4px 10px; margin-bottom: 5px; background-color: #ff4444; color: white; border-color: #ff8888;" onclick="toggleDebug()">🛠️ Toggle Debug Panel</button>
+            <button class="pixel-btn" style="display: none; font-size: 0.8em; padding: 4px 10px; margin-bottom: 5px; background-color: #ff4444; color: white; border-color: #ff8888;" onclick="toggleDebug()">🛠️ Toggle Debug Panel</button>
 
           <!-- Debug Panel -->
           <div id="debugPanel">
@@ -698,10 +710,10 @@
     </div>
   </div>
 
-  <!-- TAB 2: GENE VIEWER -->
-  <div id="gene-viewer" class="tab-content">
-    <div class="gene-viewer-container">
-      <!-- Parents: filled by renderGeneViewer() -->
+  <!-- TAB 2: GENE MIXER -->
+  <div id="gene-mixer" class="tab-content">
+    <div class="gene-mixer-container">
+      <!-- Parents: filled by renderGeneMixer() -->
       <div class="gene-parents">
         <div class="gene-parent ui-card" id="geneParentA"></div>
         <div class="gene-cross">✕</div>
@@ -730,7 +742,7 @@
 
       <div class="tree-toolbar">
         <button class="pixel-btn" onclick="openTreeDialog()">➕ Add Tama</button>
-        <button class="modal-btn" onclick="addTreeLine()">➕ New Line</button>
+        <button class="modal-btn" id="addTreeLineBtn" onclick="addTreeLine()" title="Add an empty branch to move Tamas into">➕ New Branch</button>
         <!-- Tama shell this tree belongs to: sets the grid background -->
         <div class="shell-picker">
           <button class="modal-btn shell-picker-btn" id="shellPickerBtn" onclick="toggleShellMenu(event)"></button>
@@ -766,7 +778,7 @@
             <div class="select-trigger" onclick="openModalFor('tree-tama')"><span id="treeTamaDisplay">Select Tama...</span></div>
           </div>
           <div class="custom-select-group">
-            <label>Eyes Override:</label>
+            <label id="treeEyesLabel">Eyes Override:</label>
             <div class="select-trigger" onclick="openModalFor('tree-eyes')"><span id="treeEyesDisplay">Default (Tama's own)</span></div>
           </div>
           <div class="custom-select-group">
@@ -776,6 +788,10 @@
           <div class="custom-select-group">
             <label for="treeFieldSelect">Field it came from:</label>
             <select id="treeFieldSelect" class="dialog-select" onchange="treeDraft.field = this.value === '' ? null : Number(this.value); renderTreeDialogPreview()"></select>
+          </div>
+          <div class="custom-select-group" id="treeLineGroup">
+            <label for="treeLineSelect">Branch:</label>
+            <select id="treeLineSelect" class="dialog-select" onchange="treeDraft.line = this.value"></select>
           </div>
         </div>
         <div class="dialog-parents" id="treeDialogParents"></div>
@@ -800,6 +816,12 @@
         <div class="add-to-tree-summary" id="addToTreeSummary"></div>
         <label class="dialog-label">Add to one of your trees:</label>
         <div class="add-to-tree-list" id="addToTreeList"></div>
+        <!-- Shown after picking a tree that already has branches -->
+        <div class="add-to-tree-branch" id="addToTreeBranch">
+          <label class="dialog-label" for="addToTreeLineSelect">Branch:</label>
+          <select id="addToTreeLineSelect" class="dialog-select"></select>
+          <button class="pixel-btn" onclick="addCurrentToTree(addToTreeId, document.getElementById('addToTreeLineSelect').value)">Add to Tree</button>
+        </div>
         <label class="dialog-label" for="newTreeName">Or create a new tree:</label>
         <div class="add-to-tree-new">
           <input type="text" id="newTreeName" class="modal-search" placeholder="New tree name..." maxlength="40">
@@ -828,6 +850,25 @@
   <!-- Main Application Logic -->
   <script>
     let tamaData = {};
+
+    // Body colors: each Tama's "color" in tama_defs.json is one of these keys
+    const TAMA_COLORS = {
+      red: 'FF6563', hot_pink: 'FF82B5', purple: 'AD61F7', indigo: '7371EF',
+      blue: '4AA6FF', teal: 'ADEFEF', green: '7BDB3A', yellow: 'FFEB52',
+      orange: 'FFA663', light_pink: 'FFD2EF', lavender: 'D6D2FF', sky_blue: '73CEFF',
+      light_green: 'ADEB7B', light_yellow: 'FFF294', white: 'FFFFFF', gray: 'A5A6BD'
+    };
+    // Hex for a Tama's body color (unknown keys fall back to white)
+    const tamaColorHex = id => TAMA_COLORS[tamaData[id].color] || 'FFFFFF';
+    // "hot_pink" -> "Hot Pink"
+    const colorLabel = key => String(key).split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    // Hex drawn for a Tama with a color override ('default' = the Tama's own color)
+    const resolveColor = (tamaId, override) => (TAMA_COLORS[override] || tamaColorHex(tamaId));
+    // Older saves stored a Tama id as the color override: turn it into that Tama's color key
+    // Keys from the previous palette, mapped to their closest color in the current one
+    const RENAMED_COLORS = { magenta: 'hot_pink', plum: 'purple', light_blue: 'sky_blue', light_teal: 'teal', cream: 'white' };
+    const toColorKey = v => (TAMA_COLORS[v] ? v : RENAMED_COLORS[v] ? RENAMED_COLORS[v]
+      : (v !== 'default' && tamaData[v] ? tamaData[v].color : 'default'));
     
     // Global State for the Step-by-Step tab
     let appState = {
@@ -838,7 +879,7 @@
       currentStage: 0 // 0-3
     };
 
-    // Gene Viewer state: kept separate from the Step-by-Step choices
+    // Gene Mixer state: kept separate from the Step-by-Step choices
     let geneState = {
       a: { id: null, eyes: 'default', color: 'default' },
       b: { id: null, eyes: 'default', color: 'default' }
@@ -1230,6 +1271,7 @@
     // --- MODAL STATE ---
     let modalContext = 'base'; // 'base', 'eyes', 'color'
     let modalFilterList = [];
+    let modalOnly = null; // a fixed list of { id, from } (a child's parent eyes), or null
     let isSortAscending = true;
     let modalFieldFilter = 'all'; // 'all', 'lab', or a field index
 
@@ -1298,7 +1340,7 @@
         }
         
         updateStage(0);
-        renderGeneViewer();
+        renderGeneMixer();
         loadTrees();
         renderFamilyTree();
 
@@ -1373,27 +1415,30 @@
         get: () => appState.eyesOverride, set: id => setStepOverride('eyes', id)
       },
       color: {
-        title: 'Select Color Override', filter: isBreedableAdult, defaultLabel: 'Current Tama',
-        get: () => appState.colorOverride, set: id => setStepOverride('color', id)
+        title: 'Select Color Override', colorPicker: true, defaultOf: () => appState.shownTamaId,
+        get: () => appState.colorOverride, set: key => setStepOverride('color', key)
       }
     };
 
-    // Gene Viewer pickers: parent 1/2 and each parent's eyes/color override
+    // Gene Mixer pickers: parent 1/2 and each parent's eyes/color override
     [['a', 'b', 'Parent 1'], ['b', 'a', 'Parent 2']].forEach(([key, other, label]) => {
       MODAL_CONTEXTS['gene-' + key] = {
         title: `Select ${label}`, filter: isBreedableAdult,
         exclude: () => geneState[other].id, // the two parents must be different Tamas
         get: () => geneState[key].id,
-        set: id => { geneState[key].id = id; renderGeneViewer(); }
+        set: id => { geneState[key].id = id; renderGeneMixer(); }
       };
-      ['eyes', 'color'].forEach(part => {
-        MODAL_CONTEXTS[`gene-${key}-${part}`] = {
-          title: `${label} ${part === 'eyes' ? 'Eyes' : 'Color'} Override`, filter: isBreedableAdult,
-          defaultLabel: `${label}'s own`,
-          get: () => geneState[key][part],
-          set: id => { geneState[key][part] = id; renderGeneViewer(); }
-        };
-      });
+      MODAL_CONTEXTS[`gene-${key}-eyes`] = {
+        title: `${label} Eyes Override`, filter: isBreedableAdult,
+        defaultLabel: `${label}'s own`,
+        get: () => geneState[key].eyes,
+        set: id => { geneState[key].eyes = id; renderGeneMixer(); }
+      };
+      MODAL_CONTEXTS[`gene-${key}-color`] = {
+        title: `${label} Color Override`, colorPicker: true, defaultOf: () => geneState[key].id,
+        get: () => geneState[key].color,
+        set: c => { geneState[key].color = c; renderGeneMixer(); }
+      };
     });
 
     function openModalFor(context) {
@@ -1404,13 +1449,28 @@
       document.getElementById('sortBtn').textContent = 'Sort: A-Z';
       document.getElementById('modalTitle').textContent = ctx.title;
 
+      // Color pickers list the colors instead of Tamas: no search, sort or field filters
+      // A fixed short list (a child's parent eyes) also skips search, sort and filters
+      modalOnly = ctx.only ? ctx.only() : [];
+      if (!modalOnly.length) modalOnly = null;
+      if (modalOnly) document.getElementById('modalTitle').textContent = "Select Eyes (from a parent)";
+      ['tamaSearchInput', 'sortBtn', 'modalFilters'].forEach(id => { document.getElementById(id).style.display = ctx.colorPicker || modalOnly ? 'none' : ''; });
+      document.getElementById('modalGrid').classList.toggle('color-grid', !!ctx.colorPicker);
+      if (ctx.colorPicker) {
+        renderColorGrid(ctx);
+        document.getElementById('tamaModal').style.display = 'flex';
+        return;
+      }
+
       const excluded = ctx.exclude ? ctx.exclude() : null;
-      modalFilterList = Object.entries(tamaData)
-        .filter(([id, d]) => ctx.filter(d) && id !== excluded)
-        .map(([id, d]) => ({ id, name: d.name }));
+      modalFilterList = modalOnly
+        ? modalOnly.filter(o => tamaData[o.id]).map(o => ({ id: o.id, name: `${tamaData[o.id].name} (${o.from})` }))
+        : Object.entries(tamaData)
+          .filter(([id, d]) => ctx.filter(d) && id !== excluded)
+          .map(([id, d]) => ({ id, name: d.name }));
 
       // Keep the chosen field between opens, unless no Tama in this list has it
-      if (!modalFilterList.some(t => matchesFieldFilter(t.id))) {
+      if (!modalOnly && !modalFilterList.some(t => matchesFieldFilter(t.id))) {
         modalFieldFilter = 'all';
       }
       renderModalFilters();
@@ -1435,7 +1495,7 @@
 
       const ctx = MODAL_CONTEXTS[modalContext];
       const selectedId = ctx.get();
-      if (ctx.defaultLabel) {
+      if (ctx.defaultLabel && !modalOnly) {
         const defaultCard = document.createElement('div');
         defaultCard.className = `tama-card default-card ${selectedId === 'default' ? 'selected' : ''}`;
         defaultCard.innerHTML = `
@@ -1447,7 +1507,7 @@
       }
 
       let filtered = modalFilterList.filter(t => t.name.toLowerCase().includes(searchTerm)
-        && matchesFieldFilter(t.id));
+        && (modalOnly || matchesFieldFilter(t.id)));
 
       filtered.sort((a, b) => {
         return isSortAscending ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
@@ -1475,10 +1535,33 @@
           </div>
           <div class="tama-name">${tama.name}</div>
         `;
-        applyTint(card.querySelector('.card-color'), `images/tamas/${tama.id}/color.png`, data.color);
+        applyTint(card.querySelector('.card-color'), `images/tamas/${tama.id}/color.png`, tamaColorHex(tama.id));
         card.onclick = () => selectTama(tama.id);
         grid.appendChild(card);
       });
+    }
+
+    // Color picker: the Tama's own color first, then every color in TAMA_COLORS
+    function renderColorGrid(ctx) {
+      const grid = document.getElementById('modalGrid');
+      grid.innerHTML = '';
+      const selected = ctx.get();
+      const ownerId = ctx.defaultOf();
+      const ownKey = ownerId && tamaData[ownerId] ? tamaData[ownerId].color : null;
+      const addCard = (value, hex, title, sub, isDefault) => {
+        const card = document.createElement('div');
+        card.className = 'tama-card color-card' + (isDefault ? ' default-card' : '') + (selected === value ? ' selected' : '');
+        card.innerHTML = `<div class="color-card-swatch"></div><div class="tama-name"></div>` + (sub ? '<div class="color-card-sub"></div>' : '');
+        const sw = card.querySelector('.color-card-swatch');
+        if (hex) sw.style.background = '#' + hex; else { sw.classList.add('none'); sw.textContent = '?'; }
+        card.querySelector('.tama-name').textContent = title;
+        if (sub) card.querySelector('.color-card-sub').textContent = sub;
+        card.onclick = () => selectTama(value);
+        grid.appendChild(card);
+      };
+      addCard('default', ownKey ? TAMA_COLORS[ownKey] : null, 'Default',
+        ownKey ? `${tamaName(ownerId)}'s own: ${colorLabel(ownKey)}` : "The Tama's own color", true);
+      Object.entries(TAMA_COLORS).forEach(([key, hex]) => addCard(key, hex, colorLabel(key), key === ownKey ? 'Default color' : '', false));
     }
 
     function selectTama(id) {
@@ -1489,7 +1572,8 @@
     // Step-by-Step eyes/color override ('default' = the current Tama's own)
     function setStepOverride(part, id) {
       appState[part + 'Override'] = id;
-      document.getElementById(part + 'Display').textContent = id === 'default' ? 'Default (Current Tama)' : tamaData[id].name;
+      document.getElementById(part + 'Display').textContent = id === 'default' ? 'Default (Current Tama)'
+        : (part === 'color' ? colorLabel(id) : tamaData[id].name);
       updateUI();
     }
 
@@ -1498,7 +1582,7 @@
       setStepOverride('color', 'default');
     }
 
-    // --- GENE VIEWER ---
+    // --- GENE MIXER ---
 
     const tamaName = id => (tamaData[id] ? tamaData[id].name : id);
 
@@ -1526,8 +1610,8 @@
     // What a parent passes on: its own eyes/color unless overridden
     function parentGenes(p) {
       const eyesId = p.eyes === 'default' ? p.id : p.eyes;
-      const colorId = p.color === 'default' ? p.id : p.color;
-      return { eyesId, colorId, colorHex: tamaData[colorId].color };
+      const colorKey = TAMA_COLORS[p.color] ? p.color : tamaData[p.id].color;
+      return { eyesId, colorKey, colorHex: resolveColor(p.id, p.color) };
     }
 
     function firstFieldImage(id) {
@@ -1557,7 +1641,7 @@
       const pickers = [
         [`gene-${key}`, 'Tama', p.id ? tamaName(p.id) : 'Select Tama...'],
         [`gene-${key}-eyes`, 'Eyes Override', p.eyes === 'default' ? `Default (${label}'s own)` : tamaName(p.eyes)],
-        [`gene-${key}-color`, 'Color Override', p.color === 'default' ? `Default (${label}'s own)` : tamaName(p.color)]
+        [`gene-${key}-color`, 'Color Override', p.color === 'default' ? `Default (${label}'s own)` : colorLabel(p.color)]
       ];
       pickers.forEach(([context, text, value]) => {
         const group = document.createElement('div');
@@ -1572,7 +1656,7 @@
         const g = parentGenes(p);
         const passes = document.createElement('div');
         passes.className = 'gene-passes';
-        passes.innerHTML = `Passes on: <b>${tamaName(g.eyesId)}</b> eyes · ${colorSwatch(g.colorHex)} <b>${tamaName(g.colorId)}</b> color`;
+        passes.innerHTML = `Passes on: <b>${tamaName(g.eyesId)}</b> eyes · ${colorSwatch(g.colorHex)} <b>${colorLabel(g.colorKey)}</b> color`;
         card.appendChild(passes);
       }
     }
@@ -1587,12 +1671,12 @@
       }
       const ga = parentGenes(a), gb = parentGenes(b);
       const eyeOptions = [[ga.eyesId, 'Parent 1'], [gb.eyesId, 'Parent 2']];
-      const colorOptions = [[ga.colorId, ga.colorHex, 'Parent 1'], [gb.colorId, gb.colorHex, 'Parent 2']];
+      const colorOptions = [[ga.colorKey, ga.colorHex, 'Parent 1'], [gb.colorKey, gb.colorHex, 'Parent 2']];
 
       // Every eyes x color combination; identical-looking babies are shown once
       const seen = new Set();
       eyeOptions.forEach(([eyesId, eyesFrom]) => {
-        colorOptions.forEach(([colorId, colorHex, colorFrom]) => {
+        colorOptions.forEach(([colorKey, colorHex, colorFrom]) => {
           const key = `${eyesId}|${colorHex}`;
           if (seen.has(key)) return;
           seen.add(key);
@@ -1604,28 +1688,28 @@
           info.className = 'gene-result-info';
           info.innerHTML = `
             <div>👀 Eyes: <b>${tamaName(eyesId)}</b> <span class="gene-from">(${eyesFrom})</span></div>
-            <div>🎨 Color: ${colorSwatch(colorHex)} <b>${tamaName(colorId)}</b> <span class="gene-from">(${colorFrom})</span></div>`;
+            <div>🎨 Color: ${colorSwatch(colorHex)} <b>${colorLabel(colorKey)}</b> <span class="gene-from">(${colorFrom})</span></div>`;
           card.appendChild(info);
           const btn = document.createElement('button');
           btn.className = 'pixel-btn gene-use-btn';
           btn.textContent = 'Use in Step-by-Step ➔';
-          btn.onclick = () => useGeneResult(eyesId, colorId);
+          btn.onclick = () => useGeneResult(eyesId, colorKey);
           card.appendChild(btn);
           box.appendChild(card);
         });
       });
     }
 
-    function renderGeneViewer() {
+    function renderGeneMixer() {
       renderGeneParent('a', 'Parent 1');
       renderGeneParent('b', 'Parent 2');
       renderGeneResults();
     }
 
-    // Copy a baby's eyes/color into the Step-by-Step overrides; the Gene Viewer picks stay as they are
-    function useGeneResult(eyesId, colorId) {
+    // Copy a baby's eyes/color into the Step-by-Step overrides; the Gene Mixer picks stay as they are
+    function useGeneResult(eyesId, colorKey) {
       setStepOverride('eyes', eyesId);
-      setStepOverride('color', colorId);
+      setStepOverride('color', colorKey);
       openTab('step-by-step', document.querySelector('.tab-btn'));
       showMobileSection('progress');
     }
@@ -1653,10 +1737,16 @@
     function newLine(tree) {
       let n = tree.lines.length + 1;
       const names = new Set(tree.lines.map(l => l.name));
-      while (names.has(`Line ${n}`)) n++;
-      const line = { id: uid('l'), name: `Line ${n}` };
+      while (names.has(`Branch ${n}`)) n++;
+      const line = { id: uid('l'), name: `Branch ${n}` };
       tree.lines.push(line);
       return line;
+    }
+
+    // Remove the given branches if no Tama sits on them anymore (e.g. the one a Tama just left)
+    function dropEmptyLines(tree, lineIds) {
+      const used = new Set(tree.members.map(m => m.line));
+      tree.lines = tree.lines.filter(l => used.has(l.id) || !lineIds.includes(l.id));
     }
 
     // Bring saved or imported trees (including the older parents-only format) up to the current shape
@@ -1667,6 +1757,7 @@
       const ids = new Set(tree.members.map(m => m.id));
       tree.members.forEach(m => {
         m.parents = (Array.isArray(m.parents) ? m.parents : []).filter(p => ids.has(p) && p !== m.id).slice(0, 2);
+        m.color = toColorKey(m.color); // older saves stored a Tama id here
         m.partner = ids.has(m.partner) && m.partner !== m.id ? m.partner : null;
       });
       // Older trees: a Tama with two parents becomes the child of a pair
@@ -1693,7 +1784,9 @@
           else if (pass === 1) m.line = newLine(tree).id;
         });
       }
-      if (!tree.lines.length) newLine(tree);
+      // Clear out empty branches (older saves piled them up), and rename old default "Line N" names
+      dropEmptyLines(tree, tree.lines.map(l => l.id));
+      tree.lines.forEach(l => { l.name = String(l.name).replace(/^Line (\d+)$/, 'Branch $1'); });
       return tree;
     }
 
@@ -1796,7 +1889,7 @@
         data.members.forEach(m => { if (m && m.id) idMap[m.id] = uid('m'); });
         const lines = (Array.isArray(data.lines) ? data.lines : []).filter(l => l && l.id).map(l => {
           lineMap[l.id] = uid('l');
-          return { id: lineMap[l.id], name: String(l.name || 'Line').slice(0, 30) };
+          return { id: lineMap[l.id], name: String(l.name || 'Branch').slice(0, 30) };
         });
         let skipped = 0;
         const members = data.members.filter(m => {
@@ -1807,7 +1900,7 @@
           id: idMap[m.id],
           tama: m.tama,
           eyes: tamaData[m.eyes] ? m.eyes : 'default',
-          color: tamaData[m.color] ? m.color : 'default',
+          color: toColorKey(m.color),
           field: Number.isInteger(m.field) ? m.field : null,
           line: lineMap[m.line] || null,
           partner: idMap[m.partner] || null,
@@ -1822,7 +1915,7 @@
 
     // --- Add / edit dialog ---
     const resolveEyes = m => (m.eyes === 'default' ? m.tama : m.eyes);
-    const resolveColorHex = m => tamaData[m.color === 'default' ? m.tama : m.color].color;
+    const resolveColorHex = m => resolveColor(m.tama, m.color);
 
     MODAL_CONTEXTS['tree-tama'] = {
       title: 'Select Adult Tama', filter: isRaisableAdult,
@@ -1834,19 +1927,40 @@
         renderTreeDialog();
       }
     };
-    ['eyes', 'color'].forEach(part => {
-      MODAL_CONTEXTS['tree-' + part] = {
-        title: `Select ${part === 'eyes' ? 'Eyes' : 'Color'} Override`, filter: isBreedableAdult, defaultLabel: "Tama's own",
-        get: () => treeDraft && treeDraft[part],
-        set: id => { treeDraft[part] = id; renderTreeDialog(); }
-      };
-    });
+    // A child's eye choices: each parent's eyes (that parent's eye override, or its own)
+    function parentEyeOptions(draft) {
+      const tree = currentTree();
+      const m = draft && memberById(tree, draft.id);
+      if (!m || !m.parents.length) return [];
+      const opts = [];
+      m.parents.forEach((pid, i) => {
+        const p = memberById(tree, pid);
+        if (!p) return;
+        const eyes = resolveEyes(p);
+        const from = m.parents.length > 1 ? `Parent ${i + 1}` : 'Parent';
+        const same = opts.find(o => o.id === eyes);
+        if (same) same.from += ` & ${from}`; else opts.push({ id: eyes, from });
+      });
+      return opts;
+    }
+
+    MODAL_CONTEXTS['tree-eyes'] = {
+      title: 'Select Eyes Override', filter: isBreedableAdult, defaultLabel: "Tama's own",
+      only: () => parentEyeOptions(treeDraft), // children: just their parents' eyes
+      get: () => treeDraft && treeDraft.eyes,
+      set: id => { treeDraft.eyes = id; renderTreeDialog(); }
+    };
+    MODAL_CONTEXTS['tree-color'] = {
+      title: 'Select Color Override', colorPicker: true, defaultOf: () => treeDraft && treeDraft.tama,
+      get: () => treeDraft && treeDraft.color,
+      set: c => { treeDraft.color = c; renderTreeDialog(); }
+    };
 
     function openTreeDialog(memberId) {
       const existing = memberId ? memberById(currentTree(), memberId) : null;
       treeDraft = existing
         ? { id: existing.id, tama: existing.tama, eyes: existing.eyes, color: existing.color, field: existing.field, editing: true }
-        : { id: uid('m'), tama: null, eyes: 'default', color: 'default', field: null, editing: false };
+        : { id: uid('m'), tama: null, eyes: 'default', color: 'default', field: null, line: 'new', editing: false };
       document.getElementById('treeDialogTitle').textContent = existing ? 'Edit Tama' : 'Add Tama';
       document.getElementById('treeDeleteBtn').style.display = existing ? '' : 'none';
       renderTreeDialog();
@@ -1873,7 +1987,18 @@
       const d = treeDraft;
       document.getElementById('treeTamaDisplay').textContent = d.tama ? tamaName(d.tama) : 'Select Tama...';
       document.getElementById('treeEyesDisplay').textContent = d.eyes === 'default' ? "Default (Tama's own)" : tamaName(d.eyes);
-      document.getElementById('treeColorDisplay').textContent = d.color === 'default' ? "Default (Tama's own)" : tamaName(d.color);
+      const isChild = parentEyeOptions(d).length > 0;
+      document.getElementById('treeEyesLabel').textContent = isChild ? 'Eyes (from a parent):' : 'Eyes Override:';
+
+      // Branch choice (adding only): an existing branch or a new one
+      const lineSelect = document.getElementById('treeLineSelect');
+      document.getElementById('treeLineGroup').style.display = d.editing ? 'none' : '';
+      lineSelect.innerHTML = '';
+      lineSelect.add(new Option('➕ New branch', 'new'));
+      currentTree().lines.forEach(l => lineSelect.add(new Option(l.name, l.id)));
+      if (![...lineSelect.options].some(o => o.value === d.line)) d.line = 'new';
+      lineSelect.value = d.line || 'new';
+      document.getElementById('treeColorDisplay').textContent = d.color === 'default' ? "Default (Tama's own)" : colorLabel(d.color);
 
       // Field choices: only the fields this Tama can be raised in
       const select = document.getElementById('treeFieldSelect');
@@ -1918,7 +2043,10 @@
       const { id, tama, eyes, color, field } = treeDraft;
       const existing = memberById(tree, id);
       if (existing) Object.assign(existing, { tama, eyes, color, field });
-      else tree.members.push({ id, tama, eyes, color, field, line: newLine(tree).id, partner: null, parents: [] }); // new Tamas start on their own line
+      else {
+        const line = tree.lines.some(l => l.id === treeDraft.line) ? treeDraft.line : newLine(tree).id; // chosen branch, or a new one
+        tree.members.push({ id, tama, eyes, color, field, line, partner: null, parents: [] });
+      }
       saveTrees();
       closeTreeDialog();
       renderFamilyTree(id);
@@ -1928,11 +2056,13 @@
       const tree = currentTree();
       const id = treeDraft.id;
       if (!confirm(`Remove ${tamaName(treeDraft.tama)} from this tree? Its pair and parent links are removed too.`)) return;
+      const oldLine = memberById(tree, id)?.line;
       tree.members = tree.members.filter(m => m.id !== id);
       tree.members.forEach(m => {
         if (m.partner === id) m.partner = null;
         m.parents = m.parents.filter(p => p !== id); // a pair's child keeps the remaining parent
       });
+      dropEmptyLines(tree, [oldLine]);
       saveTrees();
       closeTreeDialog();
       renderFamilyTree();
@@ -1953,7 +2083,7 @@
       renderFamilyTree();
     }
 
-    // ✂️ Unlink: detach a Tama from its partner, its parents and its children, and put it on a new line.
+    // ✂️ Unlink: detach a Tama from its partner, its parents and its children, and put it on a new branch.
     // Children it shared with a partner stay linked to that partner.
     function unlinkMember(id) {
       const tree = currentTree();
@@ -1967,7 +2097,9 @@
       m.partner = null;
       m.parents = [];
       kids.forEach(k => { k.parents = k.parents.filter(p => p !== id); });
+      const oldLine = m.line;
       m.line = newLine(tree).id;
+      dropEmptyLines(tree, [oldLine]);
       treeSelectedId = id;
       treeMoveId = null;
       saveTrees();
@@ -2008,14 +2140,17 @@
       const { fromId, mode } = treeConnect;
       if (!canConnect(tree, fromId, targetId, mode)) return;
       const from = memberById(tree, fromId), target = memberById(tree, targetId);
+      const oldLines = [from.line, target.line];
       if (mode === 'pair') {
         from.partner = target.id;
         target.partner = from.id;
-        target.line = from.line; // partners sit side by side on the same line
+        target.line = from.line; // partners sit side by side on the same branch
       } else {
         from.parents = parentSetOf(tree, target);
-        from.line = target.line; // a child joins its parents' line
+        from.eyes = resolveEyes(memberById(tree, from.parents[0])); // a new child starts with its first parent's eyes
+        from.line = target.line; // a child joins its parents' branch
       }
+      dropEmptyLines(tree, oldLines);
       treeConnect = null;
       treeSelectedId = fromId;
       saveTrees();
@@ -2028,7 +2163,9 @@
       const m = memberById(tree, id);
       const i = tree.lines.findIndex(l => l.id === m.line) + dir;
       if (m.partner || i < 0 || i >= tree.lines.length) return;
+      const oldLine = m.line;
       m.line = tree.lines[i].id;
+      dropEmptyLines(tree, [oldLine]);
       saveTrees();
       renderFamilyTree();
     }
@@ -2101,7 +2238,7 @@
 
     function renameTreeLine(lineId) {
       const line = currentTree().lines.find(l => l.id === lineId);
-      const name = prompt('Name this line:', line.name);
+      const name = prompt('Name this branch:', line.name);
       if (name === null || !name.trim()) return;
       line.name = name.trim().slice(0, 30);
       saveTrees();
@@ -2236,6 +2373,7 @@
       const shell = shellById(tree.shell);
       canvas.classList.toggle('has-shell', !!shell);
       canvas.style.setProperty('--tree-field', shell ? `url('images/fields/${shell.field}.png')` : 'none');
+      document.getElementById('addTreeLineBtn').disabled = !tree.members.length; // branches only appear once the tree has a Tama
       const banner = document.getElementById('treeConnectBanner');
       canvas.innerHTML = '';
 
@@ -2261,23 +2399,23 @@
         if (e.target === stage && (treeSelectedId || treeMoveId)) { treeSelectedId = null; treeMoveId = null; renderFamilyTree(); }
       };
 
-      // Line columns with headers (rename, sort ◀ ▶, delete when empty)
-      tree.lines.forEach((line, i) => {
+      // Branch columns with headers (rename, sort ◀ ▶, delete when empty); none while the tree is empty
+      if (tree.members.length) tree.lines.forEach((line, i) => {
         const col = document.createElement('div');
         col.className = 'tree-line-column';
         Object.assign(col.style, { left: colX[i] + 'px', width: colW[i] + 'px', height: (height - TREE.PAD * 2) + 'px', top: TREE.PAD + 'px' });
         const header = document.createElement('div');
         header.className = 'tree-line-header';
-        header.appendChild(makeTreeButton('tree-line-move', '◀', 'Move this line left', () => moveTreeLine(line.id, -1), i === 0));
+        header.appendChild(makeTreeButton('tree-line-move', '◀', 'Move this branch left', () => moveTreeLine(line.id, -1), i === 0));
         const name = document.createElement('button');
         name.className = 'tree-line-name';
         name.textContent = line.name;
-        name.title = 'Rename this line';
+        name.title = 'Rename this branch';
         name.onclick = e => { e.stopPropagation(); renameTreeLine(line.id); };
         header.appendChild(name);
-        header.appendChild(makeTreeButton('tree-line-move', '▶', 'Move this line right', () => moveTreeLine(line.id, 1), i === tree.lines.length - 1));
+        header.appendChild(makeTreeButton('tree-line-move', '▶', 'Move this branch right', () => moveTreeLine(line.id, 1), i === tree.lines.length - 1));
         if (!tree.members.some(m => m.line === line.id) && tree.lines.length > 1) {
-          header.appendChild(makeTreeButton('tree-line-delete', '✕', 'Delete this empty line', () => deleteTreeLine(line.id)));
+          header.appendChild(makeTreeButton('tree-line-delete', '✕', 'Delete this empty branch', () => deleteTreeLine(line.id)));
         }
         col.appendChild(header);
         stage.appendChild(col);
@@ -2315,9 +2453,9 @@
       });
       stage.appendChild(svg);
 
-      // 💕 between partners: view their possible babies in the Gene Viewer
+      // 💕 between partners: view their possible babies in the Gene Mixer
       hearts.forEach(h => {
-        const btn = makeTreeButton('tree-heart', '💕', 'View this pair\'s possible babies in the Gene Viewer', () => sendPairToGeneViewer(h.a, h.b));
+        const btn = makeTreeButton('tree-heart', '💕', 'View this pair\'s possible babies in the Gene Mixer', () => sendPairToGeneMixer(h.a, h.b));
         btn.style.left = h.x + 'px';
         btn.style.top = h.y + 'px';
         stage.appendChild(btn);
@@ -2364,17 +2502,17 @@
           if (!m.parents.length) actions.appendChild(makeTreeButton('tree-action', '🍼', 'Make this a child of a solo Tama or a pair', () => startConnect(m.id, 'child')));
           if (!m.partner) actions.appendChild(makeTreeButton('tree-action', '🫂', 'Pair with another solo Tama', () => startConnect(m.id, 'pair')));
           if (!m.partner && tree.lines.length > 1) {
-            actions.appendChild(makeTreeButton('tree-action' + (treeMoveId === m.id ? ' active' : ''), '↔️', 'Move to another line',
+            actions.appendChild(makeTreeButton('tree-action' + (treeMoveId === m.id ? ' active' : ''), '↔️', 'Move to another branch',
               () => { treeMoveId = treeMoveId === m.id ? null : m.id; treeSelectedId = m.id; renderFamilyTree(); }));
           }
-          if (hasLinks(tree, m)) actions.appendChild(makeTreeButton('tree-action unlink', '✂️', 'Unlink this Tama and move it to a new line', () => unlinkMember(m.id)));
+          if (hasLinks(tree, m)) actions.appendChild(makeTreeButton('tree-action unlink', '✂️', 'Unlink this Tama and move it to a new branch', () => unlinkMember(m.id)));
           if (actions.children.length) box.appendChild(actions);
         }
 
         // ◀ ▶ move arrows (after ↔️)
         if (treeMoveId === m.id && !m.partner) {
-          box.appendChild(makeTreeButton('tree-move left', '◀', 'Move to the line on the left', () => moveMemberLine(m.id, -1), lineI <= 0));
-          box.appendChild(makeTreeButton('tree-move right', '▶', 'Move to the line on the right', () => moveMemberLine(m.id, 1), lineI >= tree.lines.length - 1));
+          box.appendChild(makeTreeButton('tree-move left', '◀', 'Move to the branch on the left', () => moveMemberLine(m.id, -1), lineI <= 0));
+          box.appendChild(makeTreeButton('tree-move right', '▶', 'Move to the branch on the right', () => moveMemberLine(m.id, 1), lineI >= tree.lines.length - 1));
         }
         stage.appendChild(box);
       });
@@ -2392,14 +2530,14 @@
       }
     }
 
-    // 💕: load a pair into the Gene Viewer as Parent 1 and Parent 2 (with their eyes/color overrides)
-    function sendPairToGeneViewer(aId, bId) {
+    // 💕: load a pair into the Gene Mixer as Parent 1 and Parent 2 (with their eyes/color overrides)
+    function sendPairToGeneMixer(aId, bId) {
       const tree = currentTree();
       const [a, b] = [memberById(tree, aId), memberById(tree, bId)];
       geneState.a = { id: a.tama, eyes: a.eyes, color: a.color };
       geneState.b = { id: b.tama, eyes: b.eyes, color: b.color };
-      renderGeneViewer();
-      openTab('gene-viewer', document.querySelectorAll('.tab-btn')[1]);
+      renderGeneMixer();
+      openTab('gene-mixer', document.querySelectorAll('.tab-btn')[1]);
     }
 
     // --- Step-by-Step: Add to Tree ---
@@ -2407,23 +2545,41 @@
       const path = tamaData[appState.baseId].data.path[appState.currentPathKey];
       const field = path && path["0"] && path["0"].method ? path["0"].method.field : null;
       return { id: uid('m'), tama: appState.baseId, eyes: appState.eyesOverride, color: appState.colorOverride,
-               field: Number.isInteger(field) ? field : null, line: tree ? newLine(tree).id : null, partner: null, parents: [] };
+               field: Number.isInteger(field) ? field : null, line: null, partner: null, parents: [] };
+    }
+
+    let addToTreeId = null; // tree picked in the Add to Family Tree dialog, waiting for a branch choice
+
+    // Pick a tree: an empty one gets the Tama right away (its first branch); otherwise choose a branch
+    function pickAddToTree(treeId) {
+      const tree = treeStore.trees.find(t => t.id === treeId);
+      if (!tree.lines.length) { addCurrentToTree(treeId, 'new'); return; }
+      addToTreeId = treeId;
+      document.querySelectorAll('.add-to-tree-option').forEach(b => b.classList.toggle('active', b.dataset.tree === treeId));
+      const select = document.getElementById('addToTreeLineSelect');
+      select.innerHTML = '';
+      select.add(new Option('➕ New branch', 'new'));
+      tree.lines.forEach(l => select.add(new Option(l.name, l.id)));
+      document.getElementById('addToTreeBranch').style.display = 'flex';
     }
 
     function openAddToTreeDialog() {
       const m = currentStepMember(null);
       document.getElementById('addToTreeSummary').textContent =
         `${tamaName(m.tama)} · ${m.field !== null ? FIELD_LABELS[m.field] : 'No field'}` +
-        (m.eyes !== 'default' ? ` · ${tamaName(m.eyes)} eyes` : '') + (m.color !== 'default' ? ` · ${tamaName(m.color)} color` : '');
+        (m.eyes !== 'default' ? ` · ${tamaName(m.eyes)} eyes` : '') + (m.color !== 'default' ? ` · ${colorLabel(m.color)} color` : '');
       const list = document.getElementById('addToTreeList');
       list.innerHTML = '';
       treeStore.trees.forEach(t => {
         const btn = document.createElement('button');
         btn.className = 'modal-btn add-to-tree-option';
         btn.textContent = `${t.name} · ${t.members.length} Tama${t.members.length === 1 ? '' : 's'}`;
-        btn.onclick = () => addCurrentToTree(t.id);
+        btn.dataset.tree = t.id;
+        btn.onclick = () => pickAddToTree(t.id);
         list.appendChild(btn);
       });
+      addToTreeId = null;
+      document.getElementById('addToTreeBranch').style.display = 'none';
       document.getElementById('newTreeName').value = '';
       document.getElementById('addToTreeDialog').style.display = 'flex';
     }
@@ -2432,9 +2588,11 @@
       document.getElementById('addToTreeDialog').style.display = 'none';
     }
 
-    function addCurrentToTree(treeId) {
+    function addCurrentToTree(treeId, lineId) {
       const tree = treeStore.trees.find(t => t.id === treeId);
-      const member = currentStepMember(tree); // on its own new line
+      if (!tree) return;
+      const member = currentStepMember(tree);
+      member.line = tree.lines.some(l => l.id === lineId) ? lineId : newLine(tree).id; // chosen branch, or a new one
       tree.members.push(member);
       treeStore.selectedId = tree.id;
       resetTreeUI();
@@ -2446,7 +2604,7 @@
 
     function addCurrentToNewTree() {
       const name = document.getElementById('newTreeName').value.trim() || `Family Tree ${treeStore.trees.length + 1}`;
-      addCurrentToTree(addTree(name).id);
+      addCurrentToTree(addTree(name).id, 'new');
     }
 
     // --- APP LOGIC ---
@@ -2614,7 +2772,8 @@
       document.getElementById('TamaEyes').style.transform = `translate(50%, 95%) translate(${eyeX}px, ${eyeY}px)`;
       document.getElementById('CellEyes').style.transform = `translate(50%, 44.5%)`;
 
-      const hexColor = appState.colorOverride === 'default' ? currentTamaData.color : tamaData[appState.colorOverride].color;
+      appState.shownTamaId = currentTamaId; // the color picker's Default shows this Tama's color
+      const hexColor = resolveColor(currentTamaId, appState.colorOverride);
       applyTint(document.getElementById('TamaColor'), `images/tamas/${currentTamaId}/color.png`, hexColor);
     }
 
