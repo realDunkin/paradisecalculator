@@ -104,11 +104,15 @@
     /* Paths Buttons */
     .paths-container { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px; }
     .path-btn {
-      background-color: #222; color: #888; padding: 8px 12px; text-align: center;
+      color: #e6ecff; padding: 8px 12px; text-align: center; text-shadow: 0 1px 3px #000, 0 0 2px #000;
       border: 2px solid #555; border-radius: 5px; cursor: pointer; font-weight: bold; flex: 1; font-size: 0.9em;
+      --path-field: url('images/fields/default.png');
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), var(--path-field) center / cover, #222;
+      image-rendering: pixelated;
     }
-    .path-btn:hover { background-color: #333; color: #ccc; }
-    .path-btn.active { background-color: #ffb3d9; color: #000; border-color: #fff; }
+    /* the field shows through more on hover, fully when selected */
+    .path-btn:hover { background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), var(--path-field) center / cover, #222; color: #fff; }
+    .path-btn.active { background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), var(--path-field) center / cover, #222; color: #fff; border-color: #fff; box-shadow: 0 0 0 2px #ffb3d9; }
 
     /* Stage Tabs */
     .stage-tabs { display: flex; gap: 5px; margin-bottom: 15px; }
@@ -131,7 +135,9 @@
       font-size: 0.85em; color: #fff; background: linear-gradient(90deg, rgba(170, 68, 170, 0.55), rgba(170, 68, 170, 0.15));
       border: 1px solid #ff88ff; border-radius: 6px; padding: 6px 10px; margin-bottom: 10px;
     }
-    .guide-secret b { color: #ffd6ff; }
+    .guide-secret { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85); }
+    .guide-secret b { color: #fff; }
+    .guide-secret-shell { width: 22px; height: 22px; object-fit: contain; flex-shrink: 0; }
     .guide-foods { margin-bottom: 8px; }
     .guide-foods-title { font-size: 0.8em; color: #88bbff; margin-bottom: 5px; }
     .guide-foods-title b { color: #ffb3d9; }
@@ -284,9 +290,10 @@
 
     /* Shell picker */
     .shell-picker { position: relative; }
-    .shell-picker-btn { display: flex; align-items: center; gap: 6px; padding: 4px 10px 4px 4px; }
-    .shell-picker-btn img, .shell-option img { width: 28px; height: 28px; object-fit: contain; }
-    .shell-none-icon { width: 28px; text-align: center; font-size: 1.1em; }
+    .shell-picker-btn { display: flex; align-items: center; gap: 6px; padding: 6px 12px 6px 8px; }
+    .shell-picker-btn img { width: 18px; height: 18px; object-fit: contain; } /* no taller than the other toolbar buttons */
+    .shell-option img { width: 28px; height: 28px; object-fit: contain; border-radius: 4px; }
+    .shell-none-icon { width: 18px; text-align: center; font-size: 1em; line-height: 18px; }
     .shell-menu {
       display: none; position: absolute; top: calc(100% + 6px); left: 0; z-index: 20; min-width: 200px; padding: 6px;
       background: #001a4d; border: 2px solid #88bbff; border-radius: 10px; box-shadow: 0 6px 16px rgba(0,0,0,0.6);
@@ -315,22 +322,24 @@
       background: rgba(136, 187, 255, 0.04); border: 1px dashed rgba(136, 187, 255, 0.25);
     }
     .tree-line-header {
-      display: flex; align-items: center; justify-content: center; gap: 4px; padding: 6px; position: relative; z-index: 2;
+      display: flex; justify-content: center; padding: 6px; position: relative; z-index: 2;
+    }
+    /* ◀ name ▶ ✕ kept together in one pill so they never drift apart */
+    .tree-line-group {
+      display: inline-flex; align-items: center; gap: 2px; flex-wrap: nowrap; white-space: nowrap;
+      background: #0d1a40; border: 1px solid #334488; border-radius: 8px; padding: 2px; max-width: 100%;
     }
     .tree-line-name {
       background: #1a2a5a; color: #fff; border: 1px solid #5577aa; border-radius: 6px; padding: 4px 10px;
-      font-weight: bold; font-size: 0.8em; font-family: inherit; cursor: pointer; max-width: 120px;
+      font-weight: bold; font-size: 0.8em; font-family: inherit; cursor: pointer; max-width: 120px; min-width: 0;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
     .tree-line-move, .tree-line-delete {
       width: 24px; height: 24px; padding: 0; border-radius: 6px; cursor: pointer; font-size: 0.7em;
-      background: #334488; color: #fff; border: 1px solid #88bbff; opacity: 0; transition: opacity 0.15s;
+      background: #334488; color: #fff; border: 1px solid #88bbff; flex-shrink: 0;
     }
     .tree-line-delete { background: #aa3344; border-color: #ff5566; }
-    .tree-line-header:hover .tree-line-move, .tree-line-header:hover .tree-line-delete,
-    .tree-line-header:focus-within .tree-line-move, .tree-line-header:focus-within .tree-line-delete { opacity: 1; }
-    .tree-line-move:disabled { opacity: 0 !important; cursor: default; }
-    @media (hover: none) { .tree-line-move, .tree-line-delete { opacity: 1; } } /* touch: always show line controls */
+    .tree-line-move:disabled { opacity: 0.3; cursor: default; }
 
     .tree-box {
       position: absolute; width: 150px; height: 196px; box-sizing: border-box; padding: 10px 8px 8px; z-index: 1;
@@ -345,8 +354,7 @@
       display: none; gap: 5px; padding: 4px; border-radius: 8px; background: #001a4d; border: 1px solid #88bbff;
       box-shadow: 0 3px 8px rgba(0,0,0,0.6); white-space: nowrap;
     }
-    .tree-actions::before { content: ''; position: absolute; left: 0; right: 0; top: -8px; height: 8px; } /* keeps hover alive across the gap */
-    .tree-box:hover .tree-actions, .tree-box.selected .tree-actions { display: flex; }
+    .tree-box.selected .tree-actions { display: flex; } /* only on the selected Tama, like the edit button */
     .tree-action {
       min-width: 36px; height: 30px; padding: 0 6px; border-radius: 6px; cursor: pointer; font-size: 0.95em;
       background: #334488; color: #fff; border: 1px solid #5577aa;
@@ -372,10 +380,13 @@
     .tree-box .tree-sprite { zoom: 0.46; border-width: 4px; }
     .tree-box-name { font-size: 0.85em; font-weight: bold; color: #fff; text-align: center; line-height: 1.15; }
     .tree-box-sub { font-size: 0.7em; color: #8899cc; text-align: center; }
+    .tree-box-species { font-size: 0.72em; font-weight: bold; color: #c8d4ff; text-align: center; line-height: 1.1; margin-top: -2px; }
     .tree-edit-btn {
       position: absolute; top: -10px; left: -10px; width: 30px; height: 30px; border-radius: 50%; padding: 0;
       background: #ffb3d9; border: 2px solid #fff; cursor: pointer; font-size: 0.9em; box-shadow: 1px 1px 0 #000;
+      display: none; /* only on the selected Tama */
     }
+    .tree-box.selected .tree-edit-btn { display: block; }
     .tree-box.connect-source { border-color: #88ff88; box-shadow: 0 0 0 3px rgba(136,255,136,0.4); }
     .tree-box.connect-target { border-color: #88ff88; cursor: pointer; animation: treePulse 1.2s ease-in-out infinite; }
     .tree-box.connect-target:hover { background: #1f3f2a; }
@@ -403,7 +414,9 @@
     .add-to-tree-summary { background: #112244; border: 1px solid #5577aa; border-radius: 6px; padding: 8px 10px; color: #fff; font-weight: bold; font-size: 0.9em; }
     .add-to-tree-list { display: flex; flex-direction: column; gap: 6px; }
     .add-to-tree-option { text-align: left; }
-    .add-to-tree-option.active { background: #334488; border-color: #88bbff; color: #fff; }
+    .add-to-tree-option { display: flex; align-items: center; gap: 8px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85); }
+    .add-to-tree-option.active { background: #334488; border-color: #88bbff; color: #fff; box-shadow: 0 0 0 2px #fff; }
+    .add-to-tree-shell { width: 20px; height: 20px; object-fit: contain; flex-shrink: 0; }
     .add-to-tree-branch { display: none; flex-direction: column; gap: 6px; background: #112244; border: 1px solid #5577aa; border-radius: 6px; padding: 8px 10px; }
     .add-to-tree-new { display: flex; gap: 8px; flex-wrap: wrap; }
     .add-to-tree-new .modal-search { min-width: 0; flex: 1 1 160px; }
@@ -415,6 +428,8 @@
       background: rgba(0, 0, 0, 0.8); z-index: 1000; justify-content: center; align-items: center;
     }
     #tamaModal { z-index: 1100; } /* the Tama picker can open on top of the tree dialogs */
+    #confirmDialog { z-index: 1200; } /* confirmations sit above everything */
+    .confirm-message { color: #fff; line-height: 1.4; }
     .modal-content {
       background-color: #001a4d; border: 3px solid #88bbff; border-radius: 15px;
       width: 90%; max-width: 950px; height: 85vh; display: flex; flex-direction: column;
@@ -741,7 +756,7 @@
       </div>
 
       <div class="tree-toolbar">
-        <button class="pixel-btn" onclick="openTreeDialog()">➕ Add Tama</button>
+        <button class="pixel-btn" onclick="openTreeDialog()">➕ New Tama</button>
         <button class="modal-btn" id="addTreeLineBtn" onclick="addTreeLine()" title="Add an empty branch to move Tamas into">➕ New Branch</button>
         <!-- Tama shell this tree belongs to: sets the grid background -->
         <div class="shell-picker">
@@ -778,6 +793,10 @@
             <div class="select-trigger" onclick="openModalFor('tree-tama')"><span id="treeTamaDisplay">Select Tama...</span></div>
           </div>
           <div class="custom-select-group">
+            <label for="treeNickname">Nickname:</label>
+            <input type="text" id="treeNickname" class="dialog-select" maxlength="20" placeholder="Optional" oninput="treeDraft.nickname = this.value">
+          </div>
+          <div class="custom-select-group">
             <label id="treeEyesLabel">Eyes Override:</label>
             <div class="select-trigger" onclick="openModalFor('tree-eyes')"><span id="treeEyesDisplay">Default (Tama's own)</span></div>
           </div>
@@ -805,6 +824,22 @@
     </div>
   </div>
 
+  <!-- CONFIRMATION DIALOG (filled by confirmDialog) -->
+  <div id="confirmDialog" class="modal-overlay dialog-overlay">
+    <div class="dialog-content small">
+      <div class="modal-header">
+        <h2 id="confirmTitle">Are you sure?</h2>
+        <button class="modal-btn close" id="confirmClose">✖</button>
+      </div>
+      <div class="dialog-body column"><div class="confirm-message" id="confirmMessage"></div></div>
+      <div class="dialog-actions">
+        <span class="tree-toolbar-spacer"></span>
+        <button class="modal-btn" id="confirmCancel">Cancel</button>
+        <button class="modal-btn close" id="confirmOk">OK</button>
+      </div>
+    </div>
+  </div>
+
   <!-- STEP-BY-STEP: ADD TO TREE DIALOG -->
   <div id="addToTreeDialog" class="modal-overlay dialog-overlay">
     <div class="dialog-content small">
@@ -814,6 +849,8 @@
       </div>
       <div class="dialog-body column">
         <div class="add-to-tree-summary" id="addToTreeSummary"></div>
+        <label class="dialog-label" for="addToTreeNickname">Nickname:</label>
+        <input type="text" id="addToTreeNickname" class="dialog-select" maxlength="20" placeholder="Optional">
         <label class="dialog-label">Add to one of your trees:</label>
         <div class="add-to-tree-list" id="addToTreeList"></div>
         <!-- Shown after picking a tree that already has branches -->
@@ -1003,6 +1040,11 @@
       return FOOD_TABLE[String(path["0"].method.field)] || [];
     }
 
+    // Stages a path goes through: Baby and Adult always, Kid/Young only when the path lists them
+    function pathStages(path) {
+      return [0, 1, 2, 3].filter(s => s === 0 || s === 3 || (path && path[String(s)]));
+    }
+
     function isConnectPath(path) {
       return !!(path && path["2"] && path["2"].method.connect !== undefined);
     }
@@ -1149,18 +1191,34 @@
         const banner = document.createElement('div');
         banner.className = 'guide-secret';
         banner.innerHTML = `🔒 <b>Secret Tama</b> · only obtainable on the <b>${version || 'matching'}</b> version`;
+        // Tint the note with that version's shell color
+        const shell = SHELLS.find(s => s.name === version);
+        if (shell) {
+          const [r, g, b] = hexToRgb(shell.color);
+          banner.style.background = `linear-gradient(90deg, rgba(${r}, ${g}, ${b}, 0.6), rgba(${r}, ${g}, ${b}, 0.18))`;
+          banner.style.borderColor = '#' + shell.color;
+          const icon = document.createElement('img');
+          icon.className = 'guide-secret-shell'; icon.src = `images/shells/${shell.id}.png`; icon.alt = '';
+          banner.prepend(icon);
+        }
         reqBox.appendChild(banner);
       }
 
       const header = document.createElement('div');
       header.className = 'guide-step-header';
-      header.textContent = stage < 3 ? `Step ${stage + 1} of 3 · ${STAGE_NAMES[stage]}` : 'Complete · Adult';
+      const stages = pathStages(path);
+      header.textContent = stage < 3 ? `Step ${stages.indexOf(stage) + 1} of ${stages.length - 1} · ${STAGE_NAMES[stage]}` : 'Complete · Adult';
       reqBox.appendChild(header);
 
       // Each instruction line: [icon(s), html]
       const lines = [];
       let tip = '';
-      if (stage === 0) {
+      if (stage === 0 && path["0"].method && path["0"].method.note) {
+        // Special evolution (e.g. Bbmarutchi): no field to pick, just the rule to follow
+        lines.push([[], `Raise <b>${nameOf(tamaAt(0))}</b> in <b>any field</b>.`]);
+        lines.push([[], path["0"].method.note]);
+        tip = `${nameOf(tamaAt(0))} skips the Kid and Young stages and grows straight into <b>${nameOf(baseId)}</b>.`;
+      } else if (stage === 0) {
         const fieldKey = getFieldKey(path);
         lines.push([[makeIcon(ICON_PATHS.field(fieldKey), prettyName(fieldKey), true)],
           `Raise <b>${nameOf(tamaAt(0))}</b> ${/Planet$/.test(path.display || '') ? 'on' : 'in'} the <b>${path.display || prettyName(fieldKey) + ' Field'}</b>.`]);
@@ -1263,7 +1321,7 @@
       if (stage < 3) {
         const next = document.createElement('div');
         next.className = 'guide-next';
-        next.innerHTML = `➔ Grows into <b>${nameOf(tamaAt(stage + 1))}</b>`;
+        next.innerHTML = `➔ Grows into <b>${nameOf(tamaAt(stages[stages.indexOf(stage) + 1]))}</b>`;
         reqBox.appendChild(next);
       }
     }
@@ -1286,6 +1344,10 @@
 
     const FIELD_LABELS = ["Land Field", "Water Field", "Sky Field", "Forest Field", "Tropical Field", "Ice Field",
                           "Cosmic Planet", "New Tamagotchi Planet", "Tamagotchi Planet"];
+
+    // Field background: the field's image, or default.png when there is no field (or it is unknown)
+    const DEFAULT_FIELD_IMAGE = 'images/fields/default.png';
+    const fieldImage = f => (Number.isInteger(f) && f >= 0 && f < fieldNames.length ? `images/fields/${fieldNames[f]}.png` : DEFAULT_FIELD_IMAGE);
 
     // Field indices a Tama can be raised in, read from its paths
     function getTamaFields(id) {
@@ -1614,9 +1676,11 @@
       return { eyesId, colorKey, colorHex: resolveColor(p.id, p.color) };
     }
 
+    // Lab Tamas (and any Tama with no field data) show the default background
     function firstFieldImage(id) {
+      if (isLabOnly(id)) return DEFAULT_FIELD_IMAGE;
       const fields = [...getTamaFields(id)];
-      return `images/fields/${fieldNames[fields.length ? fields[0] : 0]}.png`;
+      return fieldImage(fields[0]);
     }
 
     function colorSwatch(hex) {
@@ -1733,6 +1797,10 @@
     const uid = prefix => prefix + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
     const currentTree = () => treeStore.trees.find(t => t.id === treeStore.selectedId) || null;
     const memberById = (tree, id) => tree.members.find(m => m.id === id) || null;
+    // Nickname: trimmed text, '' when blank or only spaces
+    const cleanNickname = v => (typeof v === 'string' ? v.trim().slice(0, 20) : '');
+    // How the tree names a member: its nickname, else its species
+    const memberName = m => (m.nickname ? m.nickname : tamaName(m.tama));
 
     function newLine(tree) {
       let n = tree.lines.length + 1;
@@ -1758,6 +1826,7 @@
       tree.members.forEach(m => {
         m.parents = (Array.isArray(m.parents) ? m.parents : []).filter(p => ids.has(p) && p !== m.id).slice(0, 2);
         m.color = toColorKey(m.color); // older saves stored a Tama id here
+        m.nickname = cleanNickname(m.nickname);
         m.partner = ids.has(m.partner) && m.partner !== m.id ? m.partner : null;
       });
       // Older trees: a Tama with two parents becomes the child of a pair
@@ -1774,6 +1843,12 @@
         const p = memberById(tree, m.partner);
         if (p.partner && p.partner !== m.id) m.partner = null; else p.partner = m.id;
       });
+      // Non-breedable Tamas (e.g. Bbmarutchi) can't be partners or parents: drop such links from older saves
+      tree.members.forEach(m => {
+        const p = m.partner && memberById(tree, m.partner);
+        if (p && (!canBreed(m) || !canBreed(p))) { m.partner = null; p.partner = null; }
+      });
+      tree.members.forEach(m => { m.parents = m.parents.filter(id => canBreed(memberById(tree, id))); });
       // Every member sits on a line: its parent's or partner's line if it has none, otherwise a new one
       const lineIds = () => new Set(tree.lines.map(l => l.id));
       for (let pass = 0; pass < 2; pass++) {
@@ -1899,6 +1974,7 @@
         }).map(m => ({
           id: idMap[m.id],
           tama: m.tama,
+          nickname: cleanNickname(m.nickname),
           eyes: tamaData[m.eyes] ? m.eyes : 'default',
           color: toColorKey(m.color),
           field: Number.isInteger(m.field) ? m.field : null,
@@ -1959,8 +2035,9 @@
     function openTreeDialog(memberId) {
       const existing = memberId ? memberById(currentTree(), memberId) : null;
       treeDraft = existing
-        ? { id: existing.id, tama: existing.tama, eyes: existing.eyes, color: existing.color, field: existing.field, editing: true }
-        : { id: uid('m'), tama: null, eyes: 'default', color: 'default', field: null, line: 'new', editing: false };
+        ? { id: existing.id, tama: existing.tama, nickname: existing.nickname || '', eyes: existing.eyes, color: existing.color, field: existing.field, editing: true }
+        : { id: uid('m'), tama: null, nickname: '', eyes: 'default', color: 'default', field: null, line: 'new', editing: false };
+      document.getElementById('treeNickname').value = treeDraft.nickname;
       document.getElementById('treeDialogTitle').textContent = existing ? 'Edit Tama' : 'Add Tama';
       document.getElementById('treeDeleteBtn').style.display = existing ? '' : 'none';
       renderTreeDialog();
@@ -1979,7 +2056,7 @@
         box.innerHTML = '<div class="mini-preview gene-empty">Pick a Tama</div>';
         return;
       }
-      const bg = treeDraft.field !== null ? `images/fields/${fieldNames[treeDraft.field]}.png` : null;
+      const bg = isLabOnly(treeDraft.tama) ? DEFAULT_FIELD_IMAGE : fieldImage(treeDraft.field);
       box.appendChild(buildSprite(treeDraft.tama, resolveEyes(treeDraft), resolveColorHex(treeDraft), bg));
     }
 
@@ -2030,8 +2107,8 @@
           box.appendChild(row);
         };
         const partner = m.partner && memberById(tree, m.partner);
-        addRow('🫂 Partner', partner ? tamaName(partner.tama) : 'none', partner ? 'Unpair' : null, () => { unpairMember(m.id); renderTreeDialog(); });
-        const parentNames = m.parents.map(p => tamaName(memberById(tree, p).tama)).join(' & ');
+        addRow('🫂 Partner', partner ? memberName(partner) : 'none', partner ? 'Unpair' : null, () => { unpairMember(m.id); renderTreeDialog(); });
+        const parentNames = m.parents.map(p => memberName(memberById(tree, p))).join(' & ');
         addRow('🍼 Parents', parentNames || 'none', m.parents.length ? 'Unlink' : null, () => { m.parents = []; saveTrees(); renderFamilyTree(); renderTreeDialog(); });
       }
       renderTreeDialogPreview();
@@ -2041,11 +2118,12 @@
       if (!treeDraft.tama) { alert('Pick a Tama first.'); return; }
       const tree = currentTree();
       const { id, tama, eyes, color, field } = treeDraft;
+      const nickname = cleanNickname(treeDraft.nickname); // blank or only spaces: no nickname
       const existing = memberById(tree, id);
-      if (existing) Object.assign(existing, { tama, eyes, color, field });
+      if (existing) Object.assign(existing, { tama, nickname, eyes, color, field });
       else {
         const line = tree.lines.some(l => l.id === treeDraft.line) ? treeDraft.line : newLine(tree).id; // chosen branch, or a new one
-        tree.members.push({ id, tama, eyes, color, field, line, partner: null, parents: [] });
+        tree.members.push({ id, tama, nickname, eyes, color, field, line, partner: null, parents: [] });
       }
       saveTrees();
       closeTreeDialog();
@@ -2055,7 +2133,7 @@
     function deleteTreeMember() {
       const tree = currentTree();
       const id = treeDraft.id;
-      if (!confirm(`Remove ${tamaName(treeDraft.tama)} from this tree? Its pair and parent links are removed too.`)) return;
+      if (!confirm(`Remove ${memberName(memberById(tree, id))} from this tree? Its pair and parent links are removed too.`)) return;
       const oldLine = memberById(tree, id)?.line;
       tree.members = tree.members.filter(m => m.id !== id);
       tree.members.forEach(m => {
@@ -2089,7 +2167,7 @@
       const tree = currentTree();
       const m = memberById(tree, id);
       const kids = tree.members.filter(k => k.parents.includes(id));
-      if (kids.length && !confirm(`Unlink ${tamaName(m.tama)}? Its ${kids.length} child(ren) will no longer be linked to it.`)) return;
+      if (kids.length && !confirm(`Unlink ${memberName(m)}? Its ${kids.length} child(ren) will no longer be linked to it.`)) return;
       if (m.partner) {
         const p = memberById(tree, m.partner);
         if (p) p.partner = null;
@@ -2118,15 +2196,18 @@
 
     const parentSetOf = (tree, target) => (target.partner ? [target.id, target.partner] : [target.id]);
 
+    // Tamas with "breedable": false (e.g. Bbmarutchi) can be a child, but never a partner or a parent
+    const canBreed = m => !!(m && tamaData[m.tama] && tamaData[m.tama].data && tamaData[m.tama].data.breedable);
+
     function canConnect(tree, fromId, targetId, mode) {
       const from = memberById(tree, fromId), target = memberById(tree, targetId);
       if (!from || !target || fromId === targetId) return false;
       if (mode === 'pair') {
-        return !from.partner && !target.partner && !isAncestor(tree, fromId, targetId) && !isAncestor(tree, targetId, fromId);
+        return canBreed(from) && canBreed(target) && !from.partner && !target.partner && !isAncestor(tree, fromId, targetId) && !isAncestor(tree, targetId, fromId);
       }
-      // child: `from` becomes the child of `target` (or of target's pair)
+      // child: `from` becomes the child of `target` (or of target's pair); the parents must be breedable
       if (from.parents.length) return false;
-      return parentSetOf(tree, target).every(p => p !== fromId && !isAncestor(tree, fromId, p));
+      return parentSetOf(tree, target).every(p => p !== fromId && canBreed(memberById(tree, p)) && !isAncestor(tree, fromId, p));
     }
 
     function startConnect(fromId, mode) {
@@ -2172,13 +2253,14 @@
 
     // --- Tama shell (device version) of the tree: sets the grid background to that shell's field ---
     const SHELLS = [
-      { id: 'pink_land', name: 'Pink Land', field: 'land' },
-      { id: 'blue_water', name: 'Blue Water', field: 'water' },
-      { id: 'purple_sky', name: 'Purple Sky', field: 'sky' },
-      { id: 'jade_forest', name: 'Jade Forest', field: 'forest' },
-      { id: 'orange_tropics', name: 'Orange Tropics', field: 'tropical' },
-      { id: 'white_glacier', name: 'White Glacier', field: 'ice' },
-      { id: 'neon_planets', name: 'Neon Planets', field: 'cosmic' }
+      // color: the shell body's main color (sampled from images/shells)
+      { id: 'pink_land', name: 'Pink Land', field: 'land', color: 'FFB8ED' },
+      { id: 'blue_water', name: 'Blue Water', field: 'water', color: '91DEFF' },
+      { id: 'purple_sky', name: 'Purple Sky', field: 'sky', color: 'D2B1FF' },
+      { id: 'jade_forest', name: 'Jade Forest', field: 'forest', color: '6EF4F5' },
+      { id: 'orange_tropics', name: 'Orange Tropics', field: 'tropical', color: 'EF75A7' },
+      { id: 'white_glacier', name: 'White Glacier', field: 'ice', color: 'E0E3F4' },
+      { id: 'neon_planets', name: 'Neon Planets', field: 'cosmic', color: '515B9A' }
     ];
     const shellById = id => SHELLS.find(s => s.id === id) || null;
 
@@ -2196,7 +2278,7 @@
       [null, ...SHELLS].forEach(s => {
         const opt = document.createElement('button');
         opt.className = 'shell-option' + ((s ? s.id : null) === (shell ? shell.id : null) ? ' active' : '');
-        opt.innerHTML = s ? `<img src="images/shells/${s.id}.png" alt=""><span></span>` : '<span class="shell-none-icon">✕</span><span></span>';
+        opt.innerHTML = `<img src="${s ? `images/shells/${s.id}.png` : DEFAULT_FIELD_IMAGE}" alt=""><span></span>`;
         opt.lastChild.textContent = s ? s.name : 'No shell';
         opt.onclick = e => { e.stopPropagation(); setTreeShell(s ? s.id : null); };
         menu.appendChild(opt);
@@ -2219,6 +2301,31 @@
       const menu = document.getElementById('shellMenu');
       if (menu) menu.classList.remove('open');
     });
+
+    // In-page confirmation dialog: resolves true on confirm, false on cancel / ✖ / Escape / clicking outside
+    function confirmDialog(title, message, okLabel = 'OK') {
+      const overlay = document.getElementById('confirmDialog');
+      document.getElementById('confirmTitle').textContent = title;
+      document.getElementById('confirmMessage').textContent = message;
+      const ok = document.getElementById('confirmOk');
+      ok.textContent = okLabel;
+      overlay.style.display = 'flex';
+      ok.focus();
+      return new Promise(resolve => {
+        const done = result => {
+          overlay.style.display = 'none';
+          document.removeEventListener('keydown', onKey, true);
+          overlay.onclick = ok.onclick = document.getElementById('confirmCancel').onclick = document.getElementById('confirmClose').onclick = null;
+          resolve(result);
+        };
+        const onKey = e => { if (e.key === 'Escape') { e.stopPropagation(); done(false); } };
+        document.addEventListener('keydown', onKey, true);
+        ok.onclick = () => done(true);
+        document.getElementById('confirmCancel').onclick = () => done(false);
+        document.getElementById('confirmClose').onclick = () => done(false);
+        overlay.onclick = e => { if (e.target === overlay) done(false); };
+      });
+    }
 
     // --- Lines (lineage columns) ---
     function addTreeLine() {
@@ -2245,9 +2352,12 @@
       renderFamilyTree();
     }
 
-    function deleteTreeLine(lineId) {
+    async function deleteTreeLine(lineId) {
       const tree = currentTree();
       if (tree.members.some(m => m.line === lineId) || tree.lines.length <= 1) return;
+      const line = tree.lines.find(l => l.id === lineId);
+      if (!(await confirmDialog('Delete Branch', `Delete "${line.name}"? This can't be undone.`, '🗑 Delete'))) return;
+      if (tree !== currentTree() || tree.members.some(m => m.line === lineId)) return; // changed while asking
       tree.lines = tree.lines.filter(l => l.id !== lineId);
       saveTrees();
       renderFamilyTree();
@@ -2371,8 +2481,8 @@
       const tree = currentTree();
       const canvas = document.getElementById('treeCanvas');
       const shell = shellById(tree.shell);
-      canvas.classList.toggle('has-shell', !!shell);
-      canvas.style.setProperty('--tree-field', shell ? `url('images/fields/${shell.field}.png')` : 'none');
+      canvas.classList.add('has-shell'); // no shell: the default field behind the grid
+      canvas.style.setProperty('--tree-field', `url('${shell ? `images/fields/${shell.field}.png` : DEFAULT_FIELD_IMAGE}')`);
       document.getElementById('addTreeLineBtn').disabled = !tree.members.length; // branches only appear once the tree has a Tama
       const banner = document.getElementById('treeConnectBanner');
       canvas.innerHTML = '';
@@ -2383,7 +2493,7 @@
         banner.innerHTML = treeConnect.mode === 'pair'
           ? '🫂 Click a highlighted solo Tama to pair it with <b></b>. <button class="modal-btn">Cancel</button>'
           : '🍼 Click a highlighted Tama or pair to make <b></b> their child. <button class="modal-btn">Cancel</button>';
-        banner.querySelector('b').textContent = tamaName(from.tama);
+        banner.querySelector('b').textContent = memberName(from);
         banner.querySelector('button').onclick = () => { treeConnect = null; renderFamilyTree(); };
         banner.style.display = 'flex';
       } else {
@@ -2406,16 +2516,19 @@
         Object.assign(col.style, { left: colX[i] + 'px', width: colW[i] + 'px', height: (height - TREE.PAD * 2) + 'px', top: TREE.PAD + 'px' });
         const header = document.createElement('div');
         header.className = 'tree-line-header';
-        header.appendChild(makeTreeButton('tree-line-move', '◀', 'Move this branch left', () => moveTreeLine(line.id, -1), i === 0));
+        const group = document.createElement('div');
+        group.className = 'tree-line-group';
+        header.appendChild(group);
+        group.appendChild(makeTreeButton('tree-line-move', '◀', 'Move this branch left', () => moveTreeLine(line.id, -1), i === 0));
         const name = document.createElement('button');
         name.className = 'tree-line-name';
         name.textContent = line.name;
         name.title = 'Rename this branch';
         name.onclick = e => { e.stopPropagation(); renameTreeLine(line.id); };
-        header.appendChild(name);
-        header.appendChild(makeTreeButton('tree-line-move', '▶', 'Move this branch right', () => moveTreeLine(line.id, 1), i === tree.lines.length - 1));
+        group.appendChild(name);
+        group.appendChild(makeTreeButton('tree-line-move', '▶', 'Move this branch right', () => moveTreeLine(line.id, 1), i === tree.lines.length - 1));
         if (!tree.members.some(m => m.line === line.id) && tree.lines.length > 1) {
-          header.appendChild(makeTreeButton('tree-line-delete', '✕', 'Delete this empty branch', () => deleteTreeLine(line.id)));
+          group.appendChild(makeTreeButton('tree-line-delete', '✕', 'Delete this empty branch', () => deleteTreeLine(line.id)));
         }
         col.appendChild(header);
         stage.appendChild(col);
@@ -2480,14 +2593,20 @@
           box.onclick = () => { treeSelectedId = treeSelectedId === m.id ? null : m.id; if (treeMoveId !== m.id) treeMoveId = null; renderFamilyTree(); };
         }
 
-        const bg = m.field !== null ? `images/fields/${fieldNames[m.field]}.png` : null;
+        const bg = isLabOnly(m.tama) ? DEFAULT_FIELD_IMAGE : fieldImage(m.field);
         const sprite = buildSprite(m.tama, resolveEyes(m), resolveColorHex(m), bg);
         sprite.classList.add('tree-sprite');
         box.appendChild(sprite);
         const name = document.createElement('div');
         name.className = 'tree-box-name';
-        name.textContent = tamaName(m.tama);
+        name.textContent = m.nickname || tamaName(m.tama);
         box.appendChild(name);
+        if (m.nickname) { // species under the nickname, a bit smaller
+          const species = document.createElement('div');
+          species.className = 'tree-box-species';
+          species.textContent = tamaName(m.tama);
+          box.appendChild(species);
+        }
         const sub = document.createElement('div');
         sub.className = 'tree-box-sub';
         sub.textContent = m.field !== null ? FIELD_LABELS[m.field] : 'No field';
@@ -2500,7 +2619,7 @@
           const actions = document.createElement('div');
           actions.className = 'tree-actions';
           if (!m.parents.length) actions.appendChild(makeTreeButton('tree-action', '🍼', 'Make this a child of a solo Tama or a pair', () => startConnect(m.id, 'child')));
-          if (!m.partner) actions.appendChild(makeTreeButton('tree-action', '🫂', 'Pair with another solo Tama', () => startConnect(m.id, 'pair')));
+          if (!m.partner && canBreed(m)) actions.appendChild(makeTreeButton('tree-action', '🫂', 'Pair with another solo Tama', () => startConnect(m.id, 'pair')));
           if (!m.partner && tree.lines.length > 1) {
             actions.appendChild(makeTreeButton('tree-action' + (treeMoveId === m.id ? ' active' : ''), '↔️', 'Move to another branch',
               () => { treeMoveId = treeMoveId === m.id ? null : m.id; treeSelectedId = m.id; renderFamilyTree(); }));
@@ -2567,13 +2686,23 @@
       const m = currentStepMember(null);
       document.getElementById('addToTreeSummary').textContent =
         `${tamaName(m.tama)} · ${m.field !== null ? FIELD_LABELS[m.field] : 'No field'}` +
-        (m.eyes !== 'default' ? ` · ${tamaName(m.eyes)} eyes` : '') + (m.color !== 'default' ? ` · ${colorLabel(m.color)} color` : '');
+        (m.eyes !== 'default' ? ` · ${tamaName(m.eyes)} Eyes` : '') + (m.color !== 'default' ? ` · ${colorLabel(m.color)} Color` : '');
       const list = document.getElementById('addToTreeList');
       list.innerHTML = '';
       treeStore.trees.forEach(t => {
         const btn = document.createElement('button');
         btn.className = 'modal-btn add-to-tree-option';
         btn.textContent = `${t.name} · ${t.members.length} Tama${t.members.length === 1 ? '' : 's'}`;
+        // Tint by the tree's shell (with its icon); no shell keeps the plain style
+        const shell = shellById(t.shell);
+        if (shell) {
+          const [r, g, b] = hexToRgb(shell.color);
+          btn.style.background = `linear-gradient(90deg, rgba(${r}, ${g}, ${b}, 0.6), rgba(${r}, ${g}, ${b}, 0.18))`;
+          btn.style.borderColor = '#' + shell.color;
+          const icon = document.createElement('img');
+          icon.className = 'add-to-tree-shell'; icon.src = `images/shells/${shell.id}.png`; icon.alt = '';
+          btn.prepend(icon);
+        }
         btn.dataset.tree = t.id;
         btn.onclick = () => pickAddToTree(t.id);
         list.appendChild(btn);
@@ -2581,6 +2710,7 @@
       addToTreeId = null;
       document.getElementById('addToTreeBranch').style.display = 'none';
       document.getElementById('newTreeName').value = '';
+      document.getElementById('addToTreeNickname').value = '';
       document.getElementById('addToTreeDialog').style.display = 'flex';
     }
 
@@ -2592,6 +2722,7 @@
       const tree = treeStore.trees.find(t => t.id === treeId);
       if (!tree) return;
       const member = currentStepMember(tree);
+      member.nickname = cleanNickname(document.getElementById('addToTreeNickname').value); // blank or spaces: none
       member.line = tree.lines.some(l => l.id === lineId) ? lineId : newLine(tree).id; // chosen branch, or a new one
       tree.members.push(member);
       treeStore.selectedId = tree.id;
@@ -2624,6 +2755,9 @@
             const btn = document.createElement('button');
             btn.className = 'path-btn';
             btn.textContent = paths[key].display || key;
+            // Background: the field this path grows in (default.png when the path has no field)
+            const method = paths[key]["0"] && paths[key]["0"].method;
+            btn.style.setProperty('--path-field', `url('${fieldImage(method ? method.field : undefined)}')`);
             btn.onclick = () => selectPath(key, btn);
             pathsContainer.appendChild(btn);
           });
@@ -2727,14 +2861,17 @@
       const baseId = appState.baseId;
       if (!baseId || !tamaData[baseId]) return;
 
-      const fieldContainer = document.getElementById('tamaPreviewField');
-      let bgImage = 'images/fields/land.png';
+      // Stage tabs: only the stages this path has (jump to Baby if the current one is skipped)
+      const curPath = appState.currentPathKey && tamaData[baseId].data && tamaData[baseId].data.path ? tamaData[baseId].data.path[appState.currentPathKey] : null;
+      const stagesHere = pathStages(curPath);
+      ['kid', 'young'].forEach((tab, i) => { document.getElementById('tab-' + tab).style.display = stagesHere.includes(i + 1) ? '' : 'none'; });
+      if (!stagesHere.includes(appState.currentStage)) { updateStage(0); return; }
 
-      if (appState.currentPathKey && tamaData[baseId].data && tamaData[baseId].data.path && tamaData[baseId].data.path[appState.currentPathKey]) {
+      const fieldContainer = document.getElementById('tamaPreviewField');
+      let bgImage = DEFAULT_FIELD_IMAGE; // lab Tamas and Tamas without a path have no field
+      if (!isLabOnly(baseId) && appState.currentPathKey && tamaData[baseId].data && tamaData[baseId].data.path && tamaData[baseId].data.path[appState.currentPathKey]) {
         const method = tamaData[baseId].data.path[appState.currentPathKey]["0"].method;
-        if (method && method.field !== undefined && method.field >= 0 && method.field < fieldNames.length) {
-          bgImage = `images/fields/${fieldNames[method.field]}.png`;
-        }
+        bgImage = fieldImage(method ? method.field : undefined);
       }
       fieldContainer.style.backgroundImage = `url('${bgImage}')`;
 

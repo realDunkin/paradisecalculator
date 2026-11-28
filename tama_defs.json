@@ -2285,7 +2285,17 @@
       "breedable": false,
       "secret": false,
       "lab_only": false,
-      "path": {}
+      "path": {
+        "any": {
+          "display": "Any Field",
+          "0": {
+            "tama": "babymarutchi",
+            "method": {
+              "note": "Evolves after 4 hours in the Baby stage by maintaining less than four of a single Field Cell type (e.g. switching Tama Fields just before 15 minutes)."
+            }
+          }
+        }
+      }
     }
   },
   "forest_kid": {
